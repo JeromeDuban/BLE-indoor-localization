@@ -3,9 +3,6 @@ package com.eirb.projets9;
 
 import java.util.ArrayList;
 
-import com.eirb.projets9.adapter.NavDrawerListAdapter;
-import com.eirb.projets9.model.NavDrawerItem;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -20,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.eirb.projets9.adapter.NavDrawerListAdapter;
+import com.eirb.projets9.model.NavDrawerItem;
 
 public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
@@ -180,7 +180,7 @@ public class MainActivity extends Activity {
 			fragment = new PagesFragment();
 			break;
 		case 5:
-			fragment = new WhatsHotFragment();
+			fragment = new ScanBLE();
 			break;
 
 		default:
