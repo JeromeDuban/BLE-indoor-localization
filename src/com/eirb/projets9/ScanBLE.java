@@ -87,6 +87,9 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 						+ " name : " + arg0.getName()
 						+ " | addr : " + arg0.getAddress()
 						+ " | rssi : " + Integer.toString(arg1) + "\n"
+						+ " | major : " + bytesToHex(arg2).substring(80,84) + "\n"
+						+ " | minor : " + bytesToHex(arg2).substring(75,79) + "\n"
+						+ " | UUID : " + bytesToHex(arg2).substring(42,74) + "\n"
 						+ bytesToHex(arg2) + "\n");	
 		    }
 		});
