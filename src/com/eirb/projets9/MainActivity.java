@@ -17,11 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
+import com.eirb.projets9.callbacks.AsyncTaskCompleteListener;
 import com.eirb.projets9.model.NavDrawerItem;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AsyncTaskCompleteListener<String>{
+	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -38,6 +41,7 @@ public class MainActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	private final static int TEST = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,12 @@ public class MainActivity extends Activity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+		/* CALLBACK TEST EXAMPLE*/
+
+		CallAPI call = new CallAPI(this,this, TEST, true);
+		call.execute("http://jduban.no-ip.org:27000/projets9.html");
+		
+		
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
 			displayView(0);
@@ -227,6 +237,17 @@ public class MainActivity extends Activity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onTaskComplete(String result, int number) {
+		if (number == TEST){
+			Log.d("CALLBACK "+Integer.toString(number) + " : ", result);
+			Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+		}
+		
+		
+		
 	}
 
 }

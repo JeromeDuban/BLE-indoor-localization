@@ -21,9 +21,7 @@ public class SplashScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.splashscreen);
-		
-		
-		
+
 		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
 		this.findViewById(R.id.img).startAnimation(hyperspaceJumpAnimation);
 
@@ -36,18 +34,6 @@ public class SplashScreen extends Activity {
 				finish();
 			}
 		}, 3000);
-		
-//		DisplayMetrics dm = new DisplayMetrics();
-//		getWindowManager().getDefaultDisplay().getMetrics(dm);
-//		double x = Math.pow(dm.widthPixels/dm.xdpi,2);
-//		double y = Math.pow(dm.heightPixels/dm.ydpi,2);
-//		double screenInches = Math.sqrt(x+y);
-//		if(screenInches>=6){
-//			BaseActivity.isTablet=true;	
-//		}
-//		else{
-//			BaseActivity.isTablet=false;
-//		}
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
