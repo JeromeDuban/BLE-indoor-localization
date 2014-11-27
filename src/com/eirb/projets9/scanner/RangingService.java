@@ -47,6 +47,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
     	
     	// ANDROID BEACON LIBRARY
     	mBeaconManager = BeaconManager.getInstanceForApplication(this);
+    	
     	// NORDIC BEACON
         mBeaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
@@ -77,15 +78,6 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
         }
     }
 
-//    private void logToDisplay(final String line) {
-//    	runOnUiThread(new Runnable() {
-//    	    public void run() {
-//    	    	TextView text = (TextView)findViewById(R.id.txt);
-//    	    	text.append(line+"\n");            	
-//    	    }
-//    	});
-//    }
-
     @Override
     public int onStartCommand( final Intent intent, final int flags, final int startId ) {
         return Service.START_STICKY;
@@ -95,10 +87,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
     final static Handler mAdmin = new Handler() { 
         @Override 
         public void handleMessage(Message msg) { 
-//           String mString=(String)msg.obj;
-//           Toast.makeText(context, mString, Toast.LENGTH_SHORT).show();
-//           Log.i(TAG,mString);
-
+           String mString=(String)msg.obj;
+           Toast.makeText(c, mString, Toast.LENGTH_SHORT).show();
         }
     };
     
@@ -112,15 +102,12 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
            TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
            v.setTextColor(Color.RED);
            toast.show();
-//           Log.i(TAG,mString);
-
         }
     };
 
 	@Override
 	public void onBeaconServiceConnect() {
 		mAllBeaconsRegion = new Region("All beacons", null, null, null);
-//      mBackgroundPowerSaver = new BackgroundPowerSaver(this);		
       try {
 			mBeaconManager.startRangingBeaconsInRegion(mAllBeaconsRegion);
 		} catch (RemoteException e) {
