@@ -1,8 +1,7 @@
 package com.eirb.projets9.scanner;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -13,6 +12,7 @@ import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
+import android.R.integer;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +24,16 @@ import android.os.RemoteException;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eirb.projets9.ReferenceApplication;
+
 public class RangingService extends Service implements BeaconConsumer, RangeNotifier{
 	
 	static Context c;
 	
 	private BeaconManager mBeaconManager;
 	private Region mAllBeaconsRegion;
+	
+	public ArrayList<BeaconRecord> records;
 	
 	@SuppressWarnings("unused")	private BackgroundPowerSaver mBackgroundPowerSaver;
 	@SuppressWarnings("unused")	private RegionBootstrap mRegionBootstrap;
@@ -43,6 +47,9 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
     public void onCreate() {
     	System.out.println("Service created");
     	c = this;
+    
+    	records = ReferenceApplication.records;
+    	System.out.println("SIZE : "+ Integer.toString(records.size()));
     	
     	
     	// ANDROID BEACON LIBRARY
@@ -53,20 +60,20 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         mBeaconManager.bind(this);
 
-    	final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor( 1 ); // Number of threads keep in the pool
-
-        executor.scheduleAtFixedRate( new Runnable() {
-
-            @Override
-            public void run() {
+//    	final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor( 1 ); // Number of threads keep in the pool
+//
+//        executor.scheduleAtFixedRate( new Runnable() {
+//
+//            @Override
+//            public void run() {
 //            	Message msg = new Message();
 //            	msg.obj="RUNNING";
 //            	mRedToast.sendMessage(msg);
 //            	System.out.println("RUNNING");
-            }
-        }, 1, 3000, TimeUnit.MILLISECONDS );
-    	
-        super.onCreate();
+//            }
+//        }, 1, 3000, TimeUnit.MILLISECONDS );
+//    	
+//        super.onCreate();
     }
     
     @Override

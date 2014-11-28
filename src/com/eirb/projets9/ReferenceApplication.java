@@ -1,7 +1,11 @@
-package com.eirb.projets9.scanner;
+package com.eirb.projets9;
+
+import java.util.ArrayList;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+
+import com.eirb.projets9.scanner.BeaconRecord;
 
 import android.app.Application;
 
@@ -10,8 +14,14 @@ public class ReferenceApplication extends Application {
 	public BeaconManager mBeaconManager;
 	public BackgroundPowerSaver mBackgroundPowerSaver;
 	
-	public void onCreate() {
-		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
-	};
+	public static ArrayList<BeaconRecord> records;
 	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		System.out.println("onCreate Application");
+		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
+		records = new ArrayList<BeaconRecord>();
+		System.out.println("end on Create Application");
+	};	
 }
