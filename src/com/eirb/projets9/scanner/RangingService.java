@@ -146,5 +146,4 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 //     }
 
 	
-
 }

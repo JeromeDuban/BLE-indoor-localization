@@ -75,13 +75,11 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		// Find People
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
 		// Photos
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "22"));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-		// Pages
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "50+"));
 		
 
 		// Recycle the typed array
@@ -185,20 +183,18 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new FindPeopleFragment();
+			fragment = new MapFragment();
 			break;
 		case 2:
-			fragment = new PhotosFragment();
+			fragment = new NotificationsFragment();
 			break;
 		case 3:
-			fragment = new CommunityFragment();
+			fragment = new PlanningFragment();
 			break;
 		case 4:
-			fragment = new PagesFragment();
-			break;
-		case 5:
 			fragment = new ScanBLE();
 			break;
+		
 
 		default:
 			break;
