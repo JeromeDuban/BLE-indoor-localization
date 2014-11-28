@@ -74,12 +74,8 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 	@Override
 	public void onLeScan(final BluetoothDevice arg0, final int arg1, final byte[] arg2) {
 		
-		
-		
-		
 		System.out.println(logs.getText());
 		
-		// To be updated, the setText needs to be done in the main UI
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 		    @Override
 		    public void run() {

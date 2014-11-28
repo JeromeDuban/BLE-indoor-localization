@@ -3,9 +3,11 @@ package com.eirb.projets9;
 
 import java.util.ArrayList;
 
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
 import com.eirb.projets9.callbacks.AsyncTaskCompleteListener;
 import com.eirb.projets9.model.NavDrawerItem;
+import com.eirb.projets9.scanner.RangingService;
 
 public class MainActivity extends Activity implements AsyncTaskCompleteListener<String>{
 	
@@ -47,6 +50,9 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		startService(new Intent(this, RangingService.class));
+		
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 		mTitle = mDrawerTitle = getTitle();
@@ -111,8 +117,8 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 		/* CALLBACK TEST EXAMPLE*/
 
-		CallAPI call = new CallAPI(this,this, TEST, true);
-		call.execute("http://jduban.no-ip.org:27000/projets9.html");
+//		CallAPI call = new CallAPI(this,this, TEST, true);
+//		call.execute("http://jduban.no-ip.org:27000/projets9.html");
 		
 		
 		if (savedInstanceState == null) {
