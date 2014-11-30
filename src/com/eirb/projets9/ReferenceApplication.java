@@ -11,8 +11,7 @@ import android.app.Application;
 
 public class ReferenceApplication extends Application {
 
-	public BeaconManager mBeaconManager;
-	public BackgroundPowerSaver mBackgroundPowerSaver;
+//	public BackgroundPowerSaver mBackgroundPowerSaver;
 	
 	public static ArrayList<BeaconRecord> records;
 	
@@ -20,8 +19,7 @@ public class ReferenceApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		System.out.println("onCreate Application");
-		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
+//		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
 		records = new ArrayList<BeaconRecord>();
-		System.out.println("end on Create Application");
 	};	
 }

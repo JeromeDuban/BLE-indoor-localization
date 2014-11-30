@@ -12,7 +12,6 @@ import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
-import android.R.integer;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
