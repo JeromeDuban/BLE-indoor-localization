@@ -40,6 +40,13 @@
             android:label="@string/app_name" >
         </service>
         
+        <service
+            android:name="com.eirb.projets9.scanner.NotificationService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name" >
+        </service>
+        
         
     </application>
 

@@ -1,91 +1,102 @@
 package com.eirb.projets9.scanner;
 
+import java.util.ArrayList;
+
 public class BeaconRecord {
 	
 	private String uuid;
 	private String major;
 	private String minor;
-	private double distance;
-	private int rssi;
-	private long timestamp;
+	private ArrayList<ScanRecord> list;
+	
 	
 	public BeaconRecord() {
 		super();
+		list = new ArrayList<ScanRecord>();
 	}
-	
+
+
 	public BeaconRecord(String uuid, String major, String minor,
-			double distance, int rssi, long timestamp) {
+			ArrayList<ScanRecord> list) {
 		super();
+		this.list = new ArrayList<ScanRecord>();
 		this.uuid = uuid;
 		this.major = major;
 		this.minor = minor;
-		this.distance = distance;
-		this.rssi = rssi;
-		this.timestamp = timestamp;
+		this.list = list;
 	}
+	
+	
+	public BeaconRecord(String uuid, String major, String minor,
+			ScanRecord sr) {
+		super();
+		this.list = new ArrayList<ScanRecord>();
+		this.uuid = uuid;
+		this.major = major;
+		this.minor = minor;
+		list.add(sr);
+	}
+
 
 	public String getUuid() {
 		return uuid;
 	}
 
+
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+
 
 	public String getMajor() {
 		return major;
 	}
 
+
 	public void setMajor(String major) {
 		this.major = major;
 	}
+
 
 	public String getMinor() {
 		return minor;
 	}
 
+
 	public void setMinor(String minor) {
 		this.minor = minor;
 	}
 
-	public double getDistance() {
-		return distance;
+
+	public ArrayList<ScanRecord> getList() {
+		return list;
 	}
 
-	public void setDistance(double distance) {
-		this.distance = distance;
+
+	public void setList(ArrayList<ScanRecord> list) {
+		this.list = list;
+	}
+	
+	public void addToList(ScanRecord scanRecord){
+		list.add(scanRecord);
+	}
+	
+	public ScanRecord getFromList(int index){
+		return list.get(index);
 	}
 
-	public int getRssi() {
-		return rssi;
-	}
-
-	public void setRssi(int rssi) {
-		this.rssi = rssi;
-	}
-
-	public long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(distance);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+//		result = prime * result + ((list == null) ? 0 : list.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
 		result = prime * result + ((minor == null) ? 0 : minor.hashCode());
-		result = prime * result + rssi;
-		result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
 		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -96,9 +107,11 @@ public class BeaconRecord {
 		if (getClass() != obj.getClass())
 			return false;
 		BeaconRecord other = (BeaconRecord) obj;
-		if (Double.doubleToLongBits(distance) != Double
-				.doubleToLongBits(other.distance))
-			return false;
+//		if (list == null) {
+//			if (other.list != null)
+//				return false;
+//		} else if (!list.equals(other.list))
+//			return false;
 		if (major == null) {
 			if (other.major != null)
 				return false;
@@ -109,10 +122,6 @@ public class BeaconRecord {
 				return false;
 		} else if (!minor.equals(other.minor))
 			return false;
-		if (rssi != other.rssi)
-			return false;
-		if (timestamp != other.timestamp)
-			return false;
 		if (uuid == null) {
 			if (other.uuid != null)
 				return false;
@@ -120,9 +129,11 @@ public class BeaconRecord {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
+
+	@Override
+	public String toString() {
+		return "BeaconRecord [uuid=" + uuid + ", major=" + major + ", minor="
+				+ minor + ", list=" + list + "]";
+	}
 }
