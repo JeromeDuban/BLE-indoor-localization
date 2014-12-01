@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
 import com.eirb.projets9.callbacks.AsyncTaskCompleteListener;
 import com.eirb.projets9.model.NavDrawerItem;
+import com.eirb.projets9.scanner.NotificationService;
 import com.eirb.projets9.scanner.RangingService;
 
 public class MainActivity extends Activity implements AsyncTaskCompleteListener<String>{
@@ -52,8 +53,10 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		setContentView(R.layout.activity_main);
 		
 		startService(new Intent(this, RangingService.class));
+		startService(new Intent(this, NotificationService.class));
 		
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		
 
 		mTitle = mDrawerTitle = getTitle();
 

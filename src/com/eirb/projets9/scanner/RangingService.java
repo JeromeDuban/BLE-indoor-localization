@@ -2,6 +2,7 @@ package com.eirb.projets9.scanner;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -44,11 +45,11 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
     @Override
     public void onCreate() {
-    	System.out.println("Service created");
+    	System.out.println("Ranging Service created");
     	c = this;
     
     	records = ReferenceApplication.records;
-    	System.out.println("SIZE : "+ Integer.toString(records.size()));
+//    	System.out.println("SIZE : "+ Integer.toString(records.size()));
     	
     	
     	// ANDROID BEACON LIBRARY
@@ -78,19 +79,57 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         if (beacons.size() > 0) {
-            for (Beacon beacon: beacons) {
-            	System.out.println("> Beacon "+beacon.toString()+" is about "+beacon.getDistance()+" meters away, with Rssi: "+beacon.getRssi());            	
+            for (Beacon beacon: beacons) {           
+            	ScanRecord sr = new ScanRecord(beacon.getDistance(), beacon.getRssi(), new Date().getTime());
+                BeaconRecord br = new BeaconRecord(beacon.getId1().toString(),beacon.getId2().toString(),beacon.getId3().toString(), sr);
+                
+                if (isNew(br)){ // Add new beacon to list
+                	records.add(br);
+                	System.out.println("New Beacon added");
+                }
+                else{
+                	addScanRecord(br,sr);
+                	ReferenceApplication.recordAdded();
+                }
+                	
+                
+//                System.out.println("===DISPLAY LIST===");
+//                System.out.println(records.toString());
+                 
             }
         }
     }
 
-    @Override
+    private void addScanRecord(BeaconRecord br, ScanRecord sr) {
+    	for (int i=0; i<records.size();i++){
+			if (records.get(i).equals(br)){
+				records.get(i).addToList(sr);
+			}
+		}
+	}
+    
+    public boolean isNew( BeaconRecord br){
+		for (int i=0; i<records.size();i++){
+			if (records.get(i).equals(br)){
+				return false;
+			}
+		}
+		return true;
+	}
+    
+    
+    /*
+     * SERVICE MANAGEMENT
+     */
+    
+
+	@Override
     public int onStartCommand( final Intent intent, final int flags, final int startId ) {
         return Service.START_STICKY;
     }
     
     /* Normal Toast */
-    final static Handler mAdmin = new Handler() { 
+    final static Handler mToast = new Handler() { 
         @Override 
         public void handleMessage(Message msg) { 
            String mString=(String)msg.obj;
@@ -143,6 +182,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 //
 //        super.onTaskRemoved(rootIntent);
 //     }
+	
+	
 
 	
 }
