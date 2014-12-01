@@ -11,7 +11,7 @@ import android.app.Application;
 
 public class ReferenceApplication extends Application {
 
-//	public BackgroundPowerSaver mBackgroundPowerSaver;
+	public BackgroundPowerSaver mBackgroundPowerSaver;
 	
 	public static ArrayList<BeaconRecord> records;
 	
@@ -19,7 +19,7 @@ public class ReferenceApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		System.out.println("onCreate Application");
-//		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
+		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
 		records = new ArrayList<BeaconRecord>();
 	};	
 }

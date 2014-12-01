@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//		startService(new Intent(this, RangingService.class));
+		startService(new Intent(this, RangingService.class));
 		
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
