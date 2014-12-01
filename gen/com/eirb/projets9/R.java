@@ -50,28 +50,37 @@ public final class R {
         public static final int ic_home=0x7f020004;
         public static final int ic_launcher=0x7f020005;
         public static final int ic_map=0x7f020006;
-        public static final int ic_notification=0x7f020007;
-        public static final int ic_pages=0x7f020008;
-        public static final int ic_people=0x7f020009;
-        public static final int ic_photos=0x7f02000a;
-        public static final int ic_whats_hot=0x7f02000b;
-        public static final int list_item_bg_normal=0x7f02000c;
-        public static final int list_item_bg_pressed=0x7f02000d;
-        public static final int list_selector=0x7f02000e;
+        public static final int ic_next=0x7f020007;
+        public static final int ic_notif=0x7f020008;
+        public static final int ic_notification=0x7f020009;
+        public static final int ic_pages=0x7f02000a;
+        public static final int ic_people=0x7f02000b;
+        public static final int ic_photos=0x7f02000c;
+        public static final int ic_whats_hot=0x7f02000d;
+        public static final int list_item_bg_normal=0x7f02000e;
+        public static final int list_item_bg_pressed=0x7f02000f;
+        public static final int list_selector=0x7f020010;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b000c;
-        public static final int button=0x7f0b0009;
+        public static final int Content=0x7f0b000c;
+        public static final int action_settings=0x7f0b0013;
+        public static final int button=0x7f0b000a;
         public static final int counter=0x7f0b0006;
         public static final int drawer_layout=0x7f0b0000;
         public static final int frame_container=0x7f0b0001;
         public static final int icon=0x7f0b0004;
-        public static final int img=0x7f0b000b;
+        public static final int imageView1=0x7f0b000d;
+        public static final int imageView2=0x7f0b0011;
+        public static final int img=0x7f0b0012;
+        public static final int listNotif=0x7f0b0008;
         public static final int list_slidermenu=0x7f0b0002;
-        public static final int logs=0x7f0b000a;
+        public static final int logs=0x7f0b000b;
         public static final int premier=0x7f0b0003;
-        public static final int status=0x7f0b0008;
+        public static final int roomNotif=0x7f0b000f;
+        public static final int status=0x7f0b0009;
+        public static final int timeNotif=0x7f0b0010;
         public static final int title=0x7f0b0005;
+        public static final int titleNotif=0x7f0b000e;
         public static final int txtLabel=0x7f0b0007;
     }
     public static final class layout {
