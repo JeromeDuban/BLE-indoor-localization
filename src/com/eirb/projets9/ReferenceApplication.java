@@ -11,6 +11,8 @@ public class ReferenceApplication extends Application {
 
 //	public BackgroundPowerSaver mBackgroundPowerSaver;	// Seems to kill the background service if the screen is off
 	
+	public static final int TIME_TO_BE_NOTIFIED = 10;
+	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	public static ArrayList<BeaconRecord> records;
 	public static NotificationService notificationService;
 	

@@ -8,6 +8,7 @@ public class BeaconRecord {
 	private String major;
 	private String minor;
 	private ArrayList<ScanRecord> list;
+	private boolean notified = false;
 	
 	
 	public BeaconRecord() {
@@ -83,6 +84,15 @@ public class BeaconRecord {
 	
 	public ScanRecord getFromList(int index){
 		return list.get(index);
+	}
+	
+	public boolean isNotified() {
+		return notified;
+	}
+
+
+	public void setNotified(boolean notified) {
+		this.notified = notified;
 	}
 
 
