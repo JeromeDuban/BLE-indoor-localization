@@ -50,7 +50,9 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-	private final static int TEST = 0;
+	private final static int DOWNLOAD = 0;
+	
+	private String conferenceFilePath;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		startService(new Intent(this, RangingService.class));
 		startService(new Intent(this, NotificationService.class));
 		
+		// Start animation
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		
 		// Connectivity test
@@ -140,10 +143,10 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		/* CALLBACK TEST EXAMPLE*/
-
-//		CallAPI call = new CallAPI(this,this, TEST, true);
-//		call.execute("http://jduban.no-ip.org:27000/projets9.html");
+		/* Get json file without scanning beacons*/
+		
+		CallAPI call = new CallAPI(this,this, DOWNLOAD, true);
+		call.execute("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json");
 		
 		
 		if (savedInstanceState == null) {
@@ -268,9 +271,14 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 	@Override
 	public void onTaskComplete(String result, int number) {
-		if (number == TEST){
-			Log.d("CALLBACK "+Integer.toString(number) + " : ", result);
-			Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+		if (number == DOWNLOAD){
+			
+			System.out.println("Writing conference file");
+			
+			conferenceFilePath = getFilesDir().getAbsolutePath();
+			conferenceFilePath = conferenceFilePath + "/" + "conference.json";
+			
+			ReferenceApplication.writeToFile(result, conferenceFilePath);
 		}
 	}
 	
