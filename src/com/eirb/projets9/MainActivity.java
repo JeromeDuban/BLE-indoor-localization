@@ -3,13 +3,18 @@ package com.eirb.projets9;
 
 import java.util.ArrayList;
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -56,6 +61,23 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		startService(new Intent(this, NotificationService.class));
 		
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		
+		// Connectivity test
+		if(!isOnline()){
+			Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_LONG).show();
+		}
+		
+		switch (getBleStatus(this)) {
+		case STATUS_BLE_NOT_AVAILABLE:
+			Toast.makeText(this, "Bluetooth Low Energy is required but not available on your device", Toast.LENGTH_LONG).show();
+			break;
+		case STATUS_BLUETOOTH_NOT_AVAILABLE:
+			Toast.makeText(this, "Bluetooth Status not availaible", Toast.LENGTH_LONG).show();
+			break;
+		default:
+			break;
+		}
+		
 		
 
 		mTitle = mDrawerTitle = getTitle();
@@ -250,9 +272,54 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 			Log.d("CALLBACK "+Integer.toString(number) + " : ", result);
 			Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
 		}
-		
-		
-		
 	}
+	
+	// CONNECTIVITY TESTS
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	
+	public static BluetoothAdapter getBluetoothAdapter(Context context) {
+        // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
+        // BluetoothAdapter through BluetoothManager.
+        final BluetoothManager bluetoothManager =
+                (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager == null)
+            return null;
+        return bluetoothManager.getAdapter();
+    }
+
+	public static final int STATUS_BLE_ENABLED = 0;
+	public static final int STATUS_BLUETOOTH_NOT_AVAILABLE = 1;
+	public static final int STATUS_BLE_NOT_AVAILABLE = 2;
+	public static final int STATUS_BLUETOOTH_DISABLED = 3;
+	
+	
+    public static int getBleStatus(Context context) {
+        // Use this check to determine whether BLE is supported on the device.  Then you can
+        // selectively disable BLE-related features.
+        if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            return STATUS_BLE_NOT_AVAILABLE;
+        }
+
+        final BluetoothAdapter adapter = getBluetoothAdapter(context);
+        // Checks if Bluetooth is supported on the device.
+        if (adapter == null) {
+            return STATUS_BLUETOOTH_NOT_AVAILABLE;
+        }
+
+        if (adapter.isEnabled())
+            return STATUS_BLUETOOTH_DISABLED;
+
+        return STATUS_BLE_ENABLED;
+    }
+	
 
 }
