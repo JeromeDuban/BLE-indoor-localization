@@ -203,13 +203,14 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action bar actions click
-		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+//		// Handle action bar actions click
+//		switch (item.getItemId()) {
+//		case R.id.action_settings:
+//			return true;
+//		default:
+//			return super.onOptionsItemSelected(item);
+//		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/* *
@@ -219,7 +220,7 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+//		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 

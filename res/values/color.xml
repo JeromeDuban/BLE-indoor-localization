@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="list_item_title">#303030</color>
     <color name="list_background">#FFFFFF</color>
     <color name="list_background_pressed">#dedede</color>
     <color name="list_divider">#FFFFFF</color>
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
-   <color name="actionbar_background">#ff0000</color> 
-    
+    <color name="actionbar_background">#025db9</color>
+
 </resources>
