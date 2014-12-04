@@ -122,7 +122,7 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090002;
+        public static final int AppBaseTheme=0x7f090003;
         public static final int MyActionBarTheme=0x7f090001;
         /** 
         Base application theme, dependent on API level. This theme is replaced
@@ -130,5 +130,6 @@ public final class R {
     
          */
         public static final int MyCustomTheme=0x7f090000;
+        public static final int myTheme_ActionBar_Text=0x7f090002;
     }
 }
