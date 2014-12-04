@@ -3,6 +3,7 @@ package com.eirb.projets9;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -13,6 +14,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -81,6 +84,9 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 			break;
 		}
 		
+		
+		//ActionBar actionBar = getActionBar();
+		//actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED)); 
 		
 
 		mTitle = mDrawerTitle = getTitle();

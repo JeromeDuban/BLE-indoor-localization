@@ -25,6 +25,7 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int actionbar_background=0x7f050006;
         public static final int counter_text_bg=0x7f050004;
         public static final int counter_text_color=0x7f050005;
         public static final int list_background=0x7f050001;
@@ -110,15 +111,6 @@ public final class R {
     }
     public static final class style {
         /** 
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     
@@ -130,10 +122,13 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
+        public static final int AppBaseTheme=0x7f090002;
+        public static final int MyActionBarTheme=0x7f090001;
+        /** 
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
          */
-        public static final int AppTheme=0x7f090001;
+        public static final int MyCustomTheme=0x7f090000;
     }
 }

@@ -23,7 +23,7 @@ public class NotificationsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         int i; 
         LinearLayout listNotif= (LinearLayout) rootView.findViewById(R.id.listNotif);
-        for (i = 0; i < 30; i++) {
+        for (i = 0; i < 25; i++) {
         	 
             System.out.println("SIZE>" + i);
 
@@ -31,14 +31,14 @@ public class NotificationsFragment extends Fragment {
             View view = inflater.inflate(R.layout.notifications_list, null);
             
             // set Title
-            //TextView title = (TextView) rootView.findViewById(R.id.titleNotif);
-       	 	//title.setText("Title");
+            TextView title = (TextView) view.findViewById(R.id.titleNotif);
+       	 	title.setText("Titre Conference " + Integer.toString(i));
        	 	// set room
-       	 	//TextView room = (TextView) rootView.findViewById(R.id.roomNotif);
-    	 	//room.setText("Room");
+       	 	TextView room = (TextView) view.findViewById(R.id.roomNotif);
+    	 	room.setText("TD14");
     	 	//set Time
-    	 	//TextView time = (TextView) rootView.findViewById(R.id.timeNotif);
-       	 	//time.setText("Time");
+    	 	TextView time = (TextView) view.findViewById(R.id.timeNotif);
+       	 	time.setText("11:00");
 
             
             listNotif.addView(view);
