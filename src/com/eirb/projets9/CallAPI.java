@@ -68,7 +68,7 @@ public class CallAPI extends AsyncTask<String, Process, String> {
 				System.out.println(e);
 			}
 
-			System.out.println("Response: "+ response);
+//			System.out.println("Response: "+ response);
 //			return response.toString().replace("\n", "").replace("\t", "");
 			return response.toString();
 		}

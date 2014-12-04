@@ -1,6 +1,7 @@
 package com.eirb.projets9;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.ActionBar;
@@ -53,9 +54,12 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-	private final static int DOWNLOAD = 0;
+	private final static int FIRST_DOWNLOAD = 0;
 	
 	private String conferenceFilePath;
+	private BluetoothAdapter mBluetoothAdapter;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,15 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 			Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_LONG).show();
 		}
 		
+		// TEST BLUETOOTH
+		 BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
+	     mBluetoothAdapter = manager.getAdapter();
+	     if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+	    	 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+	         startActivityForResult(enableBtIntent, 0);
+	     }
+		
+		// BLE TEST
 		switch (getBleStatus(this)) {
 		case STATUS_BLE_NOT_AVAILABLE:
 			Toast.makeText(this, "Bluetooth Low Energy is required but not available on your device", Toast.LENGTH_LONG).show();
@@ -83,10 +96,6 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		default:
 			break;
 		}
-		
-		
-		//ActionBar actionBar = getActionBar();
-		//actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED)); 
 		
 
 		mTitle = mDrawerTitle = getTitle();
@@ -150,9 +159,15 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		/* Get json file without scanning beacons*/
+		File file = new File(conferenceFilePath);
+		if (!file.exists()) {
+			CallAPI call = new CallAPI(this,this, FIRST_DOWNLOAD, false);
+			call.execute("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json");
+		}
+		else{
+			System.out.println("Conference file exists");
+		}
 		
-		CallAPI call = new CallAPI(this,this, DOWNLOAD, true);
-		call.execute("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json");
 		
 		
 		if (savedInstanceState == null) {
@@ -277,14 +292,11 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 	@Override
 	public void onTaskComplete(String result, int number) {
-		if (number == DOWNLOAD){
+		if (number == FIRST_DOWNLOAD){
 			
 			System.out.println("Writing conference file");
-			
-			conferenceFilePath = getFilesDir().getAbsolutePath();
-			conferenceFilePath = conferenceFilePath + "/" + "conference.json";
-			
 			ReferenceApplication.writeToFile(result, conferenceFilePath);
+			
 		}
 	}
 	
