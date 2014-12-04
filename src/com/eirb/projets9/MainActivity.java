@@ -66,6 +66,8 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		conferenceFilePath = ReferenceApplication.conferenceFilePath;
+		
 		startService(new Intent(this, RangingService.class));
 		startService(new Intent(this, NotificationService.class));
 		
