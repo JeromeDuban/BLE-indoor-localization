@@ -1,7 +1,9 @@
 package com.eirb.projets9;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +20,7 @@ public class ReferenceApplication extends Application {
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	public static ArrayList<BeaconRecord> records;
 	public static NotificationService notificationService;
+	public static String conferenceFilePath;
 	
 	@Override
 	public void onCreate() {
@@ -25,6 +28,8 @@ public class ReferenceApplication extends Application {
 		System.out.println("onCreate Application");
 //		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
 		records = new ArrayList<BeaconRecord>();
+		conferenceFilePath = getFilesDir().getAbsolutePath().concat("/conference.json");
+		
 	};	
 	
 	public static void setNotificationService(NotificationService service){
@@ -45,7 +50,7 @@ public class ReferenceApplication extends Application {
 			file = new File(path);
 			fop = new FileOutputStream(file);
  
-			// if file doesnt exists, then create it
+			// if file doesn't exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -68,5 +73,32 @@ public class ReferenceApplication extends Application {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static String readFromFile(String path) {
+		 
+		BufferedReader br = null;
+		String file = "";
+ 
+		try {
+ 
+			String sCurrentLine;
+ 
+			br = new BufferedReader(new FileReader(path));
+ 
+			while ((sCurrentLine = br.readLine()) != null) {
+				file = file.concat(sCurrentLine);
+			}
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return file;
 	}
 }
