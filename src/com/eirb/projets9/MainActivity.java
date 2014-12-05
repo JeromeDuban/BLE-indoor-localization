@@ -334,6 +334,7 @@ public class MainActivity extends Activity{
     	File file = new File(conferenceFile);
     	 
 		if(file.delete()){
+			ReferenceApplication.records.clear();
 			Toast.makeText(this, "Delete done", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();

@@ -39,18 +39,6 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-//	private void updateDisplay() {
-//		final Timer timer = new Timer();
-//		timer.schedule(new TimerTask() {
-//    		
-//			@Override
-//			public void run() {
-//				
-//					
-//			}
-//		}, 0, 1000);// Update text every second
-//
-//	}
 	
 	private Handler handler = new Handler();
 
@@ -61,9 +49,9 @@ public class HomeFragment extends Fragment {
                updateView();
    			}
 		   else{
-			   handler.postDelayed(this, 100);
+			   title.setText("There is no conference");
 		   }
-	      
+		   handler.postDelayed(this, 5000);
 	   }
 	};
 	
