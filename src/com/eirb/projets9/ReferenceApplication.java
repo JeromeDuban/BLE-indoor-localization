@@ -2,13 +2,17 @@ package com.eirb.projets9;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import android.app.Application;
 
+import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.NotificationService;
 
@@ -20,7 +24,7 @@ public class ReferenceApplication extends Application {
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	public static ArrayList<BeaconRecord> records;
 	public static NotificationService notificationService;
-	public static String conferenceFilePath;
+	public static String conferenceFile;
 	
 	@Override
 	public void onCreate() {
@@ -28,7 +32,7 @@ public class ReferenceApplication extends Application {
 		System.out.println("onCreate Application");
 //		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
 		records = new ArrayList<BeaconRecord>();
-		conferenceFilePath = getFilesDir().getAbsolutePath().concat("/conference.json");
+		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
 		
 	};	
 	
@@ -101,4 +105,38 @@ public class ReferenceApplication extends Application {
 		}
 		return file;
 	}
+	
+	public static void serializeConf(Conference conf){
+		 
+	   try{
+ 
+		FileOutputStream fout = new FileOutputStream(conferenceFile);
+		ObjectOutputStream oos = new ObjectOutputStream(fout);   
+		oos.writeObject(conf);
+		oos.close();
+		System.out.println("Done");
+ 
+	   }catch(Exception ex){
+		   ex.printStackTrace();
+	   }
+	}
+	
+	 public static Conference deserializeAddress(){
+		 
+		   Conference conf; 
+		   try{
+	 
+			   FileInputStream fin = new FileInputStream(conferenceFile);
+			   ObjectInputStream ois = new ObjectInputStream(fin);
+			   conf = (Conference) ois.readObject();
+			   ois.close();
+	 
+			   return conf;
+	 
+		   }catch(Exception ex){
+			   ex.printStackTrace();
+			   return null;
+		   } 
+	   } 
+	
 }

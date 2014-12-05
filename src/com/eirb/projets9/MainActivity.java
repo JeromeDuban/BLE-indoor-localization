@@ -4,7 +4,6 @@ package com.eirb.projets9;
 import java.io.File;
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,8 +14,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -31,12 +28,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
-import com.eirb.projets9.callbacks.AsyncTaskCompleteListener;
 import com.eirb.projets9.model.NavDrawerItem;
 import com.eirb.projets9.scanner.NotificationService;
 import com.eirb.projets9.scanner.RangingService;
 
-public class MainActivity extends Activity implements AsyncTaskCompleteListener<String>{
+public class MainActivity extends Activity{
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -54,9 +50,8 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-	private final static int FIRST_DOWNLOAD = 0;
 	
-	private String conferenceFilePath;
+	private String conferenceFile;
 	private BluetoothAdapter mBluetoothAdapter;
 	
 	
@@ -66,7 +61,7 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		conferenceFilePath = ReferenceApplication.conferenceFilePath;
+		conferenceFile = ReferenceApplication.conferenceFile;
 		
 		startService(new Intent(this, RangingService.class));
 		startService(new Intent(this, NotificationService.class));
@@ -161,14 +156,6 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		/* Get json file without scanning beacons*/
-		File file = new File(conferenceFilePath);
-		if (!file.exists()) {
-			CallAPI call = new CallAPI(this,this, FIRST_DOWNLOAD, false);
-			call.execute("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json");
-		}
-		else{
-			System.out.println("Conference file exists");
-		}
 		
 		
 		
@@ -203,14 +190,17 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-//		// Handle action bar actions click
-//		switch (item.getItemId()) {
+		// Handle action bar actions click
+		switch (item.getItemId()) {
 //		case R.id.action_settings:
 //			return true;
-//		default:
-//			return super.onOptionsItemSelected(item);
-//		}
-		return super.onOptionsItemSelected(item);
+		case R.id.action_delete:
+			deleteFile();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		
 	}
 
 	/* *
@@ -219,7 +209,7 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 //		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -292,16 +282,6 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-
-	@Override
-	public void onTaskComplete(String result, int number) {
-		if (number == FIRST_DOWNLOAD){
-			
-			System.out.println("Writing conference file");
-			ReferenceApplication.writeToFile(result, conferenceFilePath);
-			
-		}
-	}
 	
 	// CONNECTIVITY TESTS
 	
@@ -350,5 +330,15 @@ public class MainActivity extends Activity implements AsyncTaskCompleteListener<
         return STATUS_BLE_ENABLED;
     }
 	
-
+    public void deleteFile(){
+    	File file = new File(conferenceFile);
+    	 
+		if(file.delete()){
+			Toast.makeText(this, "Delete done", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
+		}
+		
+		
+    }
 }

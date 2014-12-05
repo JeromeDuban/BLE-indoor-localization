@@ -1,9 +1,14 @@
 package com.eirb.projets9.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Session {
+public class Session implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2929300051735046818L;
 	private int id;
 	private long startTs;
 	private long endTs;

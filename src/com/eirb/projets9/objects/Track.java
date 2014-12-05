@@ -1,9 +1,14 @@
 package com.eirb.projets9.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Track {
+public class Track implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6181596986843030913L;
 	public int id;
 	public String title;
 	public ArrayList<Session> list;

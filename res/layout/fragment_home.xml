@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="16dp"
-        android:text="Home View"/>
+        android:text="There is no conference"/>
     
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"

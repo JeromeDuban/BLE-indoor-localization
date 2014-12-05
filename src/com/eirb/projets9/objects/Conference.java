@@ -1,9 +1,14 @@
 package com.eirb.projets9.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Conference {
+public class Conference implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1277639833650257412L;
 	private int id;
 	private String address;
 	private String title;

@@ -1,8 +1,14 @@
 package com.eirb.projets9.objects;
 
+import java.io.Serializable;
 
-public class Talk {
 
+public class Talk implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4653665694483820698L;
 	private int id;
 	private String title;
 	private long endTs;
