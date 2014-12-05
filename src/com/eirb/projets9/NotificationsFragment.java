@@ -13,7 +13,8 @@ public class NotificationsFragment extends Fragment {
 	
 	public NotificationsFragment(){}
 	
-	int i; 
+	public final int MAX_NOTIF = 5;
+	
     LinearLayout listNotif;
 	
 	@Override
@@ -21,24 +22,27 @@ public class NotificationsFragment extends Fragment {
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-        int i; 
+        
         LinearLayout listNotif= (LinearLayout) rootView.findViewById(R.id.listNotif);
-        for (i = 0; i < 25; i++) {
+        for (int i = 0; i < MAX_NOTIF; i++) {
         	 
             System.out.println("SIZE>" + i);
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.notifications_list, null);
+            View view = inflater.inflate(R.layout.notifications_list,listNotif, false);
             
             // set Title
             TextView title = (TextView) view.findViewById(R.id.titleNotif);
        	 	title.setText("Titre Conference " + Integer.toString(i));
+       	 	title.setTypeface(ReferenceApplication.fontMedium);
        	 	// set room
        	 	TextView room = (TextView) view.findViewById(R.id.roomNotif);
     	 	room.setText("TD14");
+    	 	room.setTypeface(ReferenceApplication.fontLight);
     	 	//set Time
     	 	TextView time = (TextView) view.findViewById(R.id.timeNotif);
-       	 	time.setText("11:00");
+       	 	time.setText("11:00 PM");
+       	 	time.setTypeface(ReferenceApplication.fontThin);
 
             
             listNotif.addView(view);

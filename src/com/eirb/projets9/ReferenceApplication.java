@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import android.app.Application;
+import android.graphics.Typeface;
 
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.scanner.BeaconRecord;
@@ -26,6 +27,11 @@ public class ReferenceApplication extends Application {
 	public static NotificationService notificationService;
 	public static String conferenceFile;
 	
+	public static Typeface fontMedium;
+	public static Typeface fontThin;
+	public static Typeface fontLight;
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -33,6 +39,11 @@ public class ReferenceApplication extends Application {
 //		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
 		records = new ArrayList<BeaconRecord>();
 		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
+
+		// Fonts
+		fontMedium = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Md.otf");
+		fontThin = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Th.otf");
+		fontLight = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Lt.otf");
 		
 	};	
 	
