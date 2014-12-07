@@ -33,9 +33,8 @@ public class HomeFragment extends Fragment {
         if (file.exists()) {
 			updateView();
 		}
-        else{
-        	handler.postDelayed(runnable, 100);
-        }
+        handler.postDelayed(runnable, 100);
+
         return rootView;
     }
 
@@ -51,13 +50,15 @@ public class HomeFragment extends Fragment {
 		   else{
 			   title.setText("There is no conference");
 		   }
-		   handler.postDelayed(this, 5000);
+//		   System.out.println("run done");
+		   handler.postDelayed(this, 1000);
 	   }
 	};
 	
 	private void updateView() {
 		Conference conf = ReferenceApplication.deserializeAddress();
-		title.setText(conf.getTitle());
+		if (conf !=null)
+			title.setText(conf.getTitle());
 		
 	}
 }
