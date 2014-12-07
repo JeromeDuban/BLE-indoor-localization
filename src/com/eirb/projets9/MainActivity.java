@@ -225,7 +225,7 @@ public class MainActivity extends Activity{
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new MapFragment();
+			fragment = new com.eirbmmk.app.map.MapFragment();
 			break;
 		case 2:
 			fragment = new NotificationsFragment();
@@ -234,8 +234,7 @@ public class MainActivity extends Activity{
 			fragment = new PlanningFragment();
 			break;
 		case 4:
-//			fragment = new ScanBLE();
-			fragment = new com.eirbmmk.app.map.MapFragment();
+			fragment = new ScanBLE();
 			break;
 		
 
