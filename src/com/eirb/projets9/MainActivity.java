@@ -63,8 +63,8 @@ public class MainActivity extends Activity{
 		
 		conferenceFile = ReferenceApplication.conferenceFile;
 		
-		startService(new Intent(this, RangingService.class));
-		startService(new Intent(this, NotificationService.class));
+//		startService(new Intent(this, RangingService.class));
+//		startService(new Intent(this, NotificationService.class));
 		
 		// Start animation
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -234,7 +234,8 @@ public class MainActivity extends Activity{
 			fragment = new PlanningFragment();
 			break;
 		case 4:
-			fragment = new ScanBLE();
+//			fragment = new ScanBLE();
+			fragment = new com.eirbmmk.app.map.MapFragment();
 			break;
 		
 
