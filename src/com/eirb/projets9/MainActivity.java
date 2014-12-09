@@ -225,7 +225,7 @@ public class MainActivity extends Activity{
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new com.eirbmmk.app.map.MapFragment();
+			fragment = new com.eirb.projets9.MapFragment();
 			break;
 		case 2:
 			fragment = new NotificationsFragment();

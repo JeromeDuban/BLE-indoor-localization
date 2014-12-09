@@ -1,4 +1,4 @@
-package com.eirbmmk.app.map;
+package com.eirb.projets9.map;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
+
+import com.eirb.projets9.map.objects.PolygonRoom;
+import com.eirb.projets9.map.objects.RectangleRoom;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,7 +42,7 @@ public class MapView extends View {
     ArrayList<RectangleRoom> clickableRectangles = MapModel.getClickableRectangles();
     ArrayList<RectangleRoom> nonClickableRectangles = MapModel.getNonClickableRectangles();
     PolygonRoom contour = MapModel.getContour();
-    boolean isLogged = MapController.isLogged();
+    
 
     /* -------------------- Private classes -------------------- */
 
@@ -109,16 +112,11 @@ public class MapView extends View {
     private int mCanvasWidth;
     private int mCanvasHeight;
     private float mCalculatedScale = 1.f; //to get the same scale factor on any different screen
-
-    // User Status
-    private boolean isConnected;
-
-
-    public MapView(Context context, AttributeSet attrs, boolean connected) throws ParserConfigurationException, SAXException, IOException {
+    
+    public MapView(Context context, AttributeSet attrs) throws ParserConfigurationException, SAXException, IOException {
         super(context, attrs);
         //at first we show storey 0
         setStorey(0,context);
-        isConnected = connected;
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
     }
@@ -170,17 +168,17 @@ public class MapView extends View {
 
         for(int w = 0; w < nonClickablePolygons.size(); w++)
         {
-            canvas.drawPath(nonClickablePolygons.get(w).getPath(), mYellow);
+            canvas.drawPath(nonClickablePolygons.get(w).getPath(), mGrey);
             canvas.drawPath(nonClickablePolygons.get(w).getPath(), mBlackStroke);
         }
 
         for(int w = 0; w < clickablePolygons.size(); w++)
         {
-            if(clickablePolygons.get(w).getState() == 1 && isLogged){
+            if(clickablePolygons.get(w).getState() == 1 ){
                 canvas.drawPath(clickablePolygons.get(w).getPath(), mGreen);
                 canvas.drawPath(clickablePolygons.get(w).getPath(), mBlackStroke);
             }
-            else if(clickablePolygons.get(w).getState() == 0 && isLogged){
+            else if(clickablePolygons.get(w).getState() == 0){
                 canvas.drawPath(clickablePolygons.get(w).getPath(), mRed);
                 canvas.drawPath(clickablePolygons.get(w).getPath(), mBlackStroke);
             }
@@ -200,11 +198,11 @@ public class MapView extends View {
 
         for(int i = 0; i < clickableRectangles.size(); i++)
         {
-            if(clickableRectangles.get(i).getState() == 1 && isLogged){
+            if(clickableRectangles.get(i).getState() == 1){
                 canvas.drawRect(clickableRectangles.get(i).getRect(), mGreen);
                 canvas.drawRect(clickableRectangles.get(i).getRect(), mBlackStroke);
             }
-            else if(clickableRectangles.get(i).getState() == 0 && isLogged){
+            else if(clickableRectangles.get(i).getState() == 0){
                 canvas.drawRect(clickableRectangles.get(i).getRect(), mRed);
                 canvas.drawRect(clickableRectangles.get(i).getRect(), mBlackStroke);
             }

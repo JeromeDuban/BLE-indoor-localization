@@ -1,4 +1,4 @@
-package com.eirbmmk.app.map;
+package com.eirb.projets9.map;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,9 @@ import android.graphics.Region;
 import android.util.Log;
 
 import com.eirb.projets9.R;
-import com.eirbmmk.app.schedule.GetJson;
+import com.eirb.projets9.map.objects.Point;
+import com.eirb.projets9.map.objects.PolygonRoom;
+import com.eirb.projets9.map.objects.RectangleRoom;
 
 /**
  * Contains all the needed information for Map functionality like SVG files paths.
@@ -55,41 +57,7 @@ public class MapModel {
     /* -------------------- Constructors -------------------- */
 
     public MapModel()
-    {
-
-    }
-
-
-    /* -------------------- Methods -------------------- */
-
-    /**
-     * public method to set the context
-     * @param context context
-     */
-    public static void setContext(Context context) {
-        MapModel.mContext = context;
-    }
-
-    /**
-     * public method to get information from JSON
-     */
-    public void fetchData(boolean isLogged){
-        logged = isLogged;
-        if(isLogged){
-            // Get Data from Server
-            GetJson jParser = new GetJson();
-
-            // get JSON data from URL
-            String rawJSON = jParser.getJSONFromUrl(mRoomURL);
-           // Store it in ArrayList
-            try {
-                jsonRoomArray = new JSONArray(rawJSON);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
+    {}
 
     /**
      * svg parsing of a storey
@@ -102,11 +70,9 @@ public class MapModel {
         getNonClickableRectangles().clear();
         getNonClickablePolygons().clear();
         getClickablePolygons().clear();
-
-        //Select svg to parse according to button selected above the custom view
-//        if (mContext == null){
-//        	System.out.println("context null");
-//        }
+        
+        if (context == null)
+        	System.out.println(context);
         
         InputStream raw = context.getResources().openRawResource(R.raw.rdc);
 

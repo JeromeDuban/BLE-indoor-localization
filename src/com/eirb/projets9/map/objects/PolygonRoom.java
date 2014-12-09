@@ -1,4 +1,4 @@
-package com.eirbmmk.app.map;
+package com.eirb.projets9.map.objects;
 
 import android.graphics.Path;
 import android.graphics.Region;
