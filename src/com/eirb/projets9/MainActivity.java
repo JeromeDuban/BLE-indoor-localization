@@ -29,8 +29,6 @@ import android.widget.Toast;
 
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
 import com.eirb.projets9.model.NavDrawerItem;
-import com.eirb.projets9.scanner.NotificationService;
-import com.eirb.projets9.scanner.RangingService;
 
 public class MainActivity extends Activity{
 	

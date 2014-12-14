@@ -29,4 +29,11 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
 
+    <!-- Map page -->
+    <string-array name="rooms_array">
+        <item>Amphi F</item>
+        <item>Amphi G</item>
+        <item>Amphi H</item>
+    </string-array>
+    
 </resources>

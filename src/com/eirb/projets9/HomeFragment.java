@@ -1,8 +1,6 @@
 package com.eirb.projets9;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Fragment;
 import android.os.Bundle;
