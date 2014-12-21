@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.eirb.projets9.adapter.NavDrawerListAdapter;
 import com.eirb.projets9.model.NavDrawerItem;
+import com.eirb.projets9.scanner.NotificationService;
+import com.eirb.projets9.scanner.RangingService;
 
 public class MainActivity extends Activity{
 	
@@ -61,8 +63,8 @@ public class MainActivity extends Activity{
 		
 		conferenceFile = ReferenceApplication.conferenceFile;
 		
-//		startService(new Intent(this, RangingService.class));
-//		startService(new Intent(this, NotificationService.class));
+		startService(new Intent(this, RangingService.class));
+		startService(new Intent(this, NotificationService.class));
 		
 		// Start animation
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -159,7 +161,7 @@ public class MainActivity extends Activity{
 		
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(0);
+			displayView(1); // TODO changed for the development
 		}
 	}
 
