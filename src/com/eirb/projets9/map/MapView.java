@@ -2,6 +2,7 @@ package com.eirb.projets9.map;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -139,6 +140,8 @@ public class MapView extends View {
 		super.onDraw(canvas);
 		//saves the content to be able to zoom and translate
 		canvas.save();
+		
+		System.out.println("ON DRAW");
 		contour = MapModel.getContour();
 
 		mCalculatedScale = Math.min((float)canvas.getWidth()/(float)svgWidth, (float)canvas.getHeight()/(float)svgHeight);
@@ -223,14 +226,24 @@ public class MapView extends View {
 			else{
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mYellow);
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mBlackStroke);
-				// Added
-				canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
-				canvas.drawPath(addDot(650,600,15), mBlue);
-				canvas.drawPath(addDot(650,600,20), mBlueStroke);
 			}
 
 
 		}
+		
+		// Added ( has to be outside the for loop ;) )
+		canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
+		
+		// Test to move dot every second
+		Date date = new Date();
+		double degrees = date.getSeconds()*6d;	// 360 °
+		double rad = Math.toRadians(degrees);
+		double radius = 50;
+		double xOffset = radius*Math.cos(rad);
+		double yOffset = radius*Math.sin(rad);
+
+		canvas.drawPath(addDot(650+xOffset,600+yOffset,15), mBlue);
+		canvas.drawPath(addDot(650+xOffset,600+yOffset,20), mBlueStroke);
 
 
 		canvas.restore();
@@ -515,12 +528,13 @@ public class MapView extends View {
 	}
 	
 	
-public Path addDot(int x, int y, int radius) {
-		
+public Path addDot(double x, double y, int radius) {
+		System.out.println((float) x);
+		System.out.println((float) y);
 		        
 		Path polygonPath = new Path();
                 
-		polygonPath.addCircle(x, y, radius, Path.Direction.CCW);
+		polygonPath.addCircle((float) x, (float) y, radius, Path.Direction.CCW);
 
 		return polygonPath;
 	}

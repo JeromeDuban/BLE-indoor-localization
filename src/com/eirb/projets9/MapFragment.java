@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,9 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	public void displayData(){
 		try {
 			map = new MapView(mContext, null);
+			
+			handler.post(runnable);
+			
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -91,14 +95,26 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 //		button1.setOnClickListener(this);
 //		button2.setOnClickListener(this);
 //		button3.setOnClickListener(this);
-//		button4.setOnClickListener(this);
+//		button4.setOnClickLristener(this);
 //		button5.setOnClickListener(this);
 //		setOriginalScale.setOnClickListener(this);
 
 
 		mLinearLayoutView.addView(map);
 	}
+	
+	// Recreate the map every X seconds
+	private Handler handler = new Handler();
 
+	private Runnable runnable = new Runnable() {
+	   @Override
+	   public void run() {
+		   System.out.println("Going to invalidate");
+//		   System.out.println("run done");
+		   map.invalidate();
+		   handler.postDelayed(this, 1000);
+	   }
+	};
 
 	@Override
 	public void onClick(View v) {
