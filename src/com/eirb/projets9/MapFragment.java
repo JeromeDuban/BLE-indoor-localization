@@ -79,20 +79,21 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 			e.printStackTrace();
 		}
 
+		// TODO Changed for dev
 		Button button1, button2, button3, button4, button5, setOriginalScale;
-		button1 = (Button) rootView.findViewById(R.id.button1);
-		button2 = (Button) rootView.findViewById(R.id.button2);
-		button3 = (Button) rootView.findViewById(R.id.button3);
-		button4 = (Button) rootView.findViewById(R.id.button4);
-		button5 = (Button) rootView.findViewById(R.id.button5);
-		setOriginalScale = (Button) rootView.findViewById(R.id.setOriginalScaleButton);
+//		button1 = (Button) rootView.findViewById(R.id.button1);
+//		button2 = (Button) rootView.findViewById(R.id.button2);
+//		button3 = (Button) rootView.findViewById(R.id.button3);
+//		button4 = (Button) rootView.findViewById(R.id.button4);
+//		button5 = (Button) rootView.findViewById(R.id.button5);
+//		setOriginalScale = (Button) rootView.findViewById(R.id.setOriginalScaleButton);
 
-		button1.setOnClickListener(this);
-		button2.setOnClickListener(this);
-		button3.setOnClickListener(this);
-		button4.setOnClickListener(this);
-		button5.setOnClickListener(this);
-		setOriginalScale.setOnClickListener(this);
+//		button1.setOnClickListener(this);
+//		button2.setOnClickListener(this);
+//		button3.setOnClickListener(this);
+//		button4.setOnClickListener(this);
+//		button5.setOnClickListener(this);
+//		setOriginalScale.setOnClickListener(this);
 
 
 		mLinearLayoutView.addView(map);
@@ -101,31 +102,33 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.button1:
-			map.setStorey(-1,mContext);
-			break;
-
-		case R.id.button2:
-			map.setStorey(0,mContext);
-			break;
-
-		case R.id.button3:
-			map.setStorey(1,mContext);
-			break;
-
-		case R.id.button4:
-			map.setStorey(2,mContext);
-			break;
-
-		case R.id.button5:
-			map.setStorey(3,mContext);
-			break;
-
-		case R.id.setOriginalScaleButton:
-			map.setOriginalScale();
-			break;
-		}
+//		switch(v.getId()){
+//		
+//		// TODO changed for dev
+//		case R.id.button1:
+//			map.setStorey(-1,mContext);
+//			break;
+//
+//		case R.id.button2:
+//			map.setStorey(0,mContext);
+//			break;
+//
+//		case R.id.button3:
+//			map.setStorey(1,mContext);
+//			break;
+//
+//		case R.id.button4:
+//			map.setStorey(2,mContext);
+//			break;
+//
+//		case R.id.button5:
+//			map.setStorey(3,mContext);
+//			break;
+//
+//		case R.id.setOriginalScaleButton:
+//			map.setOriginalScale();
+//			break;
+//		}
 	}
 
 

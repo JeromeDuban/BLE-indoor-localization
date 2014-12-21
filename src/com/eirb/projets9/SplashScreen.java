@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 public class SplashScreen extends Activity {
 	
 	private Timer timer;
+	private int duration = 0; // Default 0
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class SplashScreen extends Activity {
 				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				finish();
 			}
-		}, 3000);
+		}, duration);
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
