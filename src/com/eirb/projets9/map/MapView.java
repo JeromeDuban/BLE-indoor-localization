@@ -93,6 +93,8 @@ public class MapView extends View {
 	private Paint mGrey = new Paint();
 	private Paint mRed = new Paint();
 	private Paint mGreen = new Paint();
+	private Paint mBlue = new Paint();
+	private Paint mBlueStroke = new Paint();
 	/**
 	 * TouchEvent management variables
 	 */
@@ -154,12 +156,21 @@ public class MapView extends View {
 		mYellow.setColor(Color.rgb(255, 222, 0));
 		mRed.setColor(Color.rgb(255, 0, 0));
 		mGreen.setColor(Color.rgb(0,200,83));
+		mBlue.setColor(Color.rgb(150,150,255));
 		mBlackStroke.setColor(Color.BLACK);
 		mBlackStroke.setStyle(Paint.Style.STROKE);
 		mBlackStroke.setStrokeJoin(Paint.Join.ROUND);
 		mBlackStroke.setStrokeCap(Paint.Cap.ROUND);
 		mBlackStroke.setStrokeWidth(3);
 		mBlackStroke.setDither(true);
+		
+		mBlueStroke.setColor(Color.rgb(150,150,255));
+		mBlueStroke.setStyle(Paint.Style.STROKE);
+		mBlueStroke.setStrokeJoin(Paint.Join.ROUND);
+		mBlueStroke.setStrokeCap(Paint.Cap.ROUND);
+		mBlueStroke.setStrokeWidth(1);
+		mBlueStroke.setDither(true);
+		
 		mGrey.setColor(Color.rgb(200,200,200));
 
 
@@ -211,8 +222,11 @@ public class MapView extends View {
 			}
 			else{
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mYellow);
-				canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mBlackStroke);
+				// Added
+				canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
+				canvas.drawPath(addDot(650,600,15), mBlue);
+				canvas.drawPath(addDot(650,600,20), mBlueStroke);
 			}
 
 
@@ -486,20 +500,27 @@ public class MapView extends View {
 		Point point2 = new Point(600,400); 
 		Point point3 = new Point(600,600); 
 		Point point4 = new Point(400,600); 
-		Point point5 = new Point(300,200); 
 		
 		pointsList.add(point1);
 		pointsList.add(point2);
 		pointsList.add(point3);
 		pointsList.add(point4);
-		pointsList.add(point5);
 		
 		Path polygonPath = new Path();
         polygonPath.moveTo(pointsList.get(0).getX(), pointsList.get(0).getY());
         for (int j = 0; j < pointsList.size(); j++) {
             polygonPath.lineTo(pointsList.get(j).getX(), pointsList.get(j).getY());
         }
-        polygonPath.lineTo(pointsList.get(0).getX(), pointsList.get(0).getY());
+		return polygonPath;
+	}
+	
+	
+public Path addDot(int x, int y, int radius) {
+		
+		        
+		Path polygonPath = new Path();
+                
+		polygonPath.addCircle(x, y, radius, Path.Direction.CCW);
 
 		return polygonPath;
 	}
