@@ -24,6 +24,7 @@ import com.eirb.projets9.map.objects.Point;
 import com.eirb.projets9.map.objects.PolygonRoom;
 import com.eirb.projets9.map.objects.RectangleRoom;
 import com.eirb.projets9.scanner.BeaconRecord;
+import com.eirb.projets9.scanner.ScanRecord;
 
 /**
  * This class correspond to the custom view creating school's map
@@ -241,11 +242,42 @@ public class MapView extends View {
 		double radius = 50;
 		double xOffset = radius*Math.cos(rad);
 		double yOffset = radius*Math.sin(rad);
-
-		canvas.drawPath(addDot(650+xOffset,600+yOffset,15), mBlue);
-		canvas.drawPath(addDot(650+xOffset,600+yOffset,20), mBlueStroke);
-
-
+//		
+//		canvas.drawPath(addDot(650+xOffset,600+yOffset,15), mBlue);
+//		canvas.drawPath(addDot(650+xOffset,600+yOffset,20), mBlueStroke);
+		
+		// Test BEACON 1 
+		canvas.drawPath(addDot(120,660,15), mRed);
+		// Test BEACON 2 
+		canvas.drawPath(addDot(980,660,15), mRed);
+		
+		
+		// Test with 2 beacons
+		int xBeacon1 = 120;
+		int yBeacon1 = 660;
+		int xBeacon2 = 980;
+		int yBeacon2 = 660;
+		
+		ArrayList<Double> distances = new ArrayList<Double>();
+		
+		for (int i = 0; i < ReferenceApplication.records.size() ; i++){
+			ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList();
+			if (list.get(list.size()-1).getTimestamp() == ReferenceApplication.lastTimestamp){
+				distances.add(list.get(list.size()-1).getDistance());
+			}
+		}
+		
+		if (distances.size() >= 2){
+			xOffset = ((xBeacon1 - xBeacon2)*distances.get(0))/(distances.get(0)+distances.get(1));
+			yOffset = ((yBeacon1 - yBeacon2)*distances.get(0))/(distances.get(0)+distances.get(1));
+			System.out.println(distances);
+			System.out.println(distances.get(0)/(distances.get(0)+distances.get(1)));
+			System.out.println("x : " +  Double.toString(xBeacon1-xOffset));
+			System.out.println("y : " +  Double.toString(yBeacon1-yOffset));
+			canvas.drawPath(addDot(xBeacon1-xOffset,yBeacon1-yOffset,15), mBlue);
+			canvas.drawPath(addDot(xBeacon1-xOffset,yBeacon1-yOffset,20), mBlueStroke);	
+		}
+		
 		canvas.restore();
 
 	}
@@ -529,8 +561,8 @@ public class MapView extends View {
 	
 	
 public Path addDot(double x, double y, int radius) {
-		System.out.println((float) x);
-		System.out.println((float) y);
+//		System.out.println((float) x);
+//		System.out.println((float) y);
 		        
 		Path polygonPath = new Path();
                 

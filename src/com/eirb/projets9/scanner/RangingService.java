@@ -27,19 +27,12 @@ import org.json.JSONObject;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.RemoteException;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.eirb.projets9.CallAPI;
 import com.eirb.projets9.ReferenceApplication;
-import com.eirb.projets9.callbacks.AsyncTaskCompleteListener;
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
@@ -79,27 +72,17 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         mBeaconManager.bind(this);
 
-//    	final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor( 1 ); // Number of threads keep in the pool
-//
-//        executor.scheduleAtFixedRate( new Runnable() {
-//
-//            @Override
-//            public void run() {
-//            	Message msg = new Message();
-//            	msg.obj="RUNNING";
-//            	mRedToast.sendMessage(msg);
-//            	System.out.println("RUNNING");
-//            }
-//        }, 1, 3000, TimeUnit.MILLISECONDS );
-//    	
-//        super.onCreate();
     }
     
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         if (beacons.size() > 0) {
+
+        	// We need the same timestamp for all records 
+        	long timestamp = new Date().getTime();
+        	
             for (Beacon beacon: beacons) {           
-            	ScanRecord sr = new ScanRecord(beacon.getDistance(), beacon.getRssi(), new Date().getTime());
+            	ScanRecord sr = new ScanRecord(beacon.getDistance(), beacon.getRssi(), timestamp);
                 BeaconRecord br = new BeaconRecord(beacon.getId1().toString(),beacon.getId2().toString(),beacon.getId3().toString(), sr);
                 
                 if (isNew(br)){ // Add new beacon to list
@@ -116,12 +99,12 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 }
                 else{
                 	addScanRecord(br,sr);
+                	if (ReferenceApplication.displayRecords == true)
+                		System.out.println(br);
+                	ReferenceApplication.lastTimestamp = timestamp;
                 	ReferenceApplication.recordAdded();
                 }
                 	
-                
-//                System.out.println("===DISPLAY LIST===");
-//                System.out.println(records.toString());
                  
             }
         }

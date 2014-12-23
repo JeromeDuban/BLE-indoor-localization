@@ -23,10 +23,19 @@ public class ReferenceApplication extends Application {
 	
 	public static final int TIME_TO_BE_NOTIFIED = 10;
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
+	
+	public static final boolean displayRecords = false;
+	
 	public static ArrayList<BeaconRecord> records;
+	
 	public static NotificationService notificationService;
+	
 	public static String conferenceFile;
 	
+	public static long lastTimestamp = 0;
+	
+	
+	/* FONTS */
 	public static Typeface fontMedium;
 	public static Typeface fontThin;
 	public static Typeface fontLight;

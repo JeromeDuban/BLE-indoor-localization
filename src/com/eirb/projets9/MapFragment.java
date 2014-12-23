@@ -62,6 +62,9 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
+		
+		System.out.println("ON CREATE HANDLER");
+		handler.postDelayed(runnable, 1000);
 				
 		return rootView;
 	}
@@ -71,10 +74,7 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	 */
 	public void displayData(){
 		try {
-			map = new MapView(mContext, null);
-			
-			handler.post(runnable);
-			
+			map = new MapView(mContext, null);			
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -113,8 +113,15 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 //		   System.out.println("run done");
 		   map.invalidate();
 		   handler.postDelayed(this, 1000);
+		   
 	   }
 	};
+	
+	public void onDestroyView() {
+		super.onDestroyView();
+		handler.removeCallbacks(runnable);
+	};
+	
 
 	@Override
 	public void onClick(View v) {

@@ -40,7 +40,7 @@ public class NotificationService extends Service{
     }
        
     public void recordCallback(){
-    	System.out.println("CALLBACK");
+//    	System.out.println("CALLBACK");
 //    	System.out.println(records.toString());
     	for (int i = 0; i < records.size() ; i++ ){
     		BeaconRecord br = records.get(i);
