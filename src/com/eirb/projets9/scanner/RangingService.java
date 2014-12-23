@@ -88,6 +88,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 if (isNew(br)){ // Add new beacon to list
                 	records.add(br);
                 	System.out.println("New Beacon added");
+                	System.out.println(br);
                 	
                 	// Need to create conference.json ?
                 	

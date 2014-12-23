@@ -2,6 +2,7 @@ package com.eirb.projets9.map;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,6 +24,8 @@ import com.eirb.projets9.ReferenceApplication;
 import com.eirb.projets9.map.objects.Point;
 import com.eirb.projets9.map.objects.PolygonRoom;
 import com.eirb.projets9.map.objects.RectangleRoom;
+import com.eirb.projets9.objects.Coordinate;
+import com.eirb.projets9.objects.MapBeacon;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.ScanRecord;
 
@@ -233,51 +236,53 @@ public class MapView extends View {
 		}
 		
 		// Added ( has to be outside the for loop ;) )
-		canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
+//		canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
 		
-		// Test to move dot every second
-		Date date = new Date();
-		double degrees = date.getSeconds()*6d;	// 360 °
-		double rad = Math.toRadians(degrees);
-		double radius = 50;
-		double xOffset = radius*Math.cos(rad);
-		double yOffset = radius*Math.sin(rad);
+		// Test to move dot every second : Works without Bluetooth Low Energy
+//		Date date = new Date();
+//		double degrees = date.getSeconds()*6d;	// 360 °
+//		double rad = Math.toRadians(degrees);
+//		double radius = 50;
+//		double xOffset = radius*Math.cos(rad);
+//		double yOffset = radius*Math.sin(rad);
 //		
 //		canvas.drawPath(addDot(650+xOffset,600+yOffset,15), mBlue);
 //		canvas.drawPath(addDot(650+xOffset,600+yOffset,20), mBlueStroke);
 		
-		// Test BEACON 1 
-		canvas.drawPath(addDot(120,660,15), mRed);
-		// Test BEACON 2 
-		canvas.drawPath(addDot(980,660,15), mRed);
-		
-		
-		// Test with 2 beacons
-		int xBeacon1 = 120;
-		int yBeacon1 = 660;
-		int xBeacon2 = 980;
-		int yBeacon2 = 660;
-		
-		ArrayList<Double> distances = new ArrayList<Double>();
-		
-		for (int i = 0; i < ReferenceApplication.records.size() ; i++){
-			ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList();
-			if (list.get(list.size()-1).getTimestamp() == ReferenceApplication.lastTimestamp){
-				distances.add(list.get(list.size()-1).getDistance());
-			}
+		// Draw beacons on map
+		for (int i = 0 ; i < ReferenceApplication.mapBeacons.size() ; i++){
+			MapBeacon mapBeacon = ReferenceApplication.mapBeacons.get(i);
+			canvas.drawPath(addDot(mapBeacon.getCoordinate().getX(),mapBeacon.getCoordinate().getY(),15), mRed);
 		}
 		
-		if (distances.size() >= 2){
-			xOffset = ((xBeacon1 - xBeacon2)*distances.get(0))/(distances.get(0)+distances.get(1));
-			yOffset = ((yBeacon1 - yBeacon2)*distances.get(0))/(distances.get(0)+distances.get(1));
-			System.out.println(distances);
-			System.out.println(distances.get(0)/(distances.get(0)+distances.get(1)));
-			System.out.println("x : " +  Double.toString(xBeacon1-xOffset));
-			System.out.println("y : " +  Double.toString(yBeacon1-yOffset));
-			canvas.drawPath(addDot(xBeacon1-xOffset,yBeacon1-yOffset,15), mBlue);
-			canvas.drawPath(addDot(xBeacon1-xOffset,yBeacon1-yOffset,20), mBlueStroke);	
-		}
+		// Sort List so the most recent & close beacons are first
+		Collections.sort(ReferenceApplication.records);
 		
+		// TODO Condition needs to be changed : we need two records from the latest timestamp
+		if (ReferenceApplication.records.size() >=2 ){	
+			// Get the two closest beacons
+			BeaconRecord br1 = ReferenceApplication.records.get(0);
+			BeaconRecord br2 = ReferenceApplication.records.get(1);
+			
+			// Get beacon coordinates
+			Coordinate co1 = ReferenceApplication.getCoordinate(br1.getUuid(), br1.getMajor(), br1.getMinor());
+			Coordinate co2 = ReferenceApplication.getCoordinate(br2.getUuid(), br2.getMajor(), br2.getMinor());
+			
+			// Distances
+			double distance1 = br1.getList().get(br1.getList().size()-1).getDistance();
+			double distance2 = br2.getList().get(br2.getList().size()-1).getDistance();
+			System.out.println(distance1);
+			System.out.println(distance2);
+			
+			// Calculate offsets
+			double xOffset = ((co1.getX() - co2.getX())*distance1)/(distance1+distance2);
+			double yOffset = ((co1.getY() - co2.getY())*distance1)/(distance1+distance2);
+			
+			canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,15), mBlue);
+			canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,20), mBlueStroke);
+			
+		}
+				
 		canvas.restore();
 
 	}

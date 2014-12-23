@@ -3,8 +3,8 @@ package com.eirb.projets9.objects;
 public class MapBeacon {
 	
 	private String uuid;
-	private int major;
-	private int minor;
+	private String major;
+	private String minor;
 	private int floorId;
 	private int roomId;
 	private Coordinate coordinate;
@@ -13,7 +13,7 @@ public class MapBeacon {
 		super();
 	}
 	
-	public MapBeacon(String uuid, int major, int minor, int floorId,
+	public MapBeacon(String uuid, String major, String minor, int floorId,
 			int roomId, Coordinate coordinate) {
 		super();
 		this.uuid = uuid;
@@ -32,19 +32,19 @@ public class MapBeacon {
 		this.uuid = uuid;
 	}
 
-	public int getMajor() {
+	public String getMajor() {
 		return major;
 	}
 
-	public void setMajor(int major) {
+	public void setMajor(String major) {
 		this.major = major;
 	}
 
-	public int getMinor() {
+	public String getMinor() {
 		return minor;
 	}
 
-	public void setMinor(int minor) {
+	public void setMinor(String minor) {
 		this.minor = minor;
 	}
 

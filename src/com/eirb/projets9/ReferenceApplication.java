@@ -14,6 +14,8 @@ import android.app.Application;
 import android.graphics.Typeface;
 
 import com.eirb.projets9.objects.Conference;
+import com.eirb.projets9.objects.Coordinate;
+import com.eirb.projets9.objects.MapBeacon;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.NotificationService;
 
@@ -27,6 +29,7 @@ public class ReferenceApplication extends Application {
 	public static final boolean displayRecords = false;
 	
 	public static ArrayList<BeaconRecord> records;
+	public static ArrayList<MapBeacon> mapBeacons;
 	
 	public static NotificationService notificationService;
 	
@@ -46,13 +49,19 @@ public class ReferenceApplication extends Application {
 		super.onCreate();
 		System.out.println("onCreate Application");
 //		mBackgroundPowerSaver = new BackgroundPowerSaver(this);
+		
+		
 		records = new ArrayList<BeaconRecord>();
+		mapBeacons = new ArrayList<MapBeacon>();
 		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
 
 		// Fonts
 		fontMedium = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Md.otf");
 		fontThin = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Th.otf");
 		fontLight = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Lt.otf");
+		
+		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
+		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
 		
 	};	
 	
@@ -158,5 +167,15 @@ public class ReferenceApplication extends Application {
 			   return null;
 		   } 
 	   } 
+	 
+	 public static Coordinate getCoordinate(String uuid, String major, String minor){
+		 for (int i = 0 ; i < mapBeacons.size() ; i++){
+			 MapBeacon mapBeacon = mapBeacons.get(i);
+			 if (mapBeacon.getUuid().equals(uuid) && mapBeacon.getMajor().equals(major) && mapBeacon.getMinor().equals(minor)){
+				 return mapBeacon.getCoordinate();
+			 }
+		 }
+		 return new Coordinate(-1, -1);
+	 }
 	
 }

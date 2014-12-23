@@ -2,7 +2,7 @@ package com.eirb.projets9.scanner;
 
 import java.util.ArrayList;
 
-public class BeaconRecord {
+public class BeaconRecord implements Comparable<BeaconRecord>{
 	
 	private String uuid;
 	private String major;
@@ -140,10 +140,35 @@ public class BeaconRecord {
 		return true;
 	}
 
-
+	
+	
 	@Override
 	public String toString() {
 		return "BeaconRecord [uuid=" + uuid + ", major=" + major + ", minor="
 				+ minor + ", list=" + list + "]";
+	}
+
+
+	@Override
+	public int compareTo(BeaconRecord another) {
+		final int BEFORE = -1;
+	    final int EQUAL = 0;
+	    final int AFTER = 1;
+		
+		if (list.get(list.size()-1).getTimestamp() > another.getList().get(another.getList().size()-1).getTimestamp()){
+			return BEFORE;
+		}
+		else if (list.get(list.size()-1).getTimestamp() == another.getList().get(another.getList().size()-1).getTimestamp()){
+			
+			if(list.get(list.size()-1).getDistance() <= another.getList().get(another.getList().size()-1).getDistance()){
+				return BEFORE;
+			}
+			else{
+				return AFTER;
+			}
+		}
+		else{
+			return AFTER;
+		}
 	}
 }
