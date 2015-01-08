@@ -3,7 +3,6 @@ package com.eirb.projets9.map;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -248,6 +247,15 @@ public class MapView extends View {
 		// Sort List so the most recent & close beacons are first
 		Collections.sort(ReferenceApplication.records);
 		
+		// DEBUG : displays last record for each beacon
+		for (int i = 0 ; i < ReferenceApplication.records.size(); i++){
+			BeaconRecord b = ReferenceApplication.records.get(i);
+			ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList();
+			System.out.println("================");
+			System.out.println(b.getUuid()+":"+b.getMajor()+":"+b.getMinor());
+			System.out.println(list.get(list.size()-1));
+		}
+		
 		// TODO Condition needs to be changed : we need two records from the latest timestamp 
 		if (ReferenceApplication.records.size() >=2 ){	
 			// Get the two closest beacons
@@ -272,8 +280,11 @@ public class MapView extends View {
 				double xOffset = ((co1.getX() - co2.getX())*distance1)/(distance1+distance2);
 				double yOffset = ((co1.getY() - co2.getY())*distance1)/(distance1+distance2);
 				
-				canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,15), mBlue);
-				canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,20), mBlueStroke);
+				ReferenceApplication.lastX = co1.getX()-xOffset;
+				ReferenceApplication.lastY = co1.getY()-yOffset;
+				
+				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,15), mBlue);
+				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,20), mBlueStroke);
 				
 			}
 			

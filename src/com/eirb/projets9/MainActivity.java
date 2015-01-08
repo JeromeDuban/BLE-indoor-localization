@@ -64,7 +64,7 @@ public class MainActivity extends Activity{
 		conferenceFile = ReferenceApplication.conferenceFile;
 		
 		startService(new Intent(this, RangingService.class));
-		startService(new Intent(this, NotificationService.class));
+//		startService(new Intent(this, NotificationService.class));
 		
 		/* Start Fading animation */
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

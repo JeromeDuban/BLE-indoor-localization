@@ -1,11 +1,7 @@
 package com.eirb.projets9;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -23,19 +19,32 @@ public class ReferenceApplication extends Application {
 
 //	public BackgroundPowerSaver mBackgroundPowerSaver;	// Seems to kill the background service if the screen is off
 	
+	
+	/* VARIABLES */
+	
+	// Time before being notified
 	public static final int TIME_TO_BE_NOTIFIED = 10;
+	// Maximum distance to be notified
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	
+	// Display records in logcat ?
 	public static final boolean displayRecords = false;
 	
+	// Beacons records
 	public static ArrayList<BeaconRecord> records;
 	public static ArrayList<MapBeacon> mapBeacons;
 	
+	
+	// Notification service, used for callbacks
 	public static NotificationService notificationService;
 	
+	// Conference File Path
 	public static String conferenceFile;
 	
 	public static long lastTimestamp = 0;
+	
+	public static double lastX;
+	public static double lastY;
 	
 	
 	/* FONTS */
@@ -63,6 +72,7 @@ public class ReferenceApplication extends Application {
 		// TODO : To be removed
 		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
 		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
+		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","42",-1,-1,new Coordinate(980, 1300)));
 		
 	};	
 	
@@ -72,7 +82,7 @@ public class ReferenceApplication extends Application {
 	}
 	/* Record callback */
 	public static void recordAdded(){
-		notificationService.recordCallback();
+//		notificationService.recordCallback();
 	}
 		
 	/* Save conference object to file */
