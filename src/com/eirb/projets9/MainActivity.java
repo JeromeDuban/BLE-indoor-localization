@@ -66,15 +66,25 @@ public class MainActivity extends Activity{
 		startService(new Intent(this, RangingService.class));
 		startService(new Intent(this, NotificationService.class));
 		
-		// Start animation
+		/* Start Fading animation */
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		
-		// Connectivity test
+		/* 
+		 * CONNECTIVITY TESTS :
+		 * Internet
+		 * Bluetooth
+		 * BLE
+		 * */
+		
+		/* Is the internet connnection available ? */
+		
 		if(!isOnline()){
 			Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_LONG).show();
 		}
 		
-		// TEST BLUETOOTH
+		/* Is the bluetooth enabled ? 
+		 * If not, opens a popup to enable bluetooth */
+		
 		 BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
 	     mBluetoothAdapter = manager.getAdapter();
 	     if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
@@ -82,7 +92,8 @@ public class MainActivity extends Activity{
 	         startActivityForResult(enableBtIntent, 0);
 	     }
 		
-		// BLE TEST
+		/* Is the BLE available on the device ? */
+	     
 		switch (getBleStatus(this)) {
 		case STATUS_BLE_NOT_AVAILABLE:
 			Toast.makeText(this, "Bluetooth Low Energy is required but not available on your device", Toast.LENGTH_LONG).show();
@@ -94,7 +105,8 @@ public class MainActivity extends Activity{
 			break;
 		}
 		
-
+		/* SLIDING MENU */
+		
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -154,14 +166,10 @@ public class MainActivity extends Activity{
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		/* Get json file without scanning beacons*/
-		
-		
 		
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(1); // TODO changed for the development
+			displayView(1); // TODO changed for the development ( displays the map instead of home)
 		}
 	}
 

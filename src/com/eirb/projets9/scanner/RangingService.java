@@ -95,7 +95,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 	File file = new File(ReferenceApplication.conferenceFile);
             		if (!file.exists()) {
             			System.out.println("Download started");
-            			download("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json", beacon.getId2().toInt());
+            			downloadConference("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json", beacon.getId2().toInt());
             		}
                 }
                 else{
@@ -172,7 +172,9 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 	    return true;
 	}
 	
-	public void download(String url, int major){
+	/* Download conference data from a server according to its major */
+	
+	public void downloadConference(String url, int major){
 		if (isOnline()) {
 			StringBuilder response = new StringBuilder();
 			
@@ -213,7 +215,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 				try {
 					JSONObject obj = new JSONObject(json);
 					JSONArray conferences = obj.getJSONArray("Conference");
-
+					
+					// Parse conference
 					for (int i = 0; i < conferences.length(); i++) {
 
 						JSONObject conf = conferences.getJSONObject(i);
@@ -235,6 +238,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 									.getString("updated_at")));
 
 							JSONArray tracks = conf.getJSONArray("tracks");
+							
+							// Parse tracks
 							for (int j = 0; j < tracks.length(); j++) {
 								trackList = new ArrayList<Track>();
 
@@ -246,6 +251,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
 								JSONArray sessions = tra
 										.getJSONArray("sessions");
+								
+								// Parse sessions
 								for (int k = 0; k < sessions.length(); k++) {
 									sessionList = new ArrayList<Session>();
 
@@ -259,6 +266,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 											.getString("end_ts")));
 
 									JSONArray talks = ses.getJSONArray("talks");
+									
+									// Parse talks
 									for (int l = 0; l < talks.length(); l++) {
 										talkList = new ArrayList<Talk>();
 
@@ -283,9 +292,10 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
 						// System.out.println(conference);
 					}
+					// Save conference object to file
 					if(confToSave != null){
 						System.out.println(confToSave);
-						ReferenceApplication.serializeConf(confToSave);
+						ReferenceApplication.serializeConference(confToSave);
 					}
 					else
 						System.out.println("confToSave == null");

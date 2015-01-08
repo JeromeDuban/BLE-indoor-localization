@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 	};
 	
 	private void updateView() {
-		Conference conf = ReferenceApplication.deserializeAddress();
+		Conference conf = ReferenceApplication.deserializeConference();
 		if (conf !=null)
 			title.setText(conf.getTitle());
 		

@@ -145,7 +145,7 @@ public class MapView extends View {
 		//saves the content to be able to zoom and translate
 		canvas.save();
 		
-		System.out.println("ON DRAW");
+		System.out.println("MapView : ON DRAW");
 		contour = MapModel.getContour();
 
 		mCalculatedScale = Math.min((float)canvas.getWidth()/(float)svgWidth, (float)canvas.getHeight()/(float)svgHeight);
@@ -235,19 +235,9 @@ public class MapView extends View {
 
 		}
 		
-		// Added ( has to be outside the for loop ;) )
-//		canvas.drawPath(triangulation(ReferenceApplication.records), mGreen);
-		
-		// Test to move dot every second : Works without Bluetooth Low Energy
-//		Date date = new Date();
-//		double degrees = date.getSeconds()*6d;	// 360 °
-//		double rad = Math.toRadians(degrees);
-//		double radius = 50;
-//		double xOffset = radius*Math.cos(rad);
-//		double yOffset = radius*Math.sin(rad);
-//		
-//		canvas.drawPath(addDot(650+xOffset,600+yOffset,15), mBlue);
-//		canvas.drawPath(addDot(650+xOffset,600+yOffset,20), mBlueStroke);
+		/* 
+		 * USER LOCATION MANAGEMENT 
+		 * */
 		
 		// Draw beacons on map
 		for (int i = 0 ; i < ReferenceApplication.mapBeacons.size() ; i++){
@@ -258,7 +248,7 @@ public class MapView extends View {
 		// Sort List so the most recent & close beacons are first
 		Collections.sort(ReferenceApplication.records);
 		
-		// TODO Condition needs to be changed : we need two records from the latest timestamp
+		// TODO Condition needs to be changed : we need two records from the latest timestamp 
 		if (ReferenceApplication.records.size() >=2 ){	
 			// Get the two closest beacons
 			BeaconRecord br1 = ReferenceApplication.records.get(0);
@@ -268,18 +258,24 @@ public class MapView extends View {
 			Coordinate co1 = ReferenceApplication.getCoordinate(br1.getUuid(), br1.getMajor(), br1.getMinor());
 			Coordinate co2 = ReferenceApplication.getCoordinate(br2.getUuid(), br2.getMajor(), br2.getMinor());
 			
-			// Distances
-			double distance1 = br1.getList().get(br1.getList().size()-1).getDistance();
-			double distance2 = br2.getList().get(br2.getList().size()-1).getDistance();
-			System.out.println(distance1);
-			System.out.println(distance2);
-			
-			// Calculate offsets
-			double xOffset = ((co1.getX() - co2.getX())*distance1)/(distance1+distance2);
-			double yOffset = ((co1.getY() - co2.getY())*distance1)/(distance1+distance2);
-			
-			canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,15), mBlue);
-			canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,20), mBlueStroke);
+			// Check that the beacon is known
+			if (co1.getX() != -1 && co1.getY() != -1 && co2.getX() != -1 && co2.getY() != -1){
+				
+				// Distances
+				double distance1 = br1.getList().get(br1.getList().size()-1).getDistance();
+				double distance2 = br2.getList().get(br2.getList().size()-1).getDistance();
+				
+				System.out.println(distance1);
+				System.out.println(distance2);
+				
+				// Calculate offsets
+				double xOffset = ((co1.getX() - co2.getX())*distance1)/(distance1+distance2);
+				double yOffset = ((co1.getY() - co2.getY())*distance1)/(distance1+distance2);
+				
+				canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,15), mBlue);
+				canvas.drawPath(addDot(co1.getX()-xOffset,co1.getY()-yOffset,20), mBlueStroke);
+				
+			}
 			
 		}
 				

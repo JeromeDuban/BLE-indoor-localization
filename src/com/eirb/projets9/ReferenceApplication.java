@@ -60,82 +60,23 @@ public class ReferenceApplication extends Application {
 		fontThin = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Th.otf");
 		fontLight = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Lt.otf");
 		
+		// TODO : To be removed
 		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
 		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
 		
 	};	
 	
+	/* Notification callback */
 	public static void setNotificationService(NotificationService service){
 		notificationService = service;
 	}
-	
+	/* Record callback */
 	public static void recordAdded(){
 		notificationService.recordCallback();
 	}
-	
-	public static void writeToFile(String content, String path) {
-		 
-		FileOutputStream fop = null;
-		File file;
- 
-		try {
- 
-			file = new File(path);
-			fop = new FileOutputStream(file);
- 
-			// if file doesn't exists, then create it
-			if (!file.exists()) {
-				file.createNewFile();
-			}
- 
-			// get the content in bytes
-			byte[] contentInBytes = content.getBytes();
- 
-			fop.write(contentInBytes);
-			fop.flush();
-			fop.close();
- 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (fop != null) {
-					fop.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public static String readFromFile(String path) {
-		 
-		BufferedReader br = null;
-		String file = "";
- 
-		try {
- 
-			String sCurrentLine;
- 
-			br = new BufferedReader(new FileReader(path));
- 
-			while ((sCurrentLine = br.readLine()) != null) {
-				file = file.concat(sCurrentLine);
-			}
- 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		return file;
-	}
-	
-	public static void serializeConf(Conference conf){
+		
+	/* Save conference object to file */
+	public static void serializeConference(Conference conf){
 		 
 	   try{
  
@@ -150,7 +91,8 @@ public class ReferenceApplication extends Application {
 	   }
 	}
 	
-	 public static Conference deserializeAddress(){
+	/* Creates Conference object from file */
+	 public static Conference deserializeConference(){
 		 
 		   Conference conf; 
 		   try{
@@ -168,6 +110,7 @@ public class ReferenceApplication extends Application {
 		   } 
 	   } 
 	 
+	 /* Get Coordinates of a beacon for a given uuid - major - minor */
 	 public static Coordinate getCoordinate(String uuid, String major, String minor){
 		 for (int i = 0 ; i < mapBeacons.size() ; i++){
 			 MapBeacon mapBeacon = mapBeacons.get(i);
@@ -177,5 +120,71 @@ public class ReferenceApplication extends Application {
 		 }
 		 return new Coordinate(-1, -1);
 	 }
+	 
+	 /* ------ OLD METHODS ---------- */
+	 
+//		public static void writeToFile(String content, String path) {
+//	 
+//	FileOutputStream fop = null;
+//	File file;
+//
+//	try {
+//
+//		file = new File(path);
+//		fop = new FileOutputStream(file);
+//
+//		// if file doesn't exists, then create it
+//		if (!file.exists()) {
+//			file.createNewFile();
+//		}
+//
+//		// get the content in bytes
+//		byte[] contentInBytes = content.getBytes();
+//
+//		fop.write(contentInBytes);
+//		fop.flush();
+//		fop.close();
+//
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	} finally {
+//		try {
+//			if (fop != null) {
+//				fop.close();
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//}
+
+//public static String readFromFile(String path) {
+//	 
+//	BufferedReader br = null;
+//	String file = "";
+//
+//	try {
+//
+//		String sCurrentLine;
+//
+//		br = new BufferedReader(new FileReader(path));
+//
+//		while ((sCurrentLine = br.readLine()) != null) {
+//			file = file.concat(sCurrentLine);
+//		}
+//
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	} finally {
+//		try {
+//			if (br != null)br.close();
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//		}
+//	}
+//	return file;
+//}
+	 
+	 
 	
 }

@@ -83,7 +83,7 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 			e.printStackTrace();
 		}
 
-		// TODO Changed for dev
+		// TODO Changed for dev (floor levels)
 		Button button1, button2, button3, button4, button5, setOriginalScale;
 //		button1 = (Button) rootView.findViewById(R.id.button1);
 //		button2 = (Button) rootView.findViewById(R.id.button2);
@@ -103,14 +103,14 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 		mLinearLayoutView.addView(map);
 	}
 	
-	// Recreate the map every X seconds
+	/* Refresh the map every second to display the new position of the user */
+	
 	private Handler handler = new Handler();
 
 	private Runnable runnable = new Runnable() {
 	   @Override
 	   public void run() {
-		   System.out.println("Going to invalidate");
-//		   System.out.println("run done");
+		   System.out.println("MapFragment : Going to invalidate");
 		   map.invalidate();
 		   handler.postDelayed(this, 1000);
 		   
