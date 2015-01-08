@@ -43,8 +43,8 @@ public class ReferenceApplication extends Application {
 	
 	public static long lastTimestamp = 0;
 	
-	public static double lastX;
-	public static double lastY;
+	public static double lastX = -1;
+	public static double lastY = -1;
 	
 	
 	/* FONTS */
@@ -129,6 +129,18 @@ public class ReferenceApplication extends Application {
 			 }
 		 }
 		 return new Coordinate(-1, -1);
+	 }
+	 
+	 public static boolean isInMapBeacon(BeaconRecord br){
+		 for (int i = 0; i < mapBeacons.size() ; i++){
+			 MapBeacon mb = mapBeacons.get(i);
+			 if (br.getUuid().equals(mb.getUuid()))
+				 if(br.getMajor().equals(mb.getMajor()))
+					 if(br.getMinor().equals(mb.getMinor()))
+						 return true;
+		 }
+		 
+		 return false;
 	 }
 	 
 	 /* ------ OLD METHODS ---------- */

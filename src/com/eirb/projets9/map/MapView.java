@@ -248,23 +248,33 @@ public class MapView extends View {
 		Collections.sort(ReferenceApplication.records);
 		
 		// DEBUG : displays last record for each beacon
-		for (int i = 0 ; i < ReferenceApplication.records.size(); i++){
+		/*for (int i = 0 ; i < ReferenceApplication.records.size(); i++){
 			BeaconRecord b = ReferenceApplication.records.get(i);
 			ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList();
+			
 			System.out.println("================");
 			System.out.println(b.getUuid()+":"+b.getMajor()+":"+b.getMinor());
 			System.out.println(list.get(list.size()-1));
-		}
+			
+		}*/
 		
-		// TODO Condition needs to be changed : we need two records from the latest timestamp 
+		
 		if (ReferenceApplication.records.size() >=2 ){	
-			// Get the two closest beacons
+			/*
+			// Get the two closest beacons TODO we need two beacons from the list
+			
 			BeaconRecord br1 = ReferenceApplication.records.get(0);
 			BeaconRecord br2 = ReferenceApplication.records.get(1);
+			
+//			System.out.println("MV : "+ ReferenceApplication.isInMapBeacon(br1));
+//			System.out.println("MV : "+ ReferenceApplication.isInMapBeacon(br2));
 			
 			// Get beacon coordinates
 			Coordinate co1 = ReferenceApplication.getCoordinate(br1.getUuid(), br1.getMajor(), br1.getMinor());
 			Coordinate co2 = ReferenceApplication.getCoordinate(br2.getUuid(), br2.getMajor(), br2.getMinor());
+			
+			System.out.println(ReferenceApplication.lastTimestamp);
+			
 			
 			// Check that the beacon is known
 			if (co1.getX() != -1 && co1.getY() != -1 && co2.getX() != -1 && co2.getY() != -1){
@@ -287,6 +297,52 @@ public class MapView extends View {
 				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,20), mBlueStroke);
 				
 			}
+			else if (ReferenceApplication.lastX != -1 && ReferenceApplication.lastY != -1){
+				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,15), mBlue);
+				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,20), mBlueStroke);
+			}
+			
+			*/
+			
+			/* BARYCENTRE */
+			
+			ArrayList<BeaconRecord> brList = new ArrayList<BeaconRecord>(); 
+			
+			// Get beacons from last scan
+			for (int i = 0;i < ReferenceApplication.records.size(); i++){
+				ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList(); 
+				if( list.get(list.size()-1).getTimestamp() == ReferenceApplication.lastTimestamp){
+					brList.add(ReferenceApplication.records.get(i));
+				}
+				else{
+					break;
+				}
+			}
+			
+			double x = 0;
+			double y = 0;
+			double sum = 0;
+			
+			for (int i=0; i<brList.size() ; i++){
+				BeaconRecord br = brList.get(i);
+				if (ReferenceApplication.isInMapBeacon(br)){
+					ArrayList<ScanRecord> list = br.getList();
+					double distance = list.get(list.size()-1).getDistance();
+					
+					Coordinate c = ReferenceApplication.getCoordinate(br.getUuid(), br.getMajor(), br.getMinor());
+					
+					x += (1/distance)*c.getX();
+					y += (1/distance)*c.getY();
+					sum += (1/distance);
+				}
+			}
+			
+			x = x / sum;
+			y = y / sum;
+			
+			canvas.drawPath(addDot(x,y,15), mBlue);
+			canvas.drawPath(addDot(x,y,20), mBlueStroke);
+			
 			
 		}
 				
