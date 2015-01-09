@@ -63,7 +63,7 @@ public class MainActivity extends Activity{
 		
 		conferenceFile = ReferenceApplication.conferenceFile;
 		
-		startService(new Intent(this, RangingService.class));
+//		startService(new Intent(this, RangingService.class));
 //		startService(new Intent(this, NotificationService.class));
 		
 		/* Start Fading animation */
@@ -169,7 +169,7 @@ public class MainActivity extends Activity{
 		
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(1); // TODO changed for the development ( displays the map instead of home)
+			displayView(3); // TODO changed for the development ( displays the map instead of home)
 		}
 	}
 
@@ -346,8 +346,6 @@ public class MainActivity extends Activity{
 			Toast.makeText(this, "Delete done", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
-		}
-		
-		
+		}	
     }
 }

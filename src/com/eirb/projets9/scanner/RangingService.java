@@ -95,7 +95,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 	File file = new File(ReferenceApplication.conferenceFile);
             		if (!file.exists()) {
             			System.out.println("Download started");
-            			downloadConference("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json", beacon.getId2().toInt());
+            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
             		}
                 }
                 else{
@@ -214,12 +214,14 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
 				try {
 					JSONObject obj = new JSONObject(json);
-					JSONArray conferences = obj.getJSONArray("Conference");
-					
-					// Parse conference
-					for (int i = 0; i < conferences.length(); i++) {
-
-						JSONObject conf = conferences.getJSONObject(i);
+//					JSONArray conferences = obj.getJSONArray("Conference");
+//					
+//					// Parse conference
+//					for (int i = 0; i < conferences.length(); i++) {
+//
+//						JSONObject conf = conferences.getJSONObject(i);
+						JSONObject conf = obj;
+						
 						System.out.println(conf.getString("major") +":"+ Integer.toString(major));
 						
 						if (Integer.parseInt(conf.getString("major")) == major) {
@@ -240,8 +242,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 							JSONArray tracks = conf.getJSONArray("tracks");
 							
 							// Parse tracks
+							trackList = new ArrayList<Track>();
 							for (int j = 0; j < tracks.length(); j++) {
-								trackList = new ArrayList<Track>();
 
 								JSONObject tra = tracks.getJSONObject(j);
 								Track track = new Track();
@@ -253,28 +255,31 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 										.getJSONArray("sessions");
 								
 								// Parse sessions
+								sessionList = new ArrayList<Session>();
 								for (int k = 0; k < sessions.length(); k++) {
-									sessionList = new ArrayList<Session>();
 
 									JSONObject ses = sessions.getJSONObject(k);
 									Session session = new Session();
-									session.setId(Integer.parseInt(ses
-											.getString("id")));
-									session.setStartTs(Long.parseLong(ses
-											.getString("start_ts")));
-									session.setStartTs(Long.parseLong(ses
-											.getString("end_ts")));
+									session.setId(Integer.parseInt(ses.getString("id")));
+									session.setStartTs(Long.parseLong(ses.getString("start_ts")));
+									session.setStartTs(Long.parseLong(ses.getString("end_ts")));
+									session.setRoom_id(Integer.parseInt(ses.getString("room_id")));
 
 									JSONArray talks = ses.getJSONArray("talks");
 									
 									// Parse talks
+									talkList = new ArrayList<Talk>();
 									for (int l = 0; l < talks.length(); l++) {
-										talkList = new ArrayList<Talk>();
 
 										JSONObject tal = talks.getJSONObject(l);
 										Talk talk = new Talk();
-										talk.setId(Integer.parseInt(tal
-												.getString("id")));
+										talk.setId(Integer.parseInt(tal.getString("id")));
+										talk.setTitle(tal.getString("title"));
+										talk.setStartTs(Long.parseLong(tal.getString("start_ts")));
+										talk.setEndTs(Long.parseLong(tal.getString("end_ts")));
+										talk.setSpeaker(tal.getString("speaker"));
+										talk.setConfAbstract(tal.getString("abstract"));
+										talk.setBody(tal.getString("abstract"));
 
 										talkList.add(talk);
 									}
@@ -290,8 +295,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 							confToSave = conference;
 						}
 
-						// System.out.println(conference);
-					}
+//					}
 					// Save conference object to file
 					if(confToSave != null){
 						System.out.println(confToSave);

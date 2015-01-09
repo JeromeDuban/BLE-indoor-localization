@@ -70,9 +70,15 @@ public class ReferenceApplication extends Application {
 		fontLight = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Lt.otf");
 		
 		// TODO : To be removed
-		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
-		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
-		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","42",-1,-1,new Coordinate(980, 1300)));
+//		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
+//		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
+//		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","42",-1,-1,new Coordinate(980, 1300)));
+		
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","238",-1,-1,new Coordinate(120, 660)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","232",-1,-1,new Coordinate(980, 660)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","42",-1,-1,new Coordinate(980, 1300)));
+		
+		
 		
 	};	
 	
