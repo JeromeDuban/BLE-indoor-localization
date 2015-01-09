@@ -23,13 +23,14 @@ public class NotificationsFragment extends Fragment {
  
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         
-        LinearLayout listNotif= (LinearLayout) rootView.findViewById(R.id.listNotif);
+        listNotif= (LinearLayout) rootView.findViewById(R.id.listNotif);
+        
         for (int i = 0; i < MAX_NOTIF; i++) {
         	 
             System.out.println("SIZE>" + i);
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.notifications_list,listNotif, false);
+            View view = inflater.inflate(R.layout.notification_element,listNotif, false);
             
             // set Title
             TextView title = (TextView) view.findViewById(R.id.titleNotif);

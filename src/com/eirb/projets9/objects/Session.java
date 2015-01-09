@@ -12,20 +12,21 @@ public class Session implements Serializable{
 	private int id;
 	private long startTs;
 	private long endTs;
+	private int room_id;
 	private ArrayList<Talk> list;
 	
-	public Session(int id, long startTs, long endTs, ArrayList<Talk> list) {
+	public Session(int id, long startTs, long endTs, int room_id,
+			ArrayList<Talk> list) {
 		super();
-		this.list = new ArrayList<Talk>();
 		this.id = id;
 		this.startTs = startTs;
 		this.endTs = endTs;
+		this.room_id = room_id;
 		this.list = list;
 	}
 	
 	public Session() {
 		super();
-		this.list = new ArrayList<Talk>();
 	}
 
 	public int getId() {
@@ -52,6 +53,14 @@ public class Session implements Serializable{
 		this.endTs = endTs;
 	}
 
+	public int getRoom_id() {
+		return room_id;
+	}
+
+	public void setRoom_id(int room_id) {
+		this.room_id = room_id;
+	}
+
 	public ArrayList<Talk> getList() {
 		return list;
 	}
@@ -60,11 +69,17 @@ public class Session implements Serializable{
 		this.list = list;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Session [id=" + id + ", startTs=" + startTs + ", endTs="
-				+ endTs + ", list=" + list + "]";
+				+ endTs + ", room_id=" + room_id + ", list=" + list + "]";
 	}
+	
+	
 	
 	
 	

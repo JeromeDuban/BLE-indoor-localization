@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
 			   title.setText("There is no conference");
 		   }
 //		   System.out.println("run done");
-		   handler.postDelayed(this, 1000);
+           handler.postDelayed(this, 1000);
 	   }
 	};
 	

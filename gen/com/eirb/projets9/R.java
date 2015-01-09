@@ -21,7 +21,7 @@ public final class R {
         /**  Nav Drawer Menu Items 
          */
         public static final int nav_drawer_items=0x7f090000;
-        /**  Map page 
+        /**  Map page  
          */
         public static final int rooms_array=0x7f090002;
     }
@@ -69,28 +69,23 @@ public final class R {
         public static final int list_selector=0x7f020013;
     }
     public static final class id {
-        public static final int Content=0x7f0c0010;
-        public static final int action_delete=0x7f0c0017;
-        public static final int button=0x7f0c000e;
+        public static final int action_delete=0x7f0c0012;
+        public static final int button=0x7f0c000f;
         public static final int counter=0x7f0c0006;
         public static final int drawer_layout=0x7f0c0000;
         public static final int frame_container=0x7f0c0001;
         public static final int icon=0x7f0c0004;
-        public static final int imageView1=0x7f0c0011;
-        public static final int imageView2=0x7f0c0015;
-        public static final int img=0x7f0c0016;
+        public static final int img=0x7f0c0011;
         public static final int listNotif=0x7f0c000c;
+        public static final int listSchedule=0x7f0c000d;
         public static final int list_slidermenu=0x7f0c0002;
-        public static final int logs=0x7f0c000f;
+        public static final int logs=0x7f0c0010;
         public static final int map_linear_layout=0x7f0c0008;
         public static final int premier=0x7f0c0003;
-        public static final int roomNotif=0x7f0c0013;
         public static final int rooms_spinner=0x7f0c0009;
         public static final int setOriginalScaleButton=0x7f0c000b;
-        public static final int status=0x7f0c000d;
-        public static final int timeNotif=0x7f0c0014;
+        public static final int status=0x7f0c000e;
         public static final int title=0x7f0c0005;
-        public static final int titleNotif=0x7f0c0012;
         public static final int title_research_bar=0x7f0c000a;
         public static final int txtLabel=0x7f0c0007;
     }
@@ -103,9 +98,8 @@ public final class R {
         public static final int fragment_notifications=0x7f030005;
         public static final int fragment_planning=0x7f030006;
         public static final int fragment_scan=0x7f030007;
-        public static final int notifications_list=0x7f030008;
-        public static final int spinner_list_item=0x7f030009;
-        public static final int splashscreen=0x7f03000a;
+        public static final int spinner_list_item=0x7f030008;
+        public static final int splashscreen=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
