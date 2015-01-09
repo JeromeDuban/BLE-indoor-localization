@@ -34,6 +34,7 @@ import android.os.RemoteException;
 
 import com.eirb.projets9.ReferenceApplication;
 import com.eirb.projets9.objects.Conference;
+import com.eirb.projets9.objects.Room;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
@@ -74,7 +75,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
     }
     
-    @Override
+    @SuppressWarnings({ "unused", "unused" })
+	@Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         if (beacons.size() > 0) {
 
@@ -96,6 +98,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
             		if (!file.exists()) {
             			System.out.println("Download started");
             			downloadConference("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json", beacon.getId2().toInt());
+            			//downloadBuildingParameter("https://dl.dropboxusercontent.com/u/95538366/projetS9/building.json",beacon.getId2().toInt());
             		}
                 }
                 else{
@@ -155,6 +158,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 	private Conference confToSave;
 	private ArrayList<Track> trackList;
 	private ArrayList<Session> sessionList;
+	private ArrayList<Room> roomList;
 	private ArrayList<Talk> talkList;
 		
 	public boolean isJSONValid(String test) {
@@ -280,6 +284,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 									}
 									session.setList(talkList);
 									sessionList.add(session);
+									
 								}
 
 								track.setList(sessionList);
@@ -307,9 +312,161 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 //
 //				// ReferenceApplication.writeToFile(result,
 //				// ReferenceApplication.conferenceFile);
-				
-				
+					
+			}
+		} else {
+			System.out.println("Not online");
+		}
+		
+	}
+	
+	public void downloadBuildingParameter(String url, int major){
+		if (isOnline()) {
+			StringBuilder response = new StringBuilder();
 			
+			// GET file from server
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse execute;
+			InputStream content;
+			try {
+				execute = client.execute(httpGet);
+				content = execute.getEntity().getContent();
+				BufferedReader buffer = new BufferedReader(
+						new InputStreamReader(content));
+				String s = "";
+				while ((s = buffer.readLine()) != null) {
+					response.append(s);
+					response.append("\n");
+				}
+			} catch (ClientProtocolException e) {
+				System.out.println(e);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			//Check answer
+			System.out.println(response.toString());
+			
+			// Parse json
+			if (!response.toString().equals("")) {
+				System.out.println("Writing conference file");
+
+				String json = response.toString();
+				
+				System.out.println("Valid json : " + isJSONValid(json));
+
+				confToSave = null;
+
+				try {
+					JSONObject obj = new JSONObject(json);
+					JSONArray conferences = obj.getJSONArray("Conference");
+					
+					// Parse conference
+					for (int i = 0; i < conferences.length(); i++) {
+
+						JSONObject conf = conferences.getJSONObject(i);
+						System.out.println(conf.getString("major") +":"+ Integer.toString(major));
+						
+						if (Integer.parseInt(conf.getString("major")) == major) {
+							Conference conference = new Conference();
+
+							conference.setId(Integer.parseInt(conf
+									.getString("id")));
+							conference.setAddress(conf.getString("address"));
+							conference.setTitle(conf.getString("title"));
+							conference.setStartDay(conf.getString("start_day"));
+							conference.setEndDay(conf.getString("end_day"));
+							conference.setMajor(conf.getString("major"));
+							conference.setCreatedAt(Long.parseLong(conf
+									.getString("created_at")));
+							conference.setUpdatedAt(Long.parseLong(conf
+									.getString("updated_at")));
+
+							JSONArray tracks = conf.getJSONArray("tracks");
+							
+							// Parse tracks
+							for (int j = 0; j < tracks.length(); j++) {
+								trackList = new ArrayList<Track>();
+
+								JSONObject tra = tracks.getJSONObject(j);
+								Track track = new Track();
+								track.setId(Integer.parseInt(tra
+										.getString("id")));
+								track.setTitle(tra.getString("title"));
+
+								JSONArray sessions = tra
+										.getJSONArray("sessions");
+								
+								// Parse sessions
+								for (int k = 0; k < sessions.length(); k++) {
+									sessionList = new ArrayList<Session>();
+
+									JSONObject ses = sessions.getJSONObject(k);
+									Session session = new Session();
+									session.setId(Integer.parseInt(ses
+											.getString("id")));
+									session.setStartTs(Long.parseLong(ses
+											.getString("start_ts")));
+									session.setStartTs(Long.parseLong(ses
+											.getString("end_ts")));
+
+									JSONArray talks = ses.getJSONArray("talks");
+									
+									// Parse talks
+									for (int l = 0; l < talks.length(); l++) {
+										talkList = new ArrayList<Talk>();
+
+										JSONObject tal = talks.getJSONObject(l);
+										Talk talk = new Talk();
+										talk.setId(Integer.parseInt(tal
+												.getString("id")));
+
+										talkList.add(talk);
+									}
+									session.setList(talkList);
+									sessionList.add(session);
+									
+									JSONArray rooms = ses.getJSONArray("rooms");
+									
+									// Parse rooms (added SNS)
+										for (int m = 0; m < rooms.length(); m++){
+											roomList = new ArrayList<Room>();
+											JSONObject roo = rooms.getJSONObject(m);
+											Room room = new Room();
+											room.setId(Integer.parseInt(roo
+													.getString("id")));
+											
+											roomList.add(room);		
+										}	
+								}
+
+								track.setList(sessionList);
+								trackList.add(track);
+
+							}
+							conference.setList(trackList);
+							confToSave = conference;
+						}
+
+						// System.out.println(conference);
+					}
+					// Save conference object to file
+					if(confToSave != null){
+						System.out.println(confToSave);
+						ReferenceApplication.serializeConference(confToSave);
+					}
+					else
+						System.out.println("confToSave == null");
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//
+//				// ReferenceApplication.writeToFile(result,
+//				// ReferenceApplication.conferenceFile);
+					
 			}
 		} else {
 			System.out.println("Not online");

@@ -198,7 +198,7 @@ public class MapModel {
                         if(!idPolygon.equals("contour"))
                             getClickablePolygons().add(new PolygonRoom(idPolygon, namePolygon, statePolygon, polygonPath, new Region()));
                         else {
-                            Log.d("#Enorme", "Un contour sauvage apparaît...");
+                            Log.d("#Enorme", "Un contour sauvage apparait...");
                             mContour = new PolygonRoom(polygonPath, new Region(), idPolygon);
                             if(mContour == null)
                                Log.e("#PasEnorme", "Contour sauvage s'enfuit...");
