@@ -11,12 +11,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback{
 	
@@ -29,48 +37,115 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 	private TextView logs;
 	private TextView status;
 	
+//	@Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//            Bundle savedInstanceState) {
+// 
+//        View rootView = inflater.inflate(R.layout.fragment_scan, container, false);
+//        a = getActivity();
+//        button = (Button) rootView.findViewById(R.id.button);
+//        logs = (TextView) rootView.findViewById(R.id.logs);
+//        status = (TextView) rootView.findViewById(R.id.status);
+//        
+//        BluetoothManager manager = (BluetoothManager) a.getSystemService(Context.BLUETOOTH_SERVICE);
+//        mBluetoothAdapter = manager.getAdapter();
+//        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+//            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(enableBtIntent, 0);
+//        }
+//        
+//        button.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				if (!isRunning){
+//					mBluetoothAdapter.startLeScan(ScanBLE.this);
+//					logs.setText(logs.getText().toString()+"\n SCAN STARTED");
+//					status.setText("SCAN RUNNING");
+//					status.setTextColor(Color.GREEN);
+//				}
+//				else{
+//					mBluetoothAdapter.stopLeScan(ScanBLE.this);
+//					logs.setText(logs.getText().toString()+"\n SCAN STOPPED");
+//					status.setText("SCAN STOPPED");
+//					status.setTextColor(Color.RED);
+//				}
+//				
+//				
+//				isRunning = !isRunning;
+//			}
+//		});
+//        return rootView;
+//    }
+	
+	/** Called when the activity is first created. */
+
+	private ListView lv1;
+	private String lv_arr[] =
+	{ "Alice", "Célia", "Guillaume", "Jérémie", "Jérôme", "Sandrine", "Laurent", "Alexis"};
+	ListView lst;
+	EditText edt;
+	ArrayAdapter<String> arrad;
+
+
+
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
- 
-        View rootView = inflater.inflate(R.layout.fragment_scan, container, false);
-        a = getActivity();
-        button = (Button) rootView.findViewById(R.id.button);
-        logs = (TextView) rootView.findViewById(R.id.logs);
-        status = (TextView) rootView.findViewById(R.id.status);
-        
-        BluetoothManager manager = (BluetoothManager) a.getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = manager.getAdapter();
-        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, 0);
-        }
-        
-        button.setOnClickListener(new OnClickListener() {
-			
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+          Bundle savedInstanceState) {
+		
+		View rootView = inflater.inflate(R.layout.search, container, false);
+
+	    lv1 = (ListView) rootView.findViewById(R.id.listView);
+	    edt = (EditText) rootView.findViewById(R.id.editText);
+	    lv1.setVisibility(View.GONE);
+
+	     arrad =  new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 , lv_arr);
+	     lv1.setAdapter(arrad);
+
+	    // By using setTextFilterEnabled method in listview we can filter the listview items.
+
+	     lv1.setTextFilterEnabled(true);
+	     edt.addTextChangedListener(new TextWatcher() {
+
+	        @Override
+	        public void onTextChanged( CharSequence arg0, int arg1, int arg2, int arg3){
+	            // TODO Auto-generated method stub
+	        	lv1.setVisibility(View.VISIBLE);
+	        	if(arg3 == 0)
+	        		lv1.setVisibility(View.GONE);
+	        }
+
+	        @Override
+	        public void beforeTextChanged( CharSequence arg0, int arg1, int arg2, int arg3) {
+	            // TODO Auto-generated method stub
+
+	        }
+
+	        @Override
+	        public void afterTextChanged( Editable arg0)  {
+	            // TODO Auto-generated method stub
+	            ScanBLE.this.arrad.getFilter().filter(arg0);
+
+	        }
+	    });
+	     
+	    lv1.setOnItemClickListener(new OnItemClickListener() {
+
 			@Override
-			public void onClick(View v) {
-				if (!isRunning){
-					mBluetoothAdapter.startLeScan(ScanBLE.this);
-					logs.setText(logs.getText().toString()+"\n SCAN STARTED");
-					status.setText("SCAN RUNNING");
-					status.setTextColor(Color.GREEN);
-				}
-				else{
-					mBluetoothAdapter.stopLeScan(ScanBLE.this);
-					logs.setText(logs.getText().toString()+"\n SCAN STOPPED");
-					status.setText("SCAN STOPPED");
-					status.setTextColor(Color.RED);
-				}
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Toast.makeText(getActivity(), arrad.getItem(arg2), Toast.LENGTH_SHORT).show();
+				lv1.setVisibility(View.GONE);
 				
-				
-				isRunning = !isRunning;
 			}
 		});
-         
-        return rootView;
-    }
-
+	     
+	     return rootView;
+	}
+	
+	
+	/* BLE METHODS */
+	
 	@Override
 	public void onLeScan(final BluetoothDevice arg0, final int arg1, final byte[] arg2) {
 		
