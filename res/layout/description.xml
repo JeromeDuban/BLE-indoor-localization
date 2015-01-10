@@ -20,12 +20,13 @@
             android:layout_height="match_parent"
             android:background="#8EBBFF" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -48,12 +49,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/header"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="7dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:orientation="vertical" >
 
                 <View
@@ -63,15 +66,18 @@
             </LinearLayout>
 
             <ScrollView
+                android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_above="@+id/goTo"
+                android:layout_below="@+id/line" >
 
                 <TextView
                     android:id="@+id/body"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis enim at tempus fermentum. Fusce nisl massa, scelerisque sed ultricies vel, blandit ac purus. Mauris vel sem libero. Suspendisse lacus diam, eleifend at velit at, iaculis rutrum orci. Sed imperdiet lorem a massa porta ornare. Sed eleifend ac turpis at convallis. Integer sit amet ex nec nunc pretium dictum. Vivamus tristique sem ut lorem placerat, nec efficitur augue accumsan. Praesent ut mi in justo gravida euismod eu et magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sed tristique tortor, sit amet commodo nulla. Etiam odio urna, venenatis tincidunt laoreet et, tempus eget nisi.
 
 Sed tempor sit amet ex a posuere. Vivamus sit amet tellus vel purus pellentesque tincidunt. Praesent aliquet vehicula nisl ac aliquet. Sed hendrerit nulla at pharetra posuere. In id sollicitudin erat. Aenean posuere quam nec laoreet dignissim. Quisque nec viverra nisl. Proin nec libero eget arcu dapibus rutrum. Phasellus eget nisl commodo, tempus lorem scelerisque, placerat diam. Etiam congue congue tellus, a tempus ante scelerisque quis. Donec turpis nisl, scelerisque ac erat sit amet, aliquam pellentesque lacus. Aenean at felis lectus. Duis fermentum sem ac rhoncus scelerisque. Donec vel nunc ullamcorper, ullamcorper nisi tempus, pretium diam. Integer tristique rutrum tempor.
@@ -82,7 +88,32 @@ Nullam finibus erat lobortis maximus semper. Suspendisse non tristique nisl, in 
 
 In consectetur risus nisl, sit amet blandit nisl aliquet quis. Phasellus interdum dolor vel malesuada commodo. Nullam eu magna tincidunt ipsum mollis aliquam. Quisque mollis tellus vitae pharetra egestas. Maecenas lobortis, ligula non interdum molestie, augue sem maximus tellus, in vulputate metus sem sed quam. Nunc sit amet risus volutpat, gravida dolor non, elementum metus. Aenean ac purus non sapien luctus dapibus. Aliquam fringilla lorem ipsum, ac blandit metus vulputate sit amet. Suspendisse sed massa mauris. Morbi nec risus sed ligula egestas molestie." />
             </ScrollView>
-        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goTo"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_blue"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Go To"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@android:drawable/ic_menu_send" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>
