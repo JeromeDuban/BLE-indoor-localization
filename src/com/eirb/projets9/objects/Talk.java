@@ -156,7 +156,6 @@ public class Talk implements Serializable, Comparable<Talk>{
 	@Override
 	public int compareTo(Talk another) {
 		final int BEFORE = -1;
-	    final int EQUAL = 0;
 	    final int AFTER = 1;
 	    
 	    if(startTs <= another.startTs)

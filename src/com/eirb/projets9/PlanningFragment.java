@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
+import com.eirb.projets9.objects.PlanningElement;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
@@ -31,10 +32,9 @@ public class PlanningFragment extends Fragment {
     LinearLayout listPlanning;
 //    DateFormat df = new SimpleDateFormat("hh:'00' a");
     
-    DateFormat df = new SimpleDateFormat("HH:'00'", Locale.US);
+    DateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
     DateFormat d = new SimpleDateFormat("EEE, d MMM", Locale.US);
     
-    ArrayList<String> rooms;
     Building building = null;
     
     Date previous = null;
@@ -51,8 +51,8 @@ public class PlanningFragment extends Fragment {
 			building = ReferenceApplication.deserializeBuilding();
 		}
         
-        rooms = new ArrayList<String>();
-        ArrayList<Talk> l = getAllTalks();
+        
+        ArrayList<PlanningElement> l = getAllTalks();
         Collections.sort(l);
         
         listPlanning= (LinearLayout) rootView.findViewById(R.id.listSchedule);
@@ -68,7 +68,7 @@ public class PlanningFragment extends Fragment {
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
             
-            Talk t = l.get(i);
+            Talk t = l.get(i).getTalk();
             
             /* Date */
             
@@ -94,19 +94,22 @@ public class PlanningFragment extends Fragment {
             previous = s;
             
             
-            /* Text */
+            /* Title */
             title.setText(t.getTitle());
-            title.setText( d.format(s));
+            
+            /* Subtitle */
             if (building != null){
             	String sub;
-				if ((sub = ReferenceApplication.getRoomName(building, Integer.parseInt(rooms.get(i)))) != null){
+				if ((sub = ReferenceApplication.getRoomName(building, l.get(i).getId())) != null){
             		subtitle.setText("Room " + sub);
             	}
 				else
-					subtitle.setText("Room " + rooms.get(i));
+					subtitle.setText("Room " + l.get(i).getId());
             }
             else
             	subtitle.setText("");
+            System.out.println(s);
+            System.out.println(e);
             
             start.setText(df.format(s));
             end.setText(df.format(e));
@@ -119,8 +122,9 @@ public class PlanningFragment extends Fragment {
         return rootView;
     }
 	
-	private ArrayList<Talk> getAllTalks(){
-		ArrayList<Talk> l = new ArrayList<Talk>();
+	private ArrayList<PlanningElement> getAllTalks(){
+		ArrayList<PlanningElement> l = new ArrayList<PlanningElement>();
+		PlanningElement pe ;
 		
 		File file = new File(ReferenceApplication.conferenceFile);
         if (file.exists()) {
@@ -134,8 +138,11 @@ public class PlanningFragment extends Fragment {
     				ArrayList<Talk> ct = cs.get(j).getList();
     				for (int k = 0; k < ct.size() ; k++){
     					
-    					l.add(ct.get(k));
-    					rooms.add(Integer.toString((cs.get(j).getRoom_id())));
+    					pe = new PlanningElement();
+    					pe.setTalk(ct.get(k));
+    					pe.setId(cs.get(j).getRoom_id());
+    					
+    					l.add(pe);
     				}
     				
     			}
