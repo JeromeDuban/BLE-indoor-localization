@@ -1,70 +1,58 @@
 package com.eirb.projets9.objects;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Room implements Serializable{
 
-	private static final long serialVersionUID = 2929300051735046818L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3916669604411843072L;
 	private int id;
+	private int dom_id;
 	private String name;
 	
-	private ArrayList<Coordinate> list;
-	
-	public Room() {
-		super();
-		this.list = new ArrayList<Coordinate>();
-	}
-
-	public Room(int id, String name, ArrayList<Coordinate> list) {
+	public Room(int id, int dom_id, String name) {
 		super();
 		this.id = id;
+		this.dom_id = dom_id;
 		this.name = name;
-		this.list = list;
 	}
-	
+
+	public Room() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	
+	public int getDom_id() {
+		return dom_id;
+	}
+
+	public void setDom_id(int dom_id) {
+		this.dom_id = dom_id;
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	
-	public ArrayList<Coordinate> getList() {
-		return list;
-	}
-
-	
-	public void setList(ArrayList<Coordinate> list) {
-		this.list = list;
-	}
-
-	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 	@Override
 	public String toString() {
-		return "Room [id=" + id + ", name=" + name + ", list=" + list + "]";
+		return "Room [id=" + id + ", dom_id=" + dom_id + ", name=" + name + "]";
 	}
 
 	
 	
-
 
 }

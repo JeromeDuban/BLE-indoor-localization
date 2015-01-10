@@ -98,8 +98,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
             		if (!file.exists()) {
             			System.out.println("Download started");
 
-            			downloadBuildingParameter("https://dl.dropboxusercontent.com/u/95538366/projetS9/building.json",beacon.getId2().toInt());
-            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
+            			downloadTopology("https://gist.githubusercontent.com/frco9/3670e5e353aadea2c417/raw/7ae27e0ac33388cfbc35107e802feeaf51535c18/Topology_10.json",beacon.getId2().toInt());
+//            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
             		}
                 }
                 else{
@@ -156,7 +156,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 		
 	}
 
-	private Conference confToSave;
+	private Conference topoToSave;
 	private ArrayList<Track> trackList;
 	private ArrayList<Session> sessionList;
 	private ArrayList<Room> roomList;
@@ -215,7 +215,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 				
 				System.out.println("Valid json : " + isJSONValid(json));
 
-				confToSave = null;
+				topoToSave = null;
 
 				try {
 					JSONObject obj = new JSONObject(json);
@@ -225,6 +225,142 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 //					for (int i = 0; i < conferences.length(); i++) {
 //
 //						JSONObject conf = conferences.getJSONObject(i);
+					JSONObject conf = obj;
+					
+					System.out.println(conf.getString("major") +":"+ Integer.toString(major));
+					
+					if (Integer.parseInt(conf.getString("major")) == major) {
+						Conference conference = new Conference();
+
+						conference.setId(Integer.parseInt(conf
+								.getString("id")));
+						conference.setAddress(conf.getString("address"));
+						conference.setTitle(conf.getString("title"));
+						conference.setStartDay(conf.getString("start_day"));
+						conference.setEndDay(conf.getString("end_day"));
+						conference.setMajor(conf.getString("major"));
+						conference.setCreatedAt(Long.parseLong(conf
+								.getString("created_at")));
+						conference.setUpdatedAt(Long.parseLong(conf
+								.getString("updated_at")));
+
+						JSONArray tracks = conf.getJSONArray("tracks");
+						
+						// Parse tracks
+						trackList = new ArrayList<Track>();
+						for (int j = 0; j < tracks.length(); j++) {
+
+							JSONObject tra = tracks.getJSONObject(j);
+							Track track = new Track();
+							track.setId(Integer.parseInt(tra
+									.getString("id")));
+							track.setTitle(tra.getString("title"));
+
+							JSONArray sessions = tra
+									.getJSONArray("sessions");
+							
+							// Parse sessions
+							sessionList = new ArrayList<Session>();
+							for (int k = 0; k < sessions.length(); k++) {
+
+								JSONObject ses = sessions.getJSONObject(k);
+								Session session = new Session();
+								session.setId(Integer.parseInt(ses.getString("id")));
+								session.setStartTs(Long.parseLong(ses.getString("start_ts")));
+								session.setStartTs(Long.parseLong(ses.getString("end_ts")));
+								session.setRoom_id(Integer.parseInt(ses.getString("room_id")));
+
+								JSONArray talks = ses.getJSONArray("talks");
+								
+								// Parse talks
+								talkList = new ArrayList<Talk>();
+								for (int l = 0; l < talks.length(); l++) {
+
+									JSONObject tal = talks.getJSONObject(l);
+									Talk talk = new Talk();
+									talk.setId(Integer.parseInt(tal.getString("id")));
+									talk.setTitle(tal.getString("title"));
+									talk.setStartTs(Long.parseLong(tal.getString("start_ts")));
+									talk.setEndTs(Long.parseLong(tal.getString("end_ts")));
+									talk.setSpeaker(tal.getString("speaker"));
+									talk.setConfAbstract(tal.getString("abstract"));
+									talk.setBody(tal.getString("abstract"));
+
+									talkList.add(talk);
+								}
+								session.setList(talkList);
+								sessionList.add(session);
+								
+							}
+
+							track.setList(sessionList);
+							trackList.add(track);
+
+						}
+						conference.setList(trackList);
+						topoToSave = conference;
+					}
+
+//					}
+					// Save conference object to file
+					if(topoToSave != null){
+						System.out.println(topoToSave);
+						ReferenceApplication.serializeConference(topoToSave);
+					}
+					else
+						System.out.println("confToSave == null");
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}					
+			}
+		} else {
+			System.out.println("Not online");
+		}
+		
+	}
+	
+	public void downloadTopology(String url, int major){
+		if (isOnline()) {
+			StringBuilder response = new StringBuilder();
+			
+			// GET file from server
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse execute;
+			InputStream content;
+			try {
+				execute = client.execute(httpGet);
+				content = execute.getEntity().getContent();
+				BufferedReader buffer = new BufferedReader(
+						new InputStreamReader(content));
+				String s = "";
+				while ((s = buffer.readLine()) != null) {
+					response.append(s);
+					response.append("\n");
+				}
+			} catch (ClientProtocolException e) {
+				System.out.println(e);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			//Check answer
+			System.out.println(response.toString());
+			
+			// Parse json
+			if (!response.toString().equals("")) {
+				System.out.println("Writing conference file");
+
+				String json = response.toString();
+				
+				System.out.println("Valid json : " + isJSONValid(json));
+
+				topoToSave = null;
+
+				try {
+					JSONObject obj = new JSONObject(json);
 						JSONObject conf = obj;
 						
 						System.out.println(conf.getString("major") +":"+ Integer.toString(major));
@@ -298,14 +434,13 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
 							}
 							conference.setList(trackList);
-							confToSave = conference;
+							topoToSave = conference;
 						}
 
-//					}
 					// Save conference object to file
-					if(confToSave != null){
-						System.out.println(confToSave);
-						ReferenceApplication.serializeConference(confToSave);
+					if(topoToSave != null){
+						System.out.println(topoToSave);
+						ReferenceApplication.serializeConference(topoToSave);
 					}
 					else
 						System.out.println("confToSave == null");
@@ -313,45 +448,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-//
-//				// ReferenceApplication.writeToFile(result,
-//				// ReferenceApplication.conferenceFile);
-					
+				}					
 			}
-		} else {
-			System.out.println("Not online");
-		}
-		
-	}
-	
-	public void downloadBuildingParameter(String url, int major){
-		if (isOnline()) {
-			StringBuilder response = new StringBuilder();
-			
-			// GET file from server
-			DefaultHttpClient client = new DefaultHttpClient();
-			HttpGet httpGet = new HttpGet(url);
-			HttpResponse execute;
-			InputStream content;
-			try {
-				execute = client.execute(httpGet);
-				content = execute.getEntity().getContent();
-				BufferedReader buffer = new BufferedReader(
-						new InputStreamReader(content));
-				String s = "";
-				while ((s = buffer.readLine()) != null) {
-					response.append(s);
-					response.append("\n");
-				}
-			} catch (ClientProtocolException e) {
-				System.out.println(e);
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-			
-			//Check answer
-			System.out.println(response.toString());
 			
 		} else {
 			System.out.println("Not online");
