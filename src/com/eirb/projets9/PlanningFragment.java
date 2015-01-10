@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -30,9 +31,13 @@ public class PlanningFragment extends Fragment {
     LinearLayout listPlanning;
 //    DateFormat df = new SimpleDateFormat("hh:'00' a");
     
-    DateFormat df = new SimpleDateFormat("HH:'00'",Locale.FRANCE);
+    DateFormat df = new SimpleDateFormat("HH:'00'", Locale.US);
+    DateFormat d = new SimpleDateFormat("EEE, d MMM", Locale.US);
+    
     ArrayList<String> rooms;
     Building building = null;
+    
+    Date previous = null;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,9 +53,11 @@ public class PlanningFragment extends Fragment {
         
         rooms = new ArrayList<String>();
         ArrayList<Talk> l = getAllTalks();
+        Collections.sort(l);
         
         listPlanning= (LinearLayout) rootView.findViewById(R.id.listSchedule);
         
+        /* Display */
         for (int i = 0; i < l.size(); i++) {
 
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,10 +70,33 @@ public class PlanningFragment extends Fragment {
             
             Talk t = l.get(i);
             
+            /* Date */
+            
             Date s = new Date(t.getStartTs() * 1000);
             Date e = new Date(t.getEndTs() * 1000);
+                        
+            if(previous == null){
+            	previous = s;
+            	View date = inflater.inflate(R.layout.date,listPlanning, false);
+            	TextView dateTxt = (TextView) date.findViewById(R.id.tv);
+            	dateTxt.setText(d.format(s));
+            	listPlanning.addView(date);
+            }
+            	
+            if(previous == null || (s.getYear() == previous.getYear() && s.getMonth() == previous.getMonth() && s.getDay() == previous.getDay())){
+            }
+            else{
+            	View date = inflater.inflate(R.layout.date,listPlanning, false);
+            	TextView dateTxt = (TextView) date.findViewById(R.id.tv);
+            	dateTxt.setText(d.format(s));
+            	listPlanning.addView(date);
+            }
+            previous = s;
             
+            
+            /* Text */
             title.setText(t.getTitle());
+            title.setText( d.format(s));
             if (building != null){
             	String sub;
 				if ((sub = ReferenceApplication.getRoomName(building, Integer.parseInt(rooms.get(i)))) != null){

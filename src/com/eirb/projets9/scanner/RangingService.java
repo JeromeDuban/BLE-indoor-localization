@@ -110,7 +110,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
             			System.out.println("Download started");
 
             			downloadBuilding("https://gist.githubusercontent.com/frco9/3670e5e353aadea2c417/raw/7ae27e0ac33388cfbc35107e802feeaf51535c18/Topology_10.json",beacon.getId2().toInt());
-            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
+            			downloadConference("https://gist.githubusercontent.com/jejefcgb/04bd319ac8dc428911c1/raw/Conference_10.json", beacon.getId2().toInt());
             		}
                 }
                 else{
