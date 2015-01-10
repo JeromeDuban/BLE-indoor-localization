@@ -4,6 +4,7 @@
     <string name="app_name">.ProjetS9</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="goTo">Go To</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
     
@@ -31,19 +32,12 @@
 
     <!-- Map page  -->
     <string-array name="rooms_array">
-        <item>Amphi F</item>
-        <item>Amphi G</item>
-        <item>Amphi H</item>
-        <item>Td 1</item>
-        <item>Td 2</item>
-        <item>Td 3</item>
-        <item>Td 4</item>
-        <item>Td 5</item>
-        <item>Td 6</item>
-        <item>Td 7</item>
-        <item>E 202</item>
-        <item>E 206</item>
-        <item>E 208</item>
+        <item>I001</item>
+        <item>I004</item>
+        <item>Grand Amphithéâtre</item>
+        <item>Advanced Materials and Nanotechnology</item>
+        <item>Introduction to Internet of Things</item>
+        <item>Bluetooth LE: Powering the Internet of Things</item>
     </string-array>
     
 </resources>

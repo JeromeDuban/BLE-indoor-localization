@@ -70,17 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_research_bar"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/title_research_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/setOriginalScaleButton"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="10dp"
-        android:text="Go to"
-        android:textColor="#000000"
-        android:textStyle="bold" />
+        android:spinnerMode="dropdown" />
+
+    
 
 </LinearLayout>
