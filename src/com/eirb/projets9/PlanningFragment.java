@@ -69,14 +69,7 @@ public class PlanningFragment extends Fragment {
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
             
-            layout.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-				}
-			})
+            
             
             Talk t = l.get(i).getTalk();
             
