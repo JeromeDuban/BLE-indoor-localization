@@ -121,9 +121,8 @@ public final class R {
         public static final int fragment_scan=0x7f030009;
         public static final int notification_element=0x7f03000a;
         public static final int planning_element=0x7f03000b;
-        public static final int search=0x7f03000c;
-        public static final int spinner_list_item=0x7f03000d;
-        public static final int splashscreen=0x7f03000e;
+        public static final int spinner_list_item=0x7f03000c;
+        public static final int splashscreen=0x7f03000d;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
