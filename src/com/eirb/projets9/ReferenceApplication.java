@@ -93,7 +93,7 @@ public class ReferenceApplication extends Application {
 	}
 	/* Record callback */
 	public static void recordAdded(){
-//		notificationService.recordCallback();
+		notificationService.recordCallback();
 	}
 		
 	/* Save object to file */

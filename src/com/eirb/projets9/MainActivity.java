@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -53,6 +54,7 @@ public class MainActivity extends Activity{
 	
 	private String conferenceFile;
 	private BluetoothAdapter mBluetoothAdapter;
+	private FragmentManager fragmentManager;
 	
 	public static final int STATUS_BLE_ENABLED = 0;
 	public static final int STATUS_BLUETOOTH_NOT_AVAILABLE = 1;
@@ -69,7 +71,7 @@ public class MainActivity extends Activity{
 		conferenceFile = ReferenceApplication.conferenceFile;
 		
 		startService(new Intent(this, RangingService.class));
-//		startService(new Intent(this, NotificationService.class));
+		startService(new Intent(this, NotificationService.class));
 		
 		/* Start Fading animation */
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -256,7 +258,7 @@ public class MainActivity extends Activity{
 		}
 
 		if (fragment != null) {
-			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
 
@@ -354,8 +356,28 @@ public class MainActivity extends Activity{
 			Toast.makeText(this, "Delete build done", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(this, "Delete build failed", Toast.LENGTH_SHORT).show();
-		}
-		
-		
+		}	
+    }
+    
+    public void switchMapFragment(String string){
+    	System.out.println("Method called");
+    	
+    	Fragment fragment = new com.eirb.projets9.MapFragment();
+    	Bundle b = new Bundle();
+    	b.putString("room", string);
+    	fragment.setArguments(b);
+    	
+    	FragmentManager fm = getFragmentManager();
+    	FragmentTransaction transaction = fm.beginTransaction();
+    	transaction.replace(R.id.frame_container, fragment);
+    	transaction.commit();
+    	
+    	// update selected item and title, then close the drawer
+		mDrawerList.setItemChecked(1, true);
+		mDrawerList.setSelection(1);
+		setTitle(navMenuTitles[1]);
+		mDrawerLayout.closeDrawer(mDrawerList);
+    	
+    	
     }
 }

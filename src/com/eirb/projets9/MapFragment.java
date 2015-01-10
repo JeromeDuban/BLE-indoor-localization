@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.eirb.projets9.map.MapModel;
 import com.eirb.projets9.map.MapView;
@@ -55,7 +56,15 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
+		if(this.getArguments() == null){
+//			Toast.makeText(getActivity(), "NULL", Toast.LENGTH_SHORT).show();
+		}
+		else{
+//			Toast.makeText(getActivity(), this.getArguments().getString("room"), Toast.LENGTH_SHORT).show();
+		}
+			
+		
 		mContext = getActivity();
 		rootView = inflater.inflate(R.layout.fragment_map, container, false);
 		mLinearLayoutView = (LinearLayout) rootView.findViewById(R.id.map_linear_layout);

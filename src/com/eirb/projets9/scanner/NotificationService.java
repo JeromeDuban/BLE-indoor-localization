@@ -106,7 +106,7 @@ public class NotificationService extends Service{
         NotificationManager mNotifyMgr = 
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         // Builds the notification and issues it.
-        mNotifyMgr.notify(0, mBuilder.build());
+        mNotifyMgr.notify(Integer.parseInt(tokens[2]), mBuilder.build());
  
     }
     

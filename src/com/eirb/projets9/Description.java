@@ -1,7 +1,11 @@
 package com.eirb.projets9;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Description extends Activity{
@@ -14,6 +18,7 @@ public class Description extends Activity{
 		TextView title = (TextView) findViewById(R.id.title);
 		TextView subtitle = (TextView) findViewById(R.id.subtitle);
 		TextView body = (TextView) findViewById(R.id.body);
+		LinearLayout button = (LinearLayout) findViewById(R.id.goTo);
 		
 		String ti,su,st,en,bo;
 		
@@ -28,7 +33,26 @@ public class Description extends Activity{
 		if((bo = getIntent().getExtras().getString("Body")) != null )
 			body.setText(bo);
 		
+		final String room = su;
+		button.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent resultIntent = new Intent();
+				
+		    	resultIntent.putExtra("room", room);
+		    	setResult(RESULT_OK, resultIntent);
+				finish();
+			}
+		});
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		System.out.println("onKeyDown Option");
 		
+		
+		return super.onKeyDown(keyCode, event);	
 	}
 
 }

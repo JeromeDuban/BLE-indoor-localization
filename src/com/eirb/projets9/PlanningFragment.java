@@ -8,9 +8,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +29,7 @@ import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
 
 public class PlanningFragment extends Fragment {
-	
+
 	public PlanningFragment(){}
 	
     LinearLayout listPlanning;
@@ -39,6 +41,8 @@ public class PlanningFragment extends Fragment {
     Building building = null;
     
     Date previous = null;
+    
+    MainActivity a;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +50,7 @@ public class PlanningFragment extends Fragment {
  
         View rootView = inflater.inflate(R.layout.fragment_planning, container, false);
         
+        a = (MainActivity) getActivity();
         
         File file = new File(ReferenceApplication.buildingFile);
    	 
@@ -170,5 +175,28 @@ public class PlanningFragment extends Fragment {
     		
 		}
 		return l;
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+	
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode == Activity.RESULT_OK) {
+//			Toast.makeText(getActivity(), data.getStringExtra("room"), Toast.LENGTH_SHORT).show();
+			a.switchMapFragment(data.getStringExtra("room"));
+		}
 	}
 }
