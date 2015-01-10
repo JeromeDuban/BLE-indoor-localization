@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import android.app.Application;
 import android.graphics.Typeface;
 
+import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Coordinate;
 import com.eirb.projets9.objects.MapBeacon;
@@ -40,6 +41,7 @@ public class ReferenceApplication extends Application {
 	
 	// Conference File Path
 	public static String conferenceFile;
+	public static String buildingFile;
 	
 	public static long lastTimestamp = 0;
 	
@@ -63,6 +65,7 @@ public class ReferenceApplication extends Application {
 		records = new ArrayList<BeaconRecord>();
 		mapBeacons = new ArrayList<MapBeacon>();
 		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
+		buildingFile = getFilesDir().getAbsolutePath().concat("/building");
 
 		// Fonts
 		fontMedium = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Md.otf");
@@ -91,7 +94,7 @@ public class ReferenceApplication extends Application {
 //		notificationService.recordCallback();
 	}
 		
-	/* Save conference object to file */
+	/* Save object to file */
 	public static void serializeConference(Conference conf){
 		 
 	   try{
@@ -107,7 +110,23 @@ public class ReferenceApplication extends Application {
 	   }
 	}
 	
-	/* Creates Conference object from file */
+	public static void serializeBuilding(Building build) {
+		try{
+			 
+			FileOutputStream fout = new FileOutputStream(buildingFile);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);   
+			oos.writeObject(build);
+			oos.close();
+			System.out.println("Done");
+	 
+		   }catch(Exception ex){
+			   ex.printStackTrace();
+		   }
+		
+	}
+	
+	
+	/* Get object from file */
 	 public static Conference deserializeConference(){
 		 
 		   Conference conf; 
@@ -125,6 +144,25 @@ public class ReferenceApplication extends Application {
 			   return null;
 		   } 
 	   } 
+	 
+	 public static Building deserializeBuilding(){
+		 
+		   Building build; 
+		   try{
+	 
+			   FileInputStream fin = new FileInputStream(buildingFile);
+			   ObjectInputStream ois = new ObjectInputStream(fin);
+			   build = (Building) ois.readObject();
+			   ois.close();
+	 
+			   return build;
+	 
+		   }catch(Exception ex){
+			   ex.printStackTrace();
+			   return null;
+		   } 
+	   } 
+	 
 	 
 	 /* Get Coordinates of a beacon for a given uuid - major - minor */
 	 public static Coordinate getCoordinate(String uuid, String major, String minor){
@@ -148,6 +186,8 @@ public class ReferenceApplication extends Application {
 		 
 		 return false;
 	 }
+
+	
 	 
 	 /* ------ OLD METHODS ---------- */
 	 

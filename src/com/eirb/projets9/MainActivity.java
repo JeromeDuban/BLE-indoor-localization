@@ -54,6 +54,11 @@ public class MainActivity extends Activity{
 	private String conferenceFile;
 	private BluetoothAdapter mBluetoothAdapter;
 	
+	public static final int STATUS_BLE_ENABLED = 0;
+	public static final int STATUS_BLUETOOTH_NOT_AVAILABLE = 1;
+	public static final int STATUS_BLE_NOT_AVAILABLE = 2;
+	public static final int STATUS_BLUETOOTH_DISABLED = 3;
+	
 	
 
 	@Override
@@ -312,13 +317,7 @@ public class MainActivity extends Activity{
             return null;
         return bluetoothManager.getAdapter();
     }
-
-	public static final int STATUS_BLE_ENABLED = 0;
-	public static final int STATUS_BLUETOOTH_NOT_AVAILABLE = 1;
-	public static final int STATUS_BLE_NOT_AVAILABLE = 2;
-	public static final int STATUS_BLUETOOTH_DISABLED = 3;
-	
-	
+		
     public static int getBleStatus(Context context) {
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
@@ -343,9 +342,20 @@ public class MainActivity extends Activity{
     	 
 		if(file.delete()){
 			ReferenceApplication.records.clear();
-			Toast.makeText(this, "Delete done", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Delete conf done", Toast.LENGTH_SHORT).show();
 		}else{
-			Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
-		}	
+			Toast.makeText(this, "Delete conf failed", Toast.LENGTH_SHORT).show();
+		}
+		
+		file = new File(ReferenceApplication.buildingFile);
+   	 
+		if(file.delete()){
+			ReferenceApplication.records.clear();
+			Toast.makeText(this, "Delete build done", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(this, "Delete build failed", Toast.LENGTH_SHORT).show();
+		}
+		
+		
     }
 }
