@@ -135,6 +135,7 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Toast.makeText(getActivity(), arrad.getItem(arg2), Toast.LENGTH_SHORT).show();
+				edt.setText(arrad.getItem(arg2));
 				lv1.setVisibility(View.GONE);
 				
 			}
