@@ -1,13 +1,12 @@
 package com.eirb.projets9;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,7 +14,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -80,12 +78,14 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 	
 	/** Called when the activity is first created. */
 
-	private ListView lv1;
-	private String lv_arr[] =
-	{ "Alice", "Célia", "Guillaume", "Jérémie", "Jérôme", "Sandrine", "Laurent", "Alexis"};
+	private ListView list;
+//	private String array[] =
+//	{ "Alice", "Célia", "Guillaume", "Jérémie", "Jérôme", "Sandrine", "Laurent", "Alexis"};
+	
+	
 	ListView lst;
-	EditText edt;
-	ArrayAdapter<String> arrad;
+	EditText input;
+	ArrayAdapter<String> adapter;
 
 
 
@@ -95,24 +95,38 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 		
 		View rootView = inflater.inflate(R.layout.search, container, false);
 
-	    lv1 = (ListView) rootView.findViewById(R.id.listView);
-	    edt = (EditText) rootView.findViewById(R.id.editText);
-	    lv1.setVisibility(View.GONE);
+	    list = (ListView) rootView.findViewById(R.id.listView);
+	    input = (EditText) rootView.findViewById(R.id.editText);
+	    list.setVisibility(View.GONE);
+	    
+	    ArrayList<String> l = new ArrayList<String>();
+	    l.add("Alice");
+	    l.add("Celia");
+	    l.add("Guillaume");
+	    l.add("Jérémie");
+	    l.add("Jérôme");
+	    l.add("Sandrine");
+	    l.add("Laurent");
+	    l.add("Alexis");
+	    
+	    String[] array = new String[l.size()];
+	    l.toArray(array);
+	    
 
-	     arrad =  new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 , lv_arr);
-	     lv1.setAdapter(arrad);
+	    adapter =  new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 , array);
+	    list.setAdapter(adapter);
 
 	    // By using setTextFilterEnabled method in listview we can filter the listview items.
 
-	     lv1.setTextFilterEnabled(true);
-	     edt.addTextChangedListener(new TextWatcher() {
+	     list.setTextFilterEnabled(true);
+	     input.addTextChangedListener(new TextWatcher() {
 
 	        @Override
 	        public void onTextChanged( CharSequence arg0, int arg1, int arg2, int arg3){
 	            // TODO Auto-generated method stub
-	        	lv1.setVisibility(View.VISIBLE);
+	        	list.setVisibility(View.VISIBLE);
 	        	if(arg3 == 0)
-	        		lv1.setVisibility(View.GONE);
+	        		list.setVisibility(View.GONE);
 	        }
 
 	        @Override
@@ -124,19 +138,19 @@ public class ScanBLE extends Fragment implements BluetoothAdapter.LeScanCallback
 	        @Override
 	        public void afterTextChanged( Editable arg0)  {
 	            // TODO Auto-generated method stub
-	            ScanBLE.this.arrad.getFilter().filter(arg0);
+	            ScanBLE.this.adapter.getFilter().filter(arg0);
 
 	        }
 	    });
 	     
-	    lv1.setOnItemClickListener(new OnItemClickListener() {
+	    list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Toast.makeText(getActivity(), arrad.getItem(arg2), Toast.LENGTH_SHORT).show();
-				edt.setText(arrad.getItem(arg2));
-				lv1.setVisibility(View.GONE);
+				Toast.makeText(getActivity(), adapter.getItem(arg2), Toast.LENGTH_SHORT).show();
+				input.setText(adapter.getItem(arg2));
+				list.setVisibility(View.GONE);
 				
 			}
 		});

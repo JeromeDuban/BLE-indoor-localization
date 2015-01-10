@@ -48,9 +48,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3" />
-    </LinearLayout> -->
+    </LinearLayout>
+    -->
 
-    <!-- <RelativeLayout
+
+    <!--
+    <RelativeLayout
         android:id="@+id/map_complete_view_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -63,7 +66,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Vue d&apos;ensemble" />
-    </RelativeLayout> -->
+    </RelativeLayout>
+    -->
 
     <Spinner
         android:id="@+id/rooms_spinner"
@@ -71,8 +75,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_research_bar"
         android:layout_centerHorizontal="true"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:visibility="gone" />
 
-    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/search"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"/>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText" >
+        </ListView>
+    </RelativeLayout>
 
 </LinearLayout>
