@@ -97,12 +97,9 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 	File file = new File(ReferenceApplication.conferenceFile);
             		if (!file.exists()) {
             			System.out.println("Download started");
-<<<<<<< HEAD
-            			downloadConference("https://dl.dropboxusercontent.com/u/95538366/projetS9/conference.json", beacon.getId2().toInt());
-            			//downloadBuildingParameter("https://dl.dropboxusercontent.com/u/95538366/projetS9/building.json",beacon.getId2().toInt());
-=======
+
+            			downloadBuildingParameter("https://dl.dropboxusercontent.com/u/95538366/projetS9/building.json",beacon.getId2().toInt());
             			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
->>>>>>> bc9ccbdcbcc713b81daef1ff722075c125cd9d6d
             		}
                 }
                 else{
@@ -356,126 +353,6 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 			//Check answer
 			System.out.println(response.toString());
 			
-			// Parse json
-			if (!response.toString().equals("")) {
-				System.out.println("Writing conference file");
-
-				String json = response.toString();
-				
-				System.out.println("Valid json : " + isJSONValid(json));
-
-				confToSave = null;
-
-				try {
-					JSONObject obj = new JSONObject(json);
-					JSONArray conferences = obj.getJSONArray("Conference");
-					
-					// Parse conference
-					for (int i = 0; i < conferences.length(); i++) {
-
-						JSONObject conf = conferences.getJSONObject(i);
-						System.out.println(conf.getString("major") +":"+ Integer.toString(major));
-						
-						if (Integer.parseInt(conf.getString("major")) == major) {
-							Conference conference = new Conference();
-
-							conference.setId(Integer.parseInt(conf
-									.getString("id")));
-							conference.setAddress(conf.getString("address"));
-							conference.setTitle(conf.getString("title"));
-							conference.setStartDay(conf.getString("start_day"));
-							conference.setEndDay(conf.getString("end_day"));
-							conference.setMajor(conf.getString("major"));
-							conference.setCreatedAt(Long.parseLong(conf
-									.getString("created_at")));
-							conference.setUpdatedAt(Long.parseLong(conf
-									.getString("updated_at")));
-
-							JSONArray tracks = conf.getJSONArray("tracks");
-							
-							// Parse tracks
-							for (int j = 0; j < tracks.length(); j++) {
-								trackList = new ArrayList<Track>();
-
-								JSONObject tra = tracks.getJSONObject(j);
-								Track track = new Track();
-								track.setId(Integer.parseInt(tra
-										.getString("id")));
-								track.setTitle(tra.getString("title"));
-
-								JSONArray sessions = tra
-										.getJSONArray("sessions");
-								
-								// Parse sessions
-								for (int k = 0; k < sessions.length(); k++) {
-									sessionList = new ArrayList<Session>();
-
-									JSONObject ses = sessions.getJSONObject(k);
-									Session session = new Session();
-									session.setId(Integer.parseInt(ses
-											.getString("id")));
-									session.setStartTs(Long.parseLong(ses
-											.getString("start_ts")));
-									session.setStartTs(Long.parseLong(ses
-											.getString("end_ts")));
-
-									JSONArray talks = ses.getJSONArray("talks");
-									
-									// Parse talks
-									for (int l = 0; l < talks.length(); l++) {
-										talkList = new ArrayList<Talk>();
-
-										JSONObject tal = talks.getJSONObject(l);
-										Talk talk = new Talk();
-										talk.setId(Integer.parseInt(tal
-												.getString("id")));
-
-										talkList.add(talk);
-									}
-									session.setList(talkList);
-									sessionList.add(session);
-									
-									JSONArray rooms = ses.getJSONArray("rooms");
-									
-									// Parse rooms (added SNS)
-										for (int m = 0; m < rooms.length(); m++){
-											roomList = new ArrayList<Room>();
-											JSONObject roo = rooms.getJSONObject(m);
-											Room room = new Room();
-											room.setId(Integer.parseInt(roo
-													.getString("id")));
-											
-											roomList.add(room);		
-										}	
-								}
-
-								track.setList(sessionList);
-								trackList.add(track);
-
-							}
-							conference.setList(trackList);
-							confToSave = conference;
-						}
-
-						// System.out.println(conference);
-					}
-					// Save conference object to file
-					if(confToSave != null){
-						System.out.println(confToSave);
-						ReferenceApplication.serializeConference(confToSave);
-					}
-					else
-						System.out.println("confToSave == null");
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//
-//				// ReferenceApplication.writeToFile(result,
-//				// ReferenceApplication.conferenceFile);
-					
-			}
 		} else {
 			System.out.println("Not online");
 		}
