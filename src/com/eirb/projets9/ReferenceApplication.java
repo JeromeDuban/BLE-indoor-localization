@@ -12,7 +12,9 @@ import android.graphics.Typeface;
 import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Coordinate;
+import com.eirb.projets9.objects.Floor;
 import com.eirb.projets9.objects.MapBeacon;
+import com.eirb.projets9.objects.Room;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.NotificationService;
 
@@ -187,6 +189,20 @@ public class ReferenceApplication extends Application {
 		 return false;
 	 }
 
+	 public static String getRoomName(Building building, int id ){
+		 
+		 ArrayList<Floor> fl = building.getList();
+		 for (int i = 0 ; i < fl.size();i++){
+			 
+			 ArrayList<Room> rl = fl.get(i).getList();
+			 for (int j = 0 ; j< rl.size();j++){
+				 
+				 if (rl.get(j).getId() == id)
+					 return rl.get(j).getName();
+			 }
+		 }
+		 return null;
+	 }
 	
 	 
 	 /* ------ OLD METHODS ---------- */

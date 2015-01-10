@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
@@ -26,14 +29,22 @@ public class PlanningFragment extends Fragment {
 	
     LinearLayout listPlanning;
 //    DateFormat df = new SimpleDateFormat("hh:'00' a");
-    DateFormat df = new SimpleDateFormat("HH:'00'");
+    
+    DateFormat df = new SimpleDateFormat("HH:'00'",Locale.FRANCE);
     ArrayList<String> rooms;
+    Building building = null;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_planning, container, false);
+        
+        File file = new File(ReferenceApplication.buildingFile);
+   	 
+		if(file.exists()){
+			building = ReferenceApplication.deserializeBuilding();
+		}
         
         rooms = new ArrayList<String>();
         ArrayList<Talk> l = getAllTalks();
@@ -56,7 +67,17 @@ public class PlanningFragment extends Fragment {
             Date e = new Date(t.getEndTs() * 1000);
             
             title.setText(t.getTitle());
-            subtitle.setText(rooms.get(i));
+            if (building != null){
+            	String sub;
+				if ((sub = ReferenceApplication.getRoomName(building, Integer.parseInt(rooms.get(i)))) != null){
+            		subtitle.setText("Room " + sub);
+            	}
+				else
+					subtitle.setText("Room " + rooms.get(i));
+            }
+            else
+            	subtitle.setText("Error roomid="+rooms.get(i));
+            
             
             start.setText(df.format(s));
             end.setText(df.format(e));
