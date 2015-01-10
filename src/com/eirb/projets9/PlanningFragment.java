@@ -63,10 +63,20 @@ public class PlanningFragment extends Fragment {
             inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.planning_element,listPlanning, false);
             
+            LinearLayout layout = (LinearLayout) view.findViewById(R.id.container);
             TextView start = (TextView) view.findViewById(R.id.start);
             TextView end = (TextView) view.findViewById(R.id.end);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
+            
+            layout.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			})
             
             Talk t = l.get(i).getTalk();
             

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DEDEDE"
+    android:padding="3dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" >
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#8EBBFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dynamics in soft and hard condensed matter"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Room TD 12, From 09:30 to 10:30"
+                    android:textColor="#8D8D8D"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="7dp"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#888888" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis enim at tempus fermentum. Fusce nisl massa, scelerisque sed ultricies vel, blandit ac purus. Mauris vel sem libero. Suspendisse lacus diam, eleifend at velit at, iaculis rutrum orci. Sed imperdiet lorem a massa porta ornare. Sed eleifend ac turpis at convallis. Integer sit amet ex nec nunc pretium dictum. Vivamus tristique sem ut lorem placerat, nec efficitur augue accumsan. Praesent ut mi in justo gravida euismod eu et magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sed tristique tortor, sit amet commodo nulla. Etiam odio urna, venenatis tincidunt laoreet et, tempus eget nisi.
+
+Sed tempor sit amet ex a posuere. Vivamus sit amet tellus vel purus pellentesque tincidunt. Praesent aliquet vehicula nisl ac aliquet. Sed hendrerit nulla at pharetra posuere. In id sollicitudin erat. Aenean posuere quam nec laoreet dignissim. Quisque nec viverra nisl. Proin nec libero eget arcu dapibus rutrum. Phasellus eget nisl commodo, tempus lorem scelerisque, placerat diam. Etiam congue congue tellus, a tempus ante scelerisque quis. Donec turpis nisl, scelerisque ac erat sit amet, aliquam pellentesque lacus. Aenean at felis lectus. Duis fermentum sem ac rhoncus scelerisque. Donec vel nunc ullamcorper, ullamcorper nisi tempus, pretium diam. Integer tristique rutrum tempor.
+
+Sed bibendum, turpis in interdum facilisis, ligula justo ultricies orci, sit amet varius mauris arcu sed augue. Praesent in pellentesque lorem. Proin ac vulputate nibh. Aliquam varius sem eget luctus lacinia. Donec velit risus, ullamcorper sit amet venenatis eget, gravida at diam. Cras varius tincidunt urna, eu consectetur erat bibendum et. Mauris ac erat neque. Fusce a scelerisque erat. Aliquam erat volutpat. Donec ac tincidunt lectus. Duis porttitor est ut tellus dignissim vestibulum. Sed accumsan massa a ipsum euismod, eget imperdiet orci laoreet. Nullam lobortis, massa interdum viverra pulvinar, mauris justo sollicitudin leo, a luctus lectus ante laoreet leo.
+
+Nullam finibus erat lobortis maximus semper. Suspendisse non tristique nisl, in convallis erat. Fusce lorem tellus, dictum quis fringilla vitae, pellentesque et purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum viverra condimentum purus eu congue. Proin odio justo, vehicula vitae euismod eget, rhoncus ac enim. Praesent commodo vehicula vestibulum. Curabitur sit amet nulla ultricies, euismod enim a, ornare elit. Sed posuere consectetur purus, sit amet rhoncus urna consectetur sit amet. In eget leo et nulla varius bibendum. Fusce quis enim ultrices, sollicitudin orci in, tincidunt urna.
+
+In consectetur risus nisl, sit amet blandit nisl aliquet quis. Phasellus interdum dolor vel malesuada commodo. Nullam eu magna tincidunt ipsum mollis aliquam. Quisque mollis tellus vitae pharetra egestas. Maecenas lobortis, ligula non interdum molestie, augue sem maximus tellus, in vulputate metus sem sed quam. Nunc sit amet risus volutpat, gravida dolor non, elementum metus. Aenean ac purus non sapien luctus dapibus. Aliquam fringilla lorem ipsum, ac blandit metus vulputate sit amet. Suspendisse sed massa mauris. Morbi nec risus sed ligula egestas molestie." />
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
