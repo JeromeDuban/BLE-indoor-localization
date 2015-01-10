@@ -76,8 +76,7 @@ public class PlanningFragment extends Fragment {
 					subtitle.setText("Room " + rooms.get(i));
             }
             else
-            	subtitle.setText("Error roomid="+rooms.get(i));
-            
+            	subtitle.setText("");
             
             start.setText(df.format(s));
             end.setText(df.format(e));
