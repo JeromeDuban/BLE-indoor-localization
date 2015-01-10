@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +46,12 @@ public class PlanningFragment extends Fragment {
  
         View rootView = inflater.inflate(R.layout.fragment_planning, container, false);
         
+        
         File file = new File(ReferenceApplication.buildingFile);
    	 
 		if(file.exists()){
 			building = ReferenceApplication.deserializeBuilding();
 		}
-        
         
         ArrayList<PlanningElement> l = getAllTalks();
         Collections.sort(l);
@@ -70,8 +71,7 @@ public class PlanningFragment extends Fragment {
             TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
             
             
-            
-            Talk t = l.get(i).getTalk();
+            final Talk t = l.get(i).getTalk();
             
             /* Date */
             
@@ -101,8 +101,8 @@ public class PlanningFragment extends Fragment {
             title.setText(t.getTitle());
             
             /* Subtitle */
+            String sub ="";
             if (building != null){
-            	String sub;
 				if ((sub = ReferenceApplication.getRoomName(building, l.get(i).getId())) != null){
             		subtitle.setText("Room " + sub);
             	}
@@ -111,15 +111,32 @@ public class PlanningFragment extends Fragment {
             }
             else
             	subtitle.setText("");
-            System.out.println(s);
-            System.out.println(e);
             
             start.setText(df.format(s));
             end.setText(df.format(e));
             
-            listPlanning.addView(view);
-
+            final String subFinal= sub;
+            final String sFinal= df.format(s);
+            final String eFinal= df.format(e);
             
+            layout.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getActivity(), Description.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("Title", t.getTitle());
+					bundle.putString("Subtitle",subFinal);
+					bundle.putString("Start", sFinal);
+					bundle.putString("End", eFinal);
+					bundle.putString("Body", t.getBody());
+					intent.putExtras(bundle);
+					
+					startActivityForResult(intent, 0);
+				}
+			});
+            
+            listPlanning.addView(view);
         }
         
         return rootView;

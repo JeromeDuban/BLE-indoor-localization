@@ -33,6 +33,11 @@
             android:label="@string/app_name" >
         </activity>
         
+        <activity
+            android:name="com.eirb.projets9.Description"
+            android:label="@string/app_name" >
+        </activity>
+        
         <service
             android:name="com.eirb.projets9.scanner.RangingService"
             android:enabled="true"
