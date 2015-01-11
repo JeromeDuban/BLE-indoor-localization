@@ -75,8 +75,8 @@ public class NotificationsFragment extends Fragment {
 						Bundle bundle = new Bundle();
 						bundle.putString("Title", notif.getTalk().getTitle());
 						bundle.putString("Subtitle", notif.getRoomName());
-						bundle.putString("Start", df.format(new Date(notif.getTalk().getStartTs())));
-						bundle.putString("End", df.format(new Date(notif.getTalk().getEndTs())));
+						bundle.putString("Start", df.format(new Date(notif.getTalk().getStartTs() * 1000)));
+						bundle.putString("End", df.format(new Date(notif.getTalk().getEndTs() * 1000)));
 						bundle.putString("Body", notif.getTalk().getBody());
 						intent.putExtras(bundle);
 						
