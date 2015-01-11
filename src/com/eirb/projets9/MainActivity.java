@@ -176,7 +176,7 @@ public class MainActivity extends Activity{
 		
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(3); // TODO changed for the development ( displays the map instead of home)
+			displayView(0); // TODO changed for the development ( displays the map instead of home)
 		}
 	}
 

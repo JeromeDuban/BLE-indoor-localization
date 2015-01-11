@@ -1,5 +1,6 @@
 package com.eirb.projets9;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -16,6 +17,7 @@ import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Coordinate;
 import com.eirb.projets9.objects.Floor;
 import com.eirb.projets9.objects.MapBeacon;
+import com.eirb.projets9.objects.Notification;
 import com.eirb.projets9.objects.Room;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
@@ -45,11 +47,14 @@ public class ReferenceApplication extends Application {
 	
 	// Notification service, used for callbacks
 	public static NotificationService notificationService;
+	public static ArrayList<Notification> notificationList;
+	
 	
 	// Conference File Path
 	public static String conferenceFile;
 	public static String buildingFile;
 	public static String beaconsFile;
+	public static String notificationsFile;
 	
 	public static long lastTimestamp = 0;
 	
@@ -61,7 +66,6 @@ public class ReferenceApplication extends Application {
 	public static Typeface fontMedium;
 	public static Typeface fontThin;
 	public static Typeface fontLight;
-	
 	
 	@Override
 	public void onCreate() {
@@ -75,16 +79,18 @@ public class ReferenceApplication extends Application {
 		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
 		buildingFile = getFilesDir().getAbsolutePath().concat("/building");
 		beaconsFile = getFilesDir().getAbsolutePath().concat("/beacons");
+		notificationsFile = getFilesDir().getAbsolutePath().concat("/notifications");
 
 		// Fonts
 		fontMedium = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Md.otf");
 		fontThin = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Th.otf");
 		fontLight = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Lt.otf");
 		
+		if(new File(notificationsFile).exists()){
+			notificationList = deserializeNotifications();
+		}
+		
 		// TODO : To be removed
-//		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","238",-1,-1,new Coordinate(120, 660)));
-//		mapBeacons.add(new MapBeacon("e2c56db5-dffb-48d2-b060-d0f5a71096e0","1","232",-1,-1,new Coordinate(980, 660)));
-//		mapBeacons.add(new MapBeacon("01122334-4556-6778-899a-abbccddeeff0","1","42",-1,-1,new Coordinate(980, 1300)));
 		
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","238",-1,-1,new Coordinate(120, 660)));
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","232",-1,-1,new Coordinate(980, 660)));
@@ -149,6 +155,21 @@ public class ReferenceApplication extends Application {
 		
 	}
 	
+	public static void serializeNotifications() {
+		
+		try{
+			 
+			FileOutputStream fout = new FileOutputStream(notificationsFile);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);   
+			oos.writeObject(notificationList);
+			oos.close();
+			System.out.println("Done");
+	 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+	}
 	
 	/* Get object from file */
 	 public static Conference deserializeConference(){
@@ -204,6 +225,24 @@ public class ReferenceApplication extends Application {
 			return null;
 		}
 	}
+	
+	private ArrayList<Notification> deserializeNotifications() {
+		ArrayList<Notification> notifs;
+		try {
+
+			FileInputStream fin = new FileInputStream(notificationsFile);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			notifs = (ArrayList<Notification>) ois.readObject();
+			ois.close();
+
+			return notifs;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
 	 
 	 
 	 /* Get Coordinates of a beacon for a given uuid - major - minor */
@@ -265,5 +304,7 @@ public class ReferenceApplication extends Application {
 	
 		 return null;
 	 }
+
+	
 	 
 }

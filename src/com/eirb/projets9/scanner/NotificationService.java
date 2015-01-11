@@ -76,6 +76,7 @@ public class NotificationService extends Service{
         				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase()))
         					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor()))
         						if (beaconsList.get(k).getMinor() == Integer.parseInt(br.getMinor())){
+        							System.out.println("NOTIF");
         							generateNotification(c, beaconsList.get(k).getRoom_id(), br);
         						}
         							
@@ -132,9 +133,16 @@ public class NotificationService extends Service{
             mNotifyMgr.notify(Integer.parseInt(br.getMinor()), mBuilder.build());
             
             
+            if(ReferenceApplication.notificationList == null)
+            	ReferenceApplication.notificationList = new ArrayList<com.eirb.projets9.objects.Notification>();
             
+            ReferenceApplication.notificationList.add(0, new com.eirb.projets9.objects.Notification(new Date().getTime(), talk,roomName));
+            ReferenceApplication.serializeNotifications();
             
             br.setNotified(true);
+        }
+        else{
+        	System.out.println("TRUC NULL");
         }
         
  
