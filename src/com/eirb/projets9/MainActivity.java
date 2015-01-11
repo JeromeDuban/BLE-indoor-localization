@@ -344,7 +344,6 @@ public class MainActivity extends Activity{
     	 
 		if(file.delete()){
 			ReferenceApplication.records.clear();
-			Toast.makeText(this, "Delete conf done", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(this, "Delete conf failed", Toast.LENGTH_SHORT).show();
 		}
@@ -353,9 +352,16 @@ public class MainActivity extends Activity{
    	 
 		if(file.delete()){
 			ReferenceApplication.records.clear();
-			Toast.makeText(this, "Delete build done", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(this, "Delete build failed", Toast.LENGTH_SHORT).show();
+		}
+		
+		file = new File(ReferenceApplication.beaconsFile);
+	   	 
+		if(file.delete()){
+			ReferenceApplication.records.clear();
+		}else{
+			Toast.makeText(this, "Delete beacons failed", Toast.LENGTH_SHORT).show();
 		}	
     }
     

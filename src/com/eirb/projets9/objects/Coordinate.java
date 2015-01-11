@@ -1,7 +1,13 @@
 package com.eirb.projets9.objects;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8239818977121294096L;
 	private int x;
 	private int y;
 	

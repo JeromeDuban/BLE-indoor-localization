@@ -5,16 +5,21 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.app.Application;
 import android.graphics.Typeface;
 
+import com.eirb.projets9.objects.Beacon;
 import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
 import com.eirb.projets9.objects.Coordinate;
 import com.eirb.projets9.objects.Floor;
 import com.eirb.projets9.objects.MapBeacon;
 import com.eirb.projets9.objects.Room;
+import com.eirb.projets9.objects.Session;
+import com.eirb.projets9.objects.Talk;
+import com.eirb.projets9.objects.Track;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.NotificationService;
 
@@ -26,7 +31,7 @@ public class ReferenceApplication extends Application {
 	/* VARIABLES */
 	
 	// Time before being notified
-	public static final int TIME_TO_BE_NOTIFIED = 10;
+	public static final int TIME_TO_BE_NOTIFIED = 2;
 	// Maximum distance to be notified
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	
@@ -44,6 +49,7 @@ public class ReferenceApplication extends Application {
 	// Conference File Path
 	public static String conferenceFile;
 	public static String buildingFile;
+	public static String beaconsFile;
 	
 	public static long lastTimestamp = 0;
 	
@@ -68,6 +74,7 @@ public class ReferenceApplication extends Application {
 		mapBeacons = new ArrayList<MapBeacon>();
 		conferenceFile = getFilesDir().getAbsolutePath().concat("/conference");
 		buildingFile = getFilesDir().getAbsolutePath().concat("/building");
+		beaconsFile = getFilesDir().getAbsolutePath().concat("/beacons");
 
 		// Fonts
 		fontMedium = Typeface.createFromAsset(getAssets(), "HelveticaNeueLTStd-Md.otf");
@@ -121,9 +128,24 @@ public class ReferenceApplication extends Application {
 			oos.close();
 			System.out.println("Done");
 	 
-		   }catch(Exception ex){
-			   ex.printStackTrace();
-		   }
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void serializeBeaconList(
+			ArrayList<com.eirb.projets9.objects.Beacon> beaconList) {
+		try{
+			 
+			FileOutputStream fout = new FileOutputStream(beaconsFile);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);   
+			oos.writeObject(beaconList);
+			oos.close();
+			System.out.println("Done");
+	 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		
 	}
 	
@@ -163,7 +185,25 @@ public class ReferenceApplication extends Application {
 			   ex.printStackTrace();
 			   return null;
 		   } 
-	   } 
+	   }
+	 
+	public static ArrayList<com.eirb.projets9.objects.Beacon> deserializeBeacons() {
+
+		ArrayList<com.eirb.projets9.objects.Beacon> beacons;
+		try {
+
+			FileInputStream fin = new FileInputStream(beaconsFile);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			beacons = (ArrayList<Beacon>) ois.readObject();
+			ois.close();
+
+			return beacons;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
 	 
 	 
 	 /* Get Coordinates of a beacon for a given uuid - major - minor */
@@ -203,72 +243,27 @@ public class ReferenceApplication extends Application {
 		 }
 		 return null;
 	 }
+	 
+	 public static Talk getNextTalk(int roomID){
+		 
+		 Conference c = deserializeConference();
+		 
+		 for (int i = 0; i < c.getList().size() ; i++){
+			 Track track = c.getList().get(i);
+			 for (int j = 0 ; j < track.getList().size() ; j++){
+				 Session session = track.getList().get(j);
+				 
+				 if(session.getRoom_id() == roomID){
+					 ArrayList<Talk> list = session.getList();
+					 Collections.sort(list);
+					 if(list.size() > 0){
+						 return list.get(0);
+					 }
+				 }
+			 }
+		 }
 	
+		 return null;
+	 }
 	 
-	 /* ------ OLD METHODS ---------- */
-	 
-//		public static void writeToFile(String content, String path) {
-//	 
-//	FileOutputStream fop = null;
-//	File file;
-//
-//	try {
-//
-//		file = new File(path);
-//		fop = new FileOutputStream(file);
-//
-//		// if file doesn't exists, then create it
-//		if (!file.exists()) {
-//			file.createNewFile();
-//		}
-//
-//		// get the content in bytes
-//		byte[] contentInBytes = content.getBytes();
-//
-//		fop.write(contentInBytes);
-//		fop.flush();
-//		fop.close();
-//
-//	} catch (IOException e) {
-//		e.printStackTrace();
-//	} finally {
-//		try {
-//			if (fop != null) {
-//				fop.close();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//}
-
-//public static String readFromFile(String path) {
-//	 
-//	BufferedReader br = null;
-//	String file = "";
-//
-//	try {
-//
-//		String sCurrentLine;
-//
-//		br = new BufferedReader(new FileReader(path));
-//
-//		while ((sCurrentLine = br.readLine()) != null) {
-//			file = file.concat(sCurrentLine);
-//		}
-//
-//	} catch (IOException e) {
-//		e.printStackTrace();
-//	} finally {
-//		try {
-//			if (br != null)br.close();
-//		} catch (IOException ex) {
-//			ex.printStackTrace();
-//		}
-//	}
-//	return file;
-//}
-	 
-	 
-	
 }

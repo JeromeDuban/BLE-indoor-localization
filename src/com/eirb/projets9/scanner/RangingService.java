@@ -35,6 +35,7 @@ import android.os.RemoteException;
 import com.eirb.projets9.ReferenceApplication;
 import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
+import com.eirb.projets9.objects.Coordinate;
 import com.eirb.projets9.objects.Floor;
 import com.eirb.projets9.objects.Room;
 import com.eirb.projets9.objects.Session;
@@ -59,6 +60,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 	private Building buildToSave;
 	private ArrayList<Floor> floorList;
 	private ArrayList<Room> roomList;
+	
+	private ArrayList<com.eirb.projets9.objects.Beacon> beaconList;
 	
 	@SuppressWarnings("unused")	private BackgroundPowerSaver mBackgroundPowerSaver;
 	@SuppressWarnings("unused")	private RegionBootstrap mRegionBootstrap;
@@ -111,6 +114,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 
             			downloadBuilding("https://gist.githubusercontent.com/frco9/3670e5e353aadea2c417/raw/7ae27e0ac33388cfbc35107e802feeaf51535c18/Topology_10.json",beacon.getId2().toInt());
             			downloadConference("https://gist.githubusercontent.com/jejefcgb/04bd319ac8dc428911c1/raw/Conference_10.json", beacon.getId2().toInt());
+            			downloadBeacon("https://gist.githubusercontent.com/jejefcgb/31e6dcd7ee2b98cc06d5/raw/", beacon.getId2().toInt());
 //            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
             		}
                 }
@@ -419,6 +423,85 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}					
+			}
+			
+		} else {
+			System.out.println("Not online");
+		}
+		
+	}
+	
+	
+	public void downloadBeacon(String url, int major){
+		if (isOnline()) {
+			StringBuilder response = new StringBuilder();
+			
+			// GET file from server
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse execute;
+			InputStream content;
+			try {
+				execute = client.execute(httpGet);
+				content = execute.getEntity().getContent();
+				BufferedReader buffer = new BufferedReader(
+						new InputStreamReader(content));
+				String s = "";
+				while ((s = buffer.readLine()) != null) {
+					response.append(s);
+					response.append("\n");
+				}
+			} catch (ClientProtocolException e) {
+				System.out.println(e);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			//Check answer
+			System.out.println(response.toString());
+			
+			// Parse json
+			if (!response.toString().equals("")) {
+				System.out.println("Writing beacon file");
+
+				String json = response.toString();
+				
+				System.out.println("Valid json : " + isJSONValid(json));
+
+				beaconList = null;
+				beaconList = new ArrayList<com.eirb.projets9.objects.Beacon>();
+				
+				try {
+					JSONArray beacons = new JSONArray(json);
+					for (int i = 0 ; i < beacons.length() ; i++){
+						JSONObject beacon = beacons.getJSONObject(i);
+						com.eirb.projets9.objects.Beacon b = new com.eirb.projets9.objects.Beacon();
+						
+						b.setId(Integer.parseInt(beacon.getString("id")));
+						b.setUuid(beacon.getString("uuid"));
+						b.setMajor(Integer.parseInt(beacon.getString("major")));
+						b.setMinor(Integer.parseInt(beacon.getString("minor")));
+						b.setFloor_id(Integer.parseInt(beacon.getString("floor_id")));
+						b.setRoom_id(Integer.parseInt(beacon.getString("room_id")));
+						
+						JSONObject coordinates = beacon.getJSONObject("coordinates");
+						b.setCoordinates(new Coordinate(Integer.parseInt(coordinates.getString("x")), Integer.parseInt(coordinates.getString("y"))));
+
+						beaconList.add(b);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(beaconList != null){
+					System.out.println(beaconList);
+					ReferenceApplication.serializeBeaconList(beaconList);
+				}
+				else
+					System.out.println("confToSave == null");
+					
+					
 			}
 			
 		} else {

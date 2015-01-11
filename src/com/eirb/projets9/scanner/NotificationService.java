@@ -11,10 +11,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.eirb.projets9.MainActivity;
 import com.eirb.projets9.R;
 import com.eirb.projets9.ReferenceApplication;
+import com.eirb.projets9.objects.Beacon;
+import com.eirb.projets9.objects.Talk;
 
 public class NotificationService extends Service{
 	
@@ -42,6 +45,9 @@ public class NotificationService extends Service{
     public void recordCallback(){
 //    	System.out.println("CALLBACK");
 //    	System.out.println(records.toString());
+    	
+    	ArrayList<Beacon> beaconsList = ReferenceApplication.deserializeBeacons();
+    	
     	for (int i = 0; i < records.size() ; i++ ){
     		BeaconRecord br = records.get(i);
     		
@@ -63,8 +69,21 @@ public class NotificationService extends Service{
     		}
     		if(j >= 0 && notif && br.getList().get(j).getDistance() < ReferenceApplication.DISTANCE_TO_BE_NOTIFIED && (new Date().getTime() - br.getList().get(j).getTimestamp()) >= ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000){
     			System.out.println("MORE THAN 10 seconds");
-    			generateNotification(c, br.getUuid()+"|"+br.getMajor()+"|"+br.getMinor());
-    			br.setNotified(true);
+    			
+    			/* GET DATA */
+    			if (beaconsList != null){
+    				for (int k = 0; k < beaconsList.size() ;k++){
+        				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase()))
+        					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor()))
+        						if (beaconsList.get(k).getMinor() == Integer.parseInt(br.getMinor())){
+        							generateNotification(c, beaconsList.get(k).getRoom_id(), br);
+        						}
+        							
+        			}	
+    			}
+    			
+//    			generateNotification(c, br.getUuid()+"|"+br.getMajor()+"|"+br.getMinor());
+//    			br.setNotified(true);
     		}
     		
     		
@@ -72,41 +91,52 @@ public class NotificationService extends Service{
     	}
     }
     
-    private static void generateNotification(Context context, String message) {
+    private static void generateNotification(Context context, int roomID, BeaconRecord br) {
         int icon = R.drawable.ic_launcher;
          
-        String delims = "\\|";
-        String[] tokens = message.split(delims);
-         
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context)
-                .setSmallIcon(icon)
-                .setContentTitle(tokens[0])
-                .setContentText("major : " + tokens[1] +" // minor : " + tokens[2])
-                .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE)
-                .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("major : " + tokens[1]+ "\nminor : " + tokens[2]))
-                ;
-         
-        Intent resultIntent = new Intent(context, MainActivity.class);
-        resultIntent.putExtra("goTo", "notif");
-         
-        // Because clicking the notification opens a new ("special") activity, there's
-        // no need to create an artificial back stack.
-        PendingIntent resultPendingIntent =
-            PendingIntent.getActivity(
-            context,
-            0,
-            resultIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        );
-         
-        mBuilder.setContentIntent(resultPendingIntent);
-         
-        NotificationManager mNotifyMgr = 
-                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        // Builds the notification and issues it.
-        mNotifyMgr.notify(Integer.parseInt(tokens[2]), mBuilder.build());
+//        String delims = "\\|";
+//        String[] tokens = i.split(delims);
+        
+        Talk talk = ReferenceApplication.getNextTalk(roomID);
+        String roomName = ReferenceApplication.getRoomName(ReferenceApplication.deserializeBuilding(), roomID);
+        
+        if (talk != null && roomName != null){
+        	NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                    .setSmallIcon(icon)
+                    .setContentTitle("Coming : " + talk.getTitle())
+                    .setContentText("Room " + roomName )
+                    .setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_VIBRATE)
+                    .setAutoCancel(true)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(talk.getConfAbstract()));
+                    ;
+             
+            Intent resultIntent = new Intent(context, MainActivity.class);
+            resultIntent.putExtra("goTo", "notif");
+             
+            // Because clicking the notification opens a new ("special") activity, there's
+            // no need to create an artificial back stack.
+            PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                context,
+                0,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            );
+             
+            mBuilder.setContentIntent(resultPendingIntent);
+             
+            NotificationManager mNotifyMgr = 
+                    (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            // Builds the notification and issues it.
+            mNotifyMgr.notify(Integer.parseInt(br.getMinor()), mBuilder.build());
+            
+            
+            
+            
+            br.setNotified(true);
+        }
+        
  
     }
     
