@@ -41,6 +41,8 @@ public class MapView extends View {
 	long startTime;
 	long duration;
 	long time;
+	
+	boolean searching = false;
 
 	static final int MAX_DURATION = 300;
 
@@ -60,7 +62,7 @@ public class MapView extends View {
 
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
-
+			System.out.println("ON SCALE");
 			final float originalScale = mCalculatedScale;
 			final float scale = detector.getScaleFactor();
 			mScaleFactor = mScaleFactor*detector.getScaleFactor();
@@ -146,15 +148,18 @@ public class MapView extends View {
 		
 		System.out.println("MapView : ON DRAW");
 		contour = MapModel.getContour();
-
-		mCalculatedScale = Math.min((float)canvas.getWidth()/(float)svgWidth, (float)canvas.getHeight()/(float)svgHeight);
+		
+		// TODO : fix mCalculatedScale when searching
+		
+		if (!searching)
+			mCalculatedScale = Math.min((float)canvas.getWidth()/(float)svgWidth, (float)canvas.getHeight()/(float)svgHeight);
+		
 		mCanvasWidth = canvas.getWidth();
 		mCanvasHeight = canvas.getHeight();
 		//translation
 		canvas.translate(mPosX, mPosY);
-
-		//zoom
-
+		
+		
 		canvas.scale(mCalculatedScale *mScaleFactor, mCalculatedScale *mScaleFactor);
 
 
@@ -359,6 +364,8 @@ public class MapView extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
 
+		System.out.println("ON TOUCH EVENT");
+		
 		//zoom detector
 		mScaleDetector.onTouchEvent(ev);
 
@@ -638,6 +645,13 @@ public Path addDot(double x, double y, int radius) {
 
 		return polygonPath;
 	}
+
+
+public void setSearching(boolean searching) {
+	this.searching = searching;
+}
+
+
 
 }
 

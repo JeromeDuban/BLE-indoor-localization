@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map_linear_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal" >
 
-    <!--
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/search"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:id="@+id/map_linear_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/editText"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:background="#EEFFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText" >
+    </ListView>
+
+        <!--
     <LinearLayout
         android:id="@+id/map_flat_button_bar"
         android:layout_width="fill_parent"
@@ -49,10 +75,10 @@
             android:layout_height="wrap_content"
             android:text="3" />
     </LinearLayout>
-    -->
+        -->
 
 
-    <!--
+        <!--
     <RelativeLayout
         android:id="@+id/map_complete_view_layout"
         android:layout_width="fill_parent"
@@ -65,40 +91,19 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Vue d&apos;ensemble" />
-    </RelativeLayout>
-    -->
+            android:text="Vue d&apos;ensemble"/>
+            </RelativeLayout>
 
-    <Spinner
-        android:id="@+id/rooms_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_research_bar"
-        android:layout_centerHorizontal="true"
-        android:spinnerMode="dropdown"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/rooms_spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/search"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:singleLine="true"/>
+            android:layout_below="@+id/title_research_bar"
+            android:layout_centerHorizontal="true"
+            android:spinnerMode="dropdown"
+            android:visibility="gone" />-->
+    
+    
+  
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editText" >
-        </ListView>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

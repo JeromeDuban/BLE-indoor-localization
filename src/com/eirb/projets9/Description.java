@@ -28,7 +28,7 @@ public class Description extends Activity{
 			subtitle.setText("Room " + su);
 		if((st = getIntent().getExtras().getString("Start")) != null )
 			subtitle.setText(subtitle.getText()+", From "+st);
-		if((en = getIntent().getExtras().getString("Start")) != null )
+		if((en = getIntent().getExtras().getString("End")) != null )
 			subtitle.setText(subtitle.getText()+" to "+en);
 		if((bo = getIntent().getExtras().getString("Body")) != null )
 			body.setText(bo);

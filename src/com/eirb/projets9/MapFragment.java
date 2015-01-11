@@ -165,14 +165,30 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	    input = (EditText) rootView.findViewById(R.id.editText);
 	    list.setVisibility(View.GONE);
 	    
-	    ArrayList<String> l = new ArrayList<String>();
-	    l.add("I001");
-	    l.add("I002");
-	    l.add("I003");
-	    l.add("I004");
+	    /* 
+	     * 
+	     * TODO : Needs to be automatic 
+	     * 
+	     * */
 	    
-	    String[] array = new String[l.size()];
-	    l.toArray(array);
+	    final ArrayList<String> display = new ArrayList<String>();
+	    display.add("I001");
+	    display.add("I002");
+	    display.add("I003");
+	    display.add("I004");
+	    display.add("Grand Amphithéâtre");
+	    display.add("Sujet n°1");
+	    
+	    String[] array = new String[display.size()];
+	    display.toArray(array);
+	    
+	    final ArrayList<String> action = new ArrayList<String>();
+	    action.add("I001");
+	    action.add("I002");
+	    action.add("I003");
+	    action.add("I004");
+	    action.add("Grand Amphithéâtre");
+	    action.add("Grand Amphithéâtre");
 	    
 
 	    adapter =  new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 , array);
@@ -187,13 +203,16 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	        public void onTextChanged( CharSequence arg0, int arg1, int arg2, int arg3){
 	            // TODO Auto-generated method stub
 	        	list.setVisibility(View.VISIBLE);
-	        	if(arg3 == 0)
+	        	if(arg3 == 0){
 	        		list.setVisibility(View.GONE);
+	        		map.setSearching(false);
+	        	}
+	        		
 	        }
 
 	        @Override
 	        public void beforeTextChanged( CharSequence arg0, int arg1, int arg2, int arg3) {
-	            // TODO Auto-generated method stub
+	        	map.setSearching(true);
 
 	        }
 
@@ -213,10 +232,19 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 //				Toast.makeText(getActivity(), adapter.getItem(arg2), Toast.LENGTH_SHORT).show();
 				input.setText(adapter.getItem(arg2));
 				list.setVisibility(View.GONE);
+				map.setSearching(false);
+				
+				int mAction = 0;
+				
+				for (int i = 0 ; i < display.size() ; i++){
+					if(adapter.getItem(arg2).equals(display.get(i))){
+						mAction = i;
+					}
+				}
 				
 				for(int i = 0; i < clickableRectangles.size(); i++){
 					Log.d("RECTANGLE NAME", clickableRectangles.get(i).getName());
-					if(adapter.getItem(arg2).equals(clickableRectangles.get(i).getName())){
+					if(action.get(mAction).equals(clickableRectangles.get(i).getName())){
 						clickableRectangles.get(i).setState(0);
 					}
 					else {
@@ -227,7 +255,7 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 				for(int i = 0; i < clickablePolygons.size(); i++)
 				{
 					Log.d("POLYGON NAME", clickablePolygons.get(i).getName());
-					if(adapter.getItem(arg2).equals(clickablePolygons.get(i).getName())){
+					if(action.get(mAction).equals(clickablePolygons.get(i).getName())){
 						clickablePolygons.get(i).setState(0);
 					}
 					else {
