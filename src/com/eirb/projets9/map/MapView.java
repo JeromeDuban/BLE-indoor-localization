@@ -328,25 +328,61 @@ public class MapView extends View {
 			double y = 0;
 			double sum = 0;
 			
-			for (int i=0; i<brList.size() ; i++){
-				BeaconRecord br = brList.get(i);
-				if (ReferenceApplication.isInMapBeacon(br)){
-					ArrayList<ScanRecord> list = br.getList();
-					double distance = list.get(list.size()-1).getDistance();
+			if (brList.size() >= 2){
+				if (brList.size() >= ReferenceApplication.lastNumberofBeacons){
+					for (int i=0; i<brList.size() ; i++){
+						BeaconRecord br = brList.get(i);
+						if (ReferenceApplication.isInMapBeacon(br)){
+							ArrayList<ScanRecord> list = br.getList();
+							double distance = list.get(list.size()-1).getDistance();
+							System.out.println(distance);
+							Coordinate c = ReferenceApplication.getCoordinate(br.getUuid(), br.getMajor(), br.getMinor());
+							
+							x += (1/distance)*c.getX();
+							y += (1/distance)*c.getY();
+							sum += (1/distance);
+						}
+					}
 					
-					Coordinate c = ReferenceApplication.getCoordinate(br.getUuid(), br.getMajor(), br.getMinor());
+					x = x / sum;
+					y = y / sum;
 					
-					x += (1/distance)*c.getX();
-					y += (1/distance)*c.getY();
-					sum += (1/distance);
+					if(x != 0 && y != 0){
+						
+						ReferenceApplication.lastX = x;
+						ReferenceApplication.lastY = y;
+						ReferenceApplication.lastNumberofBeacons = brList.size();
+						canvas.drawPath(addDot(x,y,15), mBlue);
+						canvas.drawPath(addDot(x,y,20), mBlueStroke);
+					}
+					else{
+						ReferenceApplication.lastNumberofBeacons = brList.size();
+						x = ReferenceApplication.lastX;
+						y = ReferenceApplication.lastY;
+						canvas.drawPath(addDot(x,y,15), mBlue);
+						canvas.drawPath(addDot(x,y,20), mBlueStroke);
+					}
 				}
+				else{
+					ReferenceApplication.lastNumberofBeacons = brList.size();
+					x = ReferenceApplication.lastX;
+					y = ReferenceApplication.lastY;
+					canvas.drawPath(addDot(x,y,15), mBlue);
+					canvas.drawPath(addDot(x,y,20), mBlueStroke);
+				}
+				
+			}
+			else{
+				ReferenceApplication.lastNumberofBeacons = brList.size();
+				x = ReferenceApplication.lastX;
+				y = ReferenceApplication.lastY;
+				canvas.drawPath(addDot(x,y,15), mBlue);
+				canvas.drawPath(addDot(x,y,20), mBlueStroke);
 			}
 			
-			x = x / sum;
-			y = y / sum;
-			
-			canvas.drawPath(addDot(x,y,15), mBlue);
-			canvas.drawPath(addDot(x,y,20), mBlueStroke);
+			System.out.println(x);
+			System.out.println(y);
+			System.out.println("=====================");
 			
 			
 		}

@@ -60,6 +60,7 @@ public class ReferenceApplication extends Application {
 	
 	public static double lastX = -1;
 	public static double lastY = -1;
+	public static int lastNumberofBeacons = 0;
 	
 	
 	/* FONTS */
