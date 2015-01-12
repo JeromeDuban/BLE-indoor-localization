@@ -67,6 +67,10 @@ public class ReferenceApplication extends Application {
 	public static Typeface fontThin;
 	public static Typeface fontLight;
 	
+	
+	public static MainActivity mainActivity;
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -304,7 +308,4 @@ public class ReferenceApplication extends Application {
 	
 		 return null;
 	 }
-
-	
-	 
 }

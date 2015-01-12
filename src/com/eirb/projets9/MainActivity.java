@@ -18,6 +18,7 @@ import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.service.notification.NotificationListenerService;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -49,8 +50,8 @@ public class MainActivity extends Activity{
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
 
-	private ArrayList<NavDrawerItem> navDrawerItems;
-	private NavDrawerListAdapter adapter;
+	private static ArrayList<NavDrawerItem> navDrawerItems;
+	private static NavDrawerListAdapter adapter;
 	
 	private String conferenceFile;
 	private BluetoothAdapter mBluetoothAdapter;
@@ -72,6 +73,7 @@ public class MainActivity extends Activity{
 		
 		startService(new Intent(this, RangingService.class));
 		startService(new Intent(this, NotificationService.class));
+		ReferenceApplication.mainActivity = this;
 		
 		/* Start Fading animation */
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -134,13 +136,13 @@ public class MainActivity extends Activity{
 		// Find People
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
 		// Photos
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "22"));
+
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "0"));
 		// Communities, Will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "50+"));
-		
-
+//		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "50+"));
+				
 		// Recycle the typed array
 		navMenuIcons.recycle();
 
@@ -169,15 +171,28 @@ public class MainActivity extends Activity{
 			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to hide action bar icons
+				changeCount();
 				invalidateOptionsMenu();
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		
-		if (savedInstanceState == null) {
-			// on first time display view for first nav item
-			displayView(0); // TODO changed for the development ( displays the map instead of home)
-		}
+		// Coming from notification
+		Bundle extras = getIntent().getExtras();
+	    if(extras != null){
+
+	        if(extras.containsKey("goTo")){
+	        	displayView(2); // NOTIFICATIONS
+	        }
+	    }
+	    else{
+	    	// First launch
+		    if (savedInstanceState == null) {
+				// on first time display view for first nav item
+				displayView(0); 
+			}
+	    }
+	    
 	}
 
 	/**
@@ -248,9 +263,9 @@ public class MainActivity extends Activity{
 		case 3:
 			fragment = new PlanningFragment();
 			break;
-		case 4:
-			fragment = new ScanBLE();
-			break;
+//		case 4:
+//			fragment = new ScanBLE();
+//			break;
 		
 
 		default:
@@ -383,7 +398,12 @@ public class MainActivity extends Activity{
 		mDrawerList.setSelection(1);
 		setTitle(navMenuTitles[1]);
 		mDrawerLayout.closeDrawer(mDrawerList);
-    	
-    	
+    }
+    
+    public void changeCount(){
+    	if (ReferenceApplication.notificationList != null){
+    		navDrawerItems.get(2).setCount(Integer.toString(ReferenceApplication.notificationList.size()));
+        	adapter.notifyDataSetChanged();
+    	}
     }
 }
