@@ -39,7 +39,6 @@ public class Description extends Activity{
 			@Override
 			public void onClick(View v) {
 				Intent resultIntent = new Intent();
-				
 		    	resultIntent.putExtra("room", room);
 		    	setResult(RESULT_OK, resultIntent);
 				finish();

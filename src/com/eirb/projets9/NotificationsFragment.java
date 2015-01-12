@@ -3,6 +3,7 @@ package com.eirb.projets9;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -40,18 +41,22 @@ public class NotificationsFragment extends Fragment {
         
         listNotif= (LinearLayout) rootView.findViewById(R.id.listNotif);
         a = (MainActivity) getActivity();
+        
+        final ArrayList<Integer> index = new ArrayList<Integer>();
 
         if (ReferenceApplication.notificationList != null){
 //        	Toast.makeText(getActivity(), "NOT NULL " + Integer.toString(ReferenceApplication.notificationList.size()), Toast.LENGTH_SHORT).show();
+        	//////////////////////////////////////
         	
-        	for (int i = 0; i < ReferenceApplication.notificationList.size(); i++) {
-    			
-    			inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        	final ViewGroup dismissableContainer = (ViewGroup) rootView.findViewById(R.id.listNotif);
+            for (int i = 0; i < ReferenceApplication.notificationList.size(); i++) {
+            	index.add(i);
+            	inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     			View view = inflater.inflate(R.layout.notification_element,listNotif, false);
     			
     			Notification n = ReferenceApplication.notificationList.get(i);
     			
-    			RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.content);
+    			final RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.content);
     			
 				// set Title
 				TextView title = (TextView) view.findViewById(R.id.titleNotif);
@@ -83,10 +88,29 @@ public class NotificationsFragment extends Fragment {
 						startActivityForResult(intent, 0);
 					}
 					});
-    			
-    			
-    			listNotif.addView(view);
-    		}
+
+                final int j = i; 
+                // Create a generic swipe-to-dismiss touch listener.
+                layout.setOnTouchListener(new com.eirb.projets9.swipedismiss.SwipeDismissTouchListener(
+                        layout,
+                        null,
+                        new com.eirb.projets9.swipedismiss.SwipeDismissTouchListener.OnDismissCallback() {
+                            @Override
+                            public void onDismiss(View view, Object token) {
+                                dismissableContainer.removeView(layout);
+                                int k;
+                                for (k = 0; k < index.size() ; k++){
+                                	if (index.get(k) == j){
+                                		index.remove(k);
+                                		ReferenceApplication.notificationList.remove(k); // TODO To be changed
+                                        ReferenceApplication.serializeNotifications();
+                                	}
+                                }                                
+                            }
+                        }));
+
+                listNotif.addView(view);
+            }
         }
 //        else
 //        	Toast.makeText(getActivity(), "NULL", Toast.LENGTH_SHORT).show();
