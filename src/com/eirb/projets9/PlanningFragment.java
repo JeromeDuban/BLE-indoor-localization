@@ -34,19 +34,19 @@ public class PlanningFragment extends Fragment {
 
 	public PlanningFragment(){}
 	
-    LinearLayout listPlanning;
+    private LinearLayout listPlanning;
 //    DateFormat df = new SimpleDateFormat("hh:'00' a");
     
-    DateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
-    DateFormat d = new SimpleDateFormat("EEE, d MMM", Locale.US);
+    private DateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
+    private DateFormat d = new SimpleDateFormat("EEE, d MMM", Locale.US);
     
-    Building building = null;
+    private Building building = null;
     
-    Date previous = null;
+    private Date previous = null;
     
-    MainActivity a;
+    private MainActivity a;
     
-    SparseIntArray array = new SparseIntArray();
+    private SparseIntArray array = new SparseIntArray();
     
     
 	

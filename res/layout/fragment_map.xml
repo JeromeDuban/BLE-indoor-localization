@@ -11,6 +11,7 @@
         android:layout_margin="5dp"
         android:background="@drawable/search"
         android:drawableLeft="@android:drawable/ic_menu_search"
+        android:hint="Search a track, a room"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:singleLine="true" />
@@ -25,7 +26,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/searchResults"
         android:background="#EEFFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

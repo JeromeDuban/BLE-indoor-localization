@@ -100,7 +100,12 @@ public class NotificationService extends Service{
 //        String[] tokens = i.split(delims);
         
         Talk talk = ReferenceApplication.getNextTalk(roomID);
-        String roomName = ReferenceApplication.getRoomName(ReferenceApplication.deserializeBuilding(), roomID);
+        
+        String roomName = "ERROR";
+        if (ReferenceApplication.deserializeBuilding() != null){
+        	roomName = ReferenceApplication.getRoomName(ReferenceApplication.deserializeBuilding(), roomID);
+        }
+         
         
         if (talk != null && roomName != null){
         	NotificationCompat.Builder mBuilder =

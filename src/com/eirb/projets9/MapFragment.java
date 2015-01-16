@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -100,68 +101,7 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 			}
 		}
 
-		//       research bar 
-//		Spinner spinner = (Spinner) rootView.findViewById(R.id.rooms_spinner);
-//		spinner.setPrompt("Go To");
-//		//spinner.setOnItemSelectedListener(this);
-//		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//			@Override
-//			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {                
-//				Log.d("MAPFRAGMENT",parent.getItemAtPosition(position).toString());
-//
-//				for(int i = 0; i < clickableRectangles.size(); i++)
-//				{
-//					Log.d("RECTANGLE NAME", clickableRectangles.get(i).getName());
-//					if(parent.getItemAtPosition(position).toString().equals(clickableRectangles.get(i).getName())){
-//						clickableRectangles.get(i).setState(0);
-//						Log.d("IF NAME ==", "HELLO");
-//					}
-//
-//					else {
-//						clickableRectangles.get(i).setState(3);
-//					}
-//				}
-//
-//				for(int i = 0; i < clickablePolygons.size(); i++)
-//				{
-//					Log.d("POLYGON NAME", clickablePolygons.get(i).getName());
-//					if(parent.getItemAtPosition(position).toString().equals(clickablePolygons.get(i).getName())){
-//						clickablePolygons.get(i).setState(0);
-//						Log.d("IF NAME ==", "HELLO");
-//					}
-//
-//					else {
-//						clickablePolygons.get(i).setState(3);
-//					}
-//				}
-//
-//				//If talks starts at position 3
-//				if (position >= 3) {
-//					for(int i = 0; i < clickablePolygons.size(); i++)
-//					{
-//						if(parent.getItemAtPosition(2).toString().equals(clickablePolygons.get(i).getName())){
-//							clickablePolygons.get(i).setState(0);
-//						}
-//					}
-//				}
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> parent) {
-//
-//			}
-//		});
-//
-//		// Create an ArrayAdapter using the string array and a default spinner layout
-//		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity().getApplicationContext(),
-//				R.array.rooms_array, R.layout.spinner_list_item);
-//		// Specify the layout to use when the list of choices appears
-//		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//		// Apply the adapter to the spinner
-//		spinner.setAdapter(adapter);
-
-		list = (ListView) rootView.findViewById(R.id.listView);
+		list = (ListView) rootView.findViewById(R.id.searchResults);
 	    input = (EditText) rootView.findViewById(R.id.editText);
 	    list.setVisibility(View.GONE);
 	    
@@ -233,6 +173,10 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 				input.setText(adapter.getItem(arg2));
 				list.setVisibility(View.GONE);
 				map.setSearching(false);
+				
+				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+					      Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
 				
 				int mAction = 0;
 				
