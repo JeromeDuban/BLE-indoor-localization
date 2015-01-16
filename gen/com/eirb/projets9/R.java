@@ -71,7 +71,8 @@ public final class R {
         public static final int search=0x7f020015;
     }
     public static final class id {
-        public static final int action_delete=0x7f0c0020;
+        public static final int action_delete=0x7f0c0021;
+        public static final int bar=0x7f0c001f;
         public static final int body=0x7f0c000b;
         public static final int button=0x7f0c0015;
         public static final int container=0x7f0c001c;
@@ -86,7 +87,7 @@ public final class R {
         public static final int icon=0x7f0c000c;
         public static final int imageView1=0x7f0c0017;
         public static final int imageView2=0x7f0c001b;
-        public static final int img=0x7f0c001f;
+        public static final int img=0x7f0c0020;
         public static final int line=0x7f0c0008;
         public static final int listNotif=0x7f0c0012;
         public static final int listSchedule=0x7f0c0013;

@@ -38,7 +38,8 @@
         </LinearLayout>
 
         <View
-            android:layout_width="2dp"
+            android:id="@+id/bar"
+            android:layout_width="2.5dp"
             android:layout_height="55dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"

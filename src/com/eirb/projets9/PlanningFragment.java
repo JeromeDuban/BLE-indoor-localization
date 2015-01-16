@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -14,12 +15,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eirb.projets9.objects.Building;
 import com.eirb.projets9.objects.Conference;
@@ -43,6 +45,10 @@ public class PlanningFragment extends Fragment {
     Date previous = null;
     
     MainActivity a;
+    
+    SparseIntArray array = new SparseIntArray();
+    
+    
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +80,22 @@ public class PlanningFragment extends Fragment {
             TextView end = (TextView) view.findViewById(R.id.end);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
-            
-            
+            View bar = view.findViewById(R.id.bar);
+
+            int roomId = l.get(i).getId();
+            if (array.get(roomId, -1) != -1){
+            	bar.setBackgroundColor(array.get(roomId));
+            }
+            else{
+            	Random rand = new Random();
+                int randomColor = 0xff000000 + rand.nextInt(0xFFFFFF);
+                System.out.println(randomColor);
+            	array.append(roomId, randomColor);
+            	bar.setBackgroundColor(randomColor);
+            	bar.invalidate();
+            }
+            	
+          
             final Talk t = l.get(i).getTalk();
             
             /* Date */
@@ -100,6 +120,7 @@ public class PlanningFragment extends Fragment {
             	listPlanning.addView(date);
             }
             previous = s;
+            
             
             
             /* Title */
@@ -140,6 +161,8 @@ public class PlanningFragment extends Fragment {
 					startActivityForResult(intent, 0);
 				}
 			});
+            
+            
             
             listPlanning.addView(view);
         }
