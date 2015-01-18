@@ -122,6 +122,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 	addScanRecord(br,sr);
                 	if (ReferenceApplication.displayRecords == true)
                 		System.out.println(br);
+                	System.out.println(br.getMinor() + " > " + sr.getDistance());
                 	ReferenceApplication.lastTimestamp = timestamp;
                 	ReferenceApplication.recordAdded();
                 }
@@ -240,7 +241,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 					
 					System.out.println(conf.getString("major") +":"+ Integer.toString(major));
 					
-					if (Integer.parseInt(conf.getString("major")) == major) {
+//					if (Integer.parseInt(conf.getString("major")) == major) {
 						Conference conference = new Conference();
 
 						conference.setId(Integer.parseInt(conf
@@ -310,7 +311,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 						}
 						conference.setList(trackList);
 						confToSave = conference;
-					}
+//					}
 
 //					}
 					// Save conference object to file
@@ -375,7 +376,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 					
 					System.out.println(build.getString("major") +":"+ Integer.toString(major));
 					
-					if (Integer.parseInt(build.getString("major")) == major) {
+//					if (Integer.parseInt(build.getString("major")) == major) {
 						Building building = new Building();
 						building.setMajor(Integer.parseInt(build.getString("major")));
 						building.setName(build.getString("name"));
@@ -409,7 +410,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 						}
 						building.setList(floorList);
 						buildToSave = building;
-					}
+//					}
 
 					// Save conference object to file
 					if(buildToSave != null){

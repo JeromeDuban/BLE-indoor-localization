@@ -140,12 +140,12 @@ public class BeaconRecord implements Comparable<BeaconRecord>{
 		return true;
 	}
 
-	
-	
+
+
 	@Override
 	public String toString() {
 		return "BeaconRecord [uuid=" + uuid + ", major=" + major + ", minor="
-				+ minor + ", list=" + list + "]";
+				+ minor + ", list=" + list + ", notified=" + notified + "]";
 	}
 
 

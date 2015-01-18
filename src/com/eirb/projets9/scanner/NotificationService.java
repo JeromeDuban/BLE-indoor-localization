@@ -56,9 +56,11 @@ public class NotificationService extends Service{
     		boolean notif = false;
     		
     		while (j>=0 && (new Date().getTime() - br.getList().get(j).getTimestamp()) < ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000 ){
+    			
+    			
     			 if( br.getList().get(j).getDistance() < ReferenceApplication.DISTANCE_TO_BE_NOTIFIED && !br.isNotified()){
-    				 System.out.println(j);
-    				 System.out.println(br.getList().get(j).getDistance());
+//    				 System.out.println(j);
+//    				 System.out.println(br.getMinor() + " : " + br.getList().get(j).getDistance());
     				 notif = true;
     			 }
     				 
@@ -68,19 +70,29 @@ public class NotificationService extends Service{
     			 }
     			j--;
     		}
-    		if(j >= 0 && notif && br.getList().get(j).getDistance() < ReferenceApplication.DISTANCE_TO_BE_NOTIFIED && (new Date().getTime() - br.getList().get(j).getTimestamp()) >= ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000){
-    			System.out.println("MORE THAN 10 seconds");
-    			
+    		if(j >= 0 && notif && !br.isNotified() && br.getList().get(j).getDistance() < ReferenceApplication.DISTANCE_TO_BE_NOTIFIED && (new Date().getTime() - br.getList().get(j).getTimestamp()) >= ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000){
+    			System.out.println("MORE THAN 10 seconds > Notification if in list");
+    			    			
     			/* GET DATA */
     			if (beaconsList != null){
     				for (int k = 0; k < beaconsList.size() ;k++){
-        				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase()))
-        					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor()))
+    					
+    					
+        				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase())){
+        					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor())){
         						if (beaconsList.get(k).getMinor() == Integer.parseInt(br.getMinor())){
         							System.out.println("NOTIF");
         							generateNotification(c, beaconsList.get(k).getRoom_id(), br);
+        							br.setNotified(true);
         						}
-        							
+        						else
+                					br.setNotified(true); // Don't need to notify because not in list
+        					}
+        					else
+            					br.setNotified(true); // Don't need to notify because not in list
+        				}
+        				else
+        					br.setNotified(true); // Don't need to notify because not in list
         			}	
     			}
     			

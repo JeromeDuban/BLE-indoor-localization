@@ -33,12 +33,12 @@ public class ReferenceApplication extends Application {
 	/* VARIABLES */
 	
 	// Time before being notified
-	public static final int TIME_TO_BE_NOTIFIED = 2;
+	public static final int TIME_TO_BE_NOTIFIED = 10;
 	// Maximum distance to be notified
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	
 	// Display records in logcat ?
-	public static final boolean displayRecords = false;
+	public static boolean displayRecords = false;
 	
 	// Beacons records
 	public static ArrayList<BeaconRecord> records;
@@ -97,9 +97,9 @@ public class ReferenceApplication extends Application {
 		
 		// TODO : To be removed
 		
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","238",-1,-1,new Coordinate(120, 660)));
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","232",-1,-1,new Coordinate(980, 660)));
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","10","42",-1,-1,new Coordinate(980, 1300)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","238",-1,-1,new Coordinate(120, 660)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(980, 660)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(980, 1300)));
 		
 		
 		
@@ -291,6 +291,8 @@ public class ReferenceApplication extends Application {
 	 public static Talk getNextTalk(int roomID){
 		 
 		 Conference c = deserializeConference();
+		 if (c == null)
+			 return null;
 		 
 		 for (int i = 0; i < c.getList().size() ; i++){
 			 Track track = c.getList().get(i);
