@@ -189,7 +189,7 @@ public class MainActivity extends Activity{
 	    	// First launch
 		    if (savedInstanceState == null) {
 				// on first time display view for first nav item
-				displayView(1); 
+				displayView(0); 
 			}
 	    }
 	    

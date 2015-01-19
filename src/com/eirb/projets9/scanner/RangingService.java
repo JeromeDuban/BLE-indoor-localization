@@ -112,8 +112,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
             		if (!file.exists()) {
             			System.out.println("Download started");
 
-            			downloadBuilding("https://gist.githubusercontent.com/frco9/3670e5e353aadea2c417/raw/7ae27e0ac33388cfbc35107e802feeaf51535c18/Topology_10.json",beacon.getId2().toInt());
-            			downloadConference("https://gist.githubusercontent.com/jejefcgb/04bd319ac8dc428911c1/raw/Conference_10.json", beacon.getId2().toInt());
+            			downloadBuilding("https://gist.githubusercontent.com/frco9/3670e5e353aadea2c417/raw/",beacon.getId2().toInt());
+            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/", beacon.getId2().toInt());
             			downloadBeacon("https://gist.githubusercontent.com/jejefcgb/31e6dcd7ee2b98cc06d5/raw/", beacon.getId2().toInt());
 //            			downloadConference("https://gist.githubusercontent.com/frco9/95a6ef89c7d4d4e72c82/raw/cc1684e795566c08103ce87b7841715a45aa5679/Conference_10.json", beacon.getId2().toInt());
             		}
@@ -296,7 +296,7 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 									talk.setEndTs(Long.parseLong(tal.getString("end_ts")));
 									talk.setSpeaker(tal.getString("speaker"));
 									talk.setConfAbstract(tal.getString("abstract"));
-									talk.setBody(tal.getString("abstract"));
+									talk.setBody(tal.getString("body"));
 
 									talkList.add(talk);
 								}

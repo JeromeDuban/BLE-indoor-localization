@@ -338,9 +338,9 @@ public class MapView extends View {
 							System.out.println(distance);
 							Coordinate c = ReferenceApplication.getCoordinate(br.getUuid(), br.getMajor(), br.getMinor());
 							
-							x += (1/distance)*c.getX();
-							y += (1/distance)*c.getY();
-							sum += (1/distance);
+							x += 1/(Math.pow(distance, 3/2))*c.getX();
+							y += 1/(Math.pow(distance, 3/2))*c.getY();
+							sum += 1/(Math.pow(distance, 3/2));
 						}
 					}
 					
@@ -352,23 +352,23 @@ public class MapView extends View {
 						ReferenceApplication.lastX = x;
 						ReferenceApplication.lastY = y;
 						ReferenceApplication.lastNumberofBeacons = brList.size();
-						canvas.drawPath(addDot(x,y,15), mBlue);
-						canvas.drawPath(addDot(x,y,20), mBlueStroke);
+						canvas.drawPath(addDot(x,y,Math.round(15/mScaleFactor)), mBlue);
+						canvas.drawPath(addDot(x,y,Math.round(20/mScaleFactor)), mBlueStroke);
 					}
 					else{
 						ReferenceApplication.lastNumberofBeacons = brList.size();
 						x = ReferenceApplication.lastX;
 						y = ReferenceApplication.lastY;
-						canvas.drawPath(addDot(x,y,15), mBlue);
-						canvas.drawPath(addDot(x,y,20), mBlueStroke);
+						canvas.drawPath(addDot(x,y,Math.round(20/mScaleFactor)), mBlue);
+						canvas.drawPath(addDot(x,y,Math.round(25/mScaleFactor)), mBlueStroke);
 					}
 				}
 				else{
 					ReferenceApplication.lastNumberofBeacons = brList.size();
 					x = ReferenceApplication.lastX;
 					y = ReferenceApplication.lastY;
-					canvas.drawPath(addDot(x,y,15), mBlue);
-					canvas.drawPath(addDot(x,y,20), mBlueStroke);
+					canvas.drawPath(addDot(x,y,Math.round(20/mScaleFactor)), mBlue);
+					canvas.drawPath(addDot(x,y,Math.round(25/mScaleFactor)), mBlueStroke);
 				}
 				
 			}
@@ -376,8 +376,8 @@ public class MapView extends View {
 				ReferenceApplication.lastNumberofBeacons = brList.size();
 				x = ReferenceApplication.lastX;
 				y = ReferenceApplication.lastY;
-				canvas.drawPath(addDot(x,y,15), mBlue);
-				canvas.drawPath(addDot(x,y,20), mBlueStroke);
+				canvas.drawPath(addDot(x,y,Math.round(25/mScaleFactor)), mBlue);
+				canvas.drawPath(addDot(x,y,Math.round(30/mScaleFactor)), mBlueStroke);
 			}
 			
 			System.out.println(x);
