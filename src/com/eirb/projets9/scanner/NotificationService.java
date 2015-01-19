@@ -81,7 +81,7 @@ public class NotificationService extends Service{
         				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase())){
         					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor())){
         						if (beaconsList.get(k).getMinor() == Integer.parseInt(br.getMinor())){
-        							System.out.println("NOTIF");
+        							System.out.println("NOTIF " + br.getMinor());
         							generateNotification(c, beaconsList.get(k).getRoom_id(), br);
         							br.setNotified(true);
         						}

@@ -246,7 +246,7 @@ public class MapView extends View {
 		// Draw beacons on map
 		for (int i = 0 ; i < ReferenceApplication.mapBeacons.size() ; i++){
 			MapBeacon mapBeacon = ReferenceApplication.mapBeacons.get(i);
-			canvas.drawPath(addDot(mapBeacon.getCoordinate().getX(),mapBeacon.getCoordinate().getY(),15), mRed);
+			canvas.drawPath(addDot(mapBeacon.getCoordinate().getX(),mapBeacon.getCoordinate().getY(),5), mRed);
 		}
 		
 		// Sort List so the most recent & close beacons are first

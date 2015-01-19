@@ -234,7 +234,8 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	 */
 	public void displayData(){
 		try {
-			map = new MapView(mContext, null);			
+			map = new MapView(mContext, null);	
+			map.setStorey(-1, mContext);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
