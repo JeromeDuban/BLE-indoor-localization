@@ -101,9 +101,9 @@ public class ReferenceApplication extends Application {
 //		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(980, 660)));
 //		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(980, 1300)));
 		
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(915, 445)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(915, 445)));
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(990, 445)));
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(990, 572)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(990, 572)));
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(915, 572)));
 		
 	};	
