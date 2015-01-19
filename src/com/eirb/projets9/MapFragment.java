@@ -118,6 +118,15 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	    display.add("I004");
 	    display.add("Grand Amphithéâtre");
 	    display.add("Sujet n°1");
+	    display.add("Amphi A");
+	    display.add("Amphi B");
+	    display.add("Amphi C");
+	    display.add("Amphi D");
+	    display.add("Amphi E");
+	    display.add("Sujet n°2");
+	    display.add("Sujet n°3");
+	    display.add("Sujet n°4");
+	    display.add("Sujet n°5");
 	    
 	    String[] array = new String[display.size()];
 	    display.toArray(array);
@@ -128,7 +137,16 @@ public class MapFragment extends Fragment implements View.OnClickListener{
 	    action.add("I003");
 	    action.add("I004");
 	    action.add("Grand Amphithéâtre");
-	    action.add("Grand Amphithéâtre");
+	    action.add("Amphi A");
+	    action.add("Amphi A");
+	    action.add("Amphi B");
+	    action.add("Amphi C");
+	    action.add("Amphi D");
+	    action.add("Amphi E");
+	    action.add("Amphi A");
+	    action.add("Amphi B");
+	    action.add("Amphi A");
+	    action.add("Amphi B");
 	    
 
 	    adapter =  new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 , array);
