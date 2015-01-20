@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Description extends Activity{
 	
@@ -18,9 +19,10 @@ public class Description extends Activity{
 		TextView title = (TextView) findViewById(R.id.title);
 		TextView subtitle = (TextView) findViewById(R.id.subtitle);
 		TextView body = (TextView) findViewById(R.id.body);
+		TextView speaker = (TextView) findViewById(R.id.speaker);
 		LinearLayout button = (LinearLayout) findViewById(R.id.goTo);
 		
-		String ti,su,st,en,bo;
+		String ti,su,st,en,bo,sp;
 		
 		if((ti = getIntent().getExtras().getString("Title")) != null )
 			title.setText(ti);
@@ -32,6 +34,8 @@ public class Description extends Activity{
 			subtitle.setText(subtitle.getText()+" to "+en);
 		if((bo = getIntent().getExtras().getString("Body")) != null )
 			body.setText(bo);
+		if((sp = getIntent().getExtras().getString("Speaker")) != null )
+			speaker.setText("Speaker : " + sp);
 		
 		final String room = su;
 		button.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,7 @@ public class Description extends Activity{
 			public void onClick(View v) {
 				Intent resultIntent = new Intent();
 		    	resultIntent.putExtra("room", room);
+		    	Toast.makeText(Description.this, room, Toast.LENGTH_SHORT).show();
 		    	setResult(RESULT_OK, resultIntent);
 				finish();
 			}

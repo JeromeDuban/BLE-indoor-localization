@@ -156,6 +156,7 @@ public class PlanningFragment extends Fragment {
 					bundle.putString("Start", sFinal);
 					bundle.putString("End", eFinal);
 					bundle.putString("Body", t.getBody());
+					bundle.putString("Speaker", t.getSpeaker());
 					System.out.println(t.getBody());
 					intent.putExtras(bundle);
 					

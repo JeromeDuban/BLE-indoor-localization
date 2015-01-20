@@ -245,22 +245,23 @@ public class HomeFragment extends Fragment {
             final String sFinal= df.format(s);
             final String eFinal= df.format(e);
             
-            layout.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(getActivity(), Description.class);
-					Bundle bundle = new Bundle();
-					bundle.putString("Title", t.getTitle());
-					bundle.putString("Subtitle",subFinal);
-					bundle.putString("Start", sFinal);
-					bundle.putString("End", eFinal);
-					bundle.putString("Body", t.getBody());
-					intent.putExtras(bundle);
-					
-					startActivityForResult(intent, 0);
-				}
-			});
+//            layout.setOnClickListener(new View.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					Intent intent = new Intent(getActivity(), Description.class);
+//					Bundle bundle = new Bundle();
+//					bundle.putString("Title", t.getTitle());
+//					bundle.putString("Subtitle",subFinal);
+//					bundle.putString("Start", sFinal);
+//					bundle.putString("End", eFinal);
+//					bundle.putString("Body", t.getBody());
+//					bundle.putString("Speaker", t.getSpeaker());
+//					intent.putExtras(bundle);
+//					
+//					startActivityForResult(intent, 0);
+//				}
+//			});
             
             
             
@@ -302,8 +303,8 @@ public class HomeFragment extends Fragment {
 		
 		if (conf !=null){
 			title.setText(conf.getTitle());
-			dates.setText("Du " + conf.getStartDay() + " au " + conf.getEndDay());
-			addresse.setText("Adresse : "+conf.getAddress());
+			dates.setText("From " + conf.getStartDay() + " to " + conf.getEndDay());
+			addresse.setText("Address : "+conf.getAddress());
 		}
 			
 		

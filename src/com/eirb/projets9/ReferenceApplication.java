@@ -35,7 +35,7 @@ public class ReferenceApplication extends Application {
 	// Time before being notified
 	public static final int TIME_TO_BE_NOTIFIED = 3;
 	// Maximum distance to be notified
-	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
+	public static final double DISTANCE_TO_BE_NOTIFIED = 0.5;
 	
 	// Display records in logcat ?
 	public static boolean displayRecords = false;
@@ -101,10 +101,16 @@ public class ReferenceApplication extends Application {
 //		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(980, 660)));
 //		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(980, 1300)));
 		
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(835, 445))); //915
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(913, 445))); //990
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(913, 485)));
-		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(835, 485)));
+//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(835, 445))); //915
+//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(913, 445))); //990
+//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(913, 485)));
+//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(835, 485)));
+		
+		
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(915, 445))); //915
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(990, 445))); //990
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(990, 485)));
+		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(915, 485)));
 		
 	};	
 	

@@ -122,6 +122,8 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
                 	addScanRecord(br,sr);
                 	if (ReferenceApplication.displayRecords == true)
                 		System.out.println(br);
+                	if (br.getMinor().equals("17938"))
+                		System.out.println(sr.getDistance());
 //                	System.out.println(br.getMinor() + " > " + sr.getDistance());
                 	ReferenceApplication.lastTimestamp = timestamp;
                 	ReferenceApplication.recordAdded();
