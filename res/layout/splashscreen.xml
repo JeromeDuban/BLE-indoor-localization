@@ -10,7 +10,7 @@
         android:id="@+id/img"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/ic_launcher4" />
+        android:background="@drawable/ic_launcher_hd" />
     <TextView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
