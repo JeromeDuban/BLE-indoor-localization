@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
+    android:background="#025db9"
     android:orientation="vertical"
     android:gravity="center" >
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textColor="@color/actionbar_background"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:textSize="20sp"/>

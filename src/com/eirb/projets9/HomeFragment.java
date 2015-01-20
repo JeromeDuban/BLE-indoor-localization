@@ -234,16 +234,9 @@ public class HomeFragment extends Fragment {
             title.setText(t.getTitle());
             
             /* Subtitle */
-            String sub ="";
-            if (building != null){
-				if ((sub = ReferenceApplication.getRoomName(building, l.get(i).getId())) != null){
-            		subtitle.setText("Room " + sub);
-            	}
-				else
-					subtitle.setText("Room " + l.get(i).getId());
-            }
-            else
-            	subtitle.setText("");
+            String sub = ReferenceApplication.getRoomName(building, l.get(i).getId());
+            subtitle.setText(t.getConfAbstract());
+
             
             start.setText(df.format(s));
             end.setText(df.format(e));

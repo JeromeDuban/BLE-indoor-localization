@@ -1,18 +1,37 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<!-- <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-  <!--  <item
+    
+        <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"
-        /> -->
-	 
-	 <item
+        />
+    
+
+    <item
         android:id="@+id/action_delete"
-        android:orderInCategory="100"
         android:icon="@drawable/ic_delete"
         android:title="@string/action_settings"
-        android:showAsAction="always"
-        />
+        android:showAsAction="always"/>
+    
+    
 
+</menu>-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item 
+        android:id="@+id/dropdown_menu"
+        android:showAsAction="ifRoom"
+        android:title="Options"
+        android:icon="@drawable/ic_menu_moreoverflow_normal_holo_dark">
+
+        <menu>
+            <item
+                android:id="@+id/action_delete"
+                android:showAsAction="ifRoom"
+                android:title="Refresh data"
+                android:icon="@drawable/ic_refresh"/>
+        </menu>
+    </item>
 </menu>

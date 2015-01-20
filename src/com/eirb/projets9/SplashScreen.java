@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +16,7 @@ import android.view.animation.AnimationUtils;
 public class SplashScreen extends Activity {
 	
 	private Timer timer;
-	private int duration = 0; // Default 0
+	private int duration = 1800; // Default 0
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,10 @@ public class SplashScreen extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.splashscreen);
 
-		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+		final Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
 		this.findViewById(R.id.img).startAnimation(hyperspaceJumpAnimation);
+		 
+		
 
 		timer = new Timer();
 		timer.schedule(new TimerTask(){

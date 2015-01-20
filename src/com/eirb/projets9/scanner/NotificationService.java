@@ -71,7 +71,7 @@ public class NotificationService extends Service{
     			j--;
     		}
     		if(j >= 0 && notif && !br.isNotified() && br.getList().get(j).getDistance() < ReferenceApplication.DISTANCE_TO_BE_NOTIFIED && (new Date().getTime() - br.getList().get(j).getTimestamp()) >= ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000){
-    			System.out.println("MORE THAN 10 seconds > Notification if in list");
+    			System.out.println("MORE THAN 10 seconds > Notification if in list :" + br.getMinor());
     			    			
     			/* GET DATA */
     			if (beaconsList != null){
@@ -81,7 +81,7 @@ public class NotificationService extends Service{
         				if (beaconsList.get(k).getUuid().toLowerCase().equals(br.getUuid().toLowerCase())){
         					if (beaconsList.get(k).getMajor() == Integer.parseInt(br.getMajor())){
         						if (beaconsList.get(k).getMinor() == Integer.parseInt(br.getMinor())){
-        							System.out.println("NOTIF " + br.getMinor());
+        							System.out.println("NOTIF >" + br.getMinor());
         							generateNotification(c, beaconsList.get(k).getRoom_id(), br);
         							br.setNotified(true);
         						}
@@ -110,7 +110,7 @@ public class NotificationService extends Service{
          
 //        String delims = "\\|";
 //        String[] tokens = i.split(delims);
-        
+        System.out.println("ROOM ID " + roomID);
         Talk talk = ReferenceApplication.getNextTalk(roomID);
         
         String roomName = "ERROR";
@@ -160,7 +160,10 @@ public class NotificationService extends Service{
             br.setNotified(true);
         }
         else{
-        	System.out.println("TRUC NULL");
+        	if (talk == null)
+        		System.out.println("TALK NULL");
+        	if (roomName == null)
+        		System.out.println("ROOM NULL");
         }
         
  
