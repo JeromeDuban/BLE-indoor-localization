@@ -33,7 +33,7 @@ public class ReferenceApplication extends Application {
 	/* VARIABLES */
 	
 	// Time before being notified
-	public static final int TIME_TO_BE_NOTIFIED = ;
+	public static final int TIME_TO_BE_NOTIFIED = 3;
 	// Maximum distance to be notified
 	public static final double DISTANCE_TO_BE_NOTIFIED = 2;
 	
