@@ -36,7 +36,10 @@ import com.eirb.projets9.objects.PlanningElement;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
-
+/**
+ * Home View
+ * La barre de recherche est toujours statique et peut être améliorée
+ */
 public class HomeFragment extends Fragment {
 		
 	public HomeFragment(){}

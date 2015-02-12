@@ -32,7 +32,12 @@ import com.eirb.projets9.map.MapModel;
 import com.eirb.projets9.map.MapView;
 import com.eirb.projets9.map.objects.PolygonRoom;
 import com.eirb.projets9.map.objects.RectangleRoom;
-
+/**
+ * Map View
+ * La barre de recherche est statique et peut être améliorée
+ * @author jduban
+ *
+ */
 public class MapFragment extends Fragment implements View.OnClickListener{
 
 

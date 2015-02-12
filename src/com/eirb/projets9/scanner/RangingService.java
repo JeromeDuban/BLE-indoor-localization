@@ -41,7 +41,15 @@ import com.eirb.projets9.objects.Room;
 import com.eirb.projets9.objects.Session;
 import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
-
+/**
+ * Ce service effectue :
+ * - le ranging des beacons
+ * - le téléchargement des données
+ * - le parsing des données recues
+ * 
+ * @author jduban
+ *
+ */
 public class RangingService extends Service implements BeaconConsumer, RangeNotifier{
 	
 	static Context c;
@@ -175,7 +183,11 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 		
 	}
 
-		
+	/**
+	 * Vérifie que le json est valide
+	 * @param json
+	 * @return
+	 */
 	public boolean isJSONValid(String test) {
 	    try {
 	        new JSONObject(test);
@@ -192,7 +204,6 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 	}
 	
 	/* Download conference data from a server according to its major */
-	
 	public void downloadConference(String url, int major){
 		if (isOnline()) {
 			StringBuilder response = new StringBuilder();
@@ -334,7 +345,11 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 		}
 		
 	}
-	
+	/**
+	 * Télécharge les données liées au batiment
+	 * @param url
+	 * @param major
+	 */
 	public void downloadBuilding(String url, int major){
 		if (isOnline()) {
 			StringBuilder response = new StringBuilder();
@@ -434,7 +449,11 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 		
 	}
 	
-	
+	/**
+	 * Télécharge les données liées aux beacons
+	 * @param url
+	 * @param major
+	 */
 	public void downloadBeacon(String url, int major){
 		if (isOnline()) {
 			StringBuilder response = new StringBuilder();
@@ -513,6 +532,10 @@ public class RangingService extends Service implements BeaconConsumer, RangeNoti
 		
 	}
 	
+	/**
+	 * Vérifie que le wifi ou les données mobiles sont activées
+	 * @return
+	 */
 	public boolean isOnline() {
 	    ConnectivityManager cm =
 	        (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -30,6 +30,8 @@ import com.eirb.projets9.scanner.ScanRecord;
 
 /**
  * This class correspond to the custom view creating school's map
+ * Le calcul du barycentre pour définir la position de l'utilisateur se trouve dans cette classe,
+ * dans la méthode onDraw()
  */
 
 public class MapView extends View {
@@ -235,79 +237,20 @@ public class MapView extends View {
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mYellow);
 				canvas.drawRect(clickableRectangles.get(i).getRect(), mBlackStroke);
 			}
-
-
 		}
 		
 		/* 
-		 * USER LOCATION MANAGEMENT 
-		 * */
-		
-		// Draw beacons on map
-//		for (int i = 0 ; i < ReferenceApplication.mapBeacons.size() ; i++){
-//			MapBeacon mapBeacon = ReferenceApplication.mapBeacons.get(i);
-//			canvas.drawPath(addDot(mapBeacon.getCoordinate().getX(),mapBeacon.getCoordinate().getY(),5), mRed);
-//		}
+		 * Calcul de la position de l'utilisateur
+		 * La taille du point évolue en fonction du zoom et de la précision des beacons
+		 * Si le scan le plus récent a detecté moins de beacons que le scan précédent,
+		 * alors le point n'est pas mis a jour sur la carte pour éviter un saut trop
+		 * important sur la carte.
+		 */
 		
 		// Sort List so the most recent & close beacons are first
 		Collections.sort(ReferenceApplication.records);
 		
-		// DEBUG : displays last record for each beacon
-		/*for (int i = 0 ; i < ReferenceApplication.records.size(); i++){
-			BeaconRecord b = ReferenceApplication.records.get(i);
-			ArrayList<ScanRecord> list = ReferenceApplication.records.get(i).getList();
-			
-			System.out.println("================");
-			System.out.println(b.getUuid()+":"+b.getMajor()+":"+b.getMinor());
-			System.out.println(list.get(list.size()-1));
-			
-		}*/
-		
-		
 		if (ReferenceApplication.records.size() >=2 ){	
-			/*
-			// Get the two closest beacons TODO we need two beacons from the list
-			
-			BeaconRecord br1 = ReferenceApplication.records.get(0);
-			BeaconRecord br2 = ReferenceApplication.records.get(1);
-			
-//			System.out.println("MV : "+ ReferenceApplication.isInMapBeacon(br1));
-//			System.out.println("MV : "+ ReferenceApplication.isInMapBeacon(br2));
-			
-			// Get beacon coordinates
-			Coordinate co1 = ReferenceApplication.getCoordinate(br1.getUuid(), br1.getMajor(), br1.getMinor());
-			Coordinate co2 = ReferenceApplication.getCoordinate(br2.getUuid(), br2.getMajor(), br2.getMinor());
-			
-			System.out.println(ReferenceApplication.lastTimestamp);
-			
-			
-			// Check that the beacon is known
-			if (co1.getX() != -1 && co1.getY() != -1 && co2.getX() != -1 && co2.getY() != -1){
-				
-				// Distances
-				double distance1 = br1.getList().get(br1.getList().size()-1).getDistance();
-				double distance2 = br2.getList().get(br2.getList().size()-1).getDistance();
-				
-				System.out.println(distance1);
-				System.out.println(distance2);
-				
-				// Calculate offsets
-				double xOffset = ((co1.getX() - co2.getX())*distance1)/(distance1+distance2);
-				double yOffset = ((co1.getY() - co2.getY())*distance1)/(distance1+distance2);
-				
-				ReferenceApplication.lastX = co1.getX()-xOffset;
-				ReferenceApplication.lastY = co1.getY()-yOffset;
-				
-				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,15), mBlue);
-				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,20), mBlueStroke);
-				
-			}
-			else if (ReferenceApplication.lastX != -1 && ReferenceApplication.lastY != -1){
-				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,15), mBlue);
-				canvas.drawPath(addDot(ReferenceApplication.lastX,ReferenceApplication.lastY,20), mBlueStroke);
-			}
-			
-			*/
 			
 			/* BARYCENTRE */
 			
@@ -632,46 +575,7 @@ public class MapView extends View {
 	}
 
 
-	public Path triangulation(ArrayList<BeaconRecord> records) {
-		
-		ArrayList<Point> pointsList = new ArrayList<Point>();
-        
-		/*
-		ArrayList<String> uuids = null; //list of beacons uuids
-		ArrayList<Double> distances = null; //list of distances matching the beacons
-
-		for (int i=0; i<records.size(); i++) {
-			BeaconRecord record = records.get(i);
-
-			String uuid = record.getUuid(); //get the uuid of the beacon
-			uuids.add(uuid);
-
-			ArrayList<ScanRecord> list = record.getList();
-			double distance = list.get(list.size()).getDistance(); //get the last distance recorded by the beacon
-			distances.add(distance);
-
-		}*/
-		
-		Point point1 = new Point(400,400); 
-		Point point2 = new Point(600,400); 
-		Point point3 = new Point(600,600); 
-		Point point4 = new Point(400,600); 
-		
-		pointsList.add(point1);
-		pointsList.add(point2);
-		pointsList.add(point3);
-		pointsList.add(point4);
-		
-		Path polygonPath = new Path();
-        polygonPath.moveTo(pointsList.get(0).getX(), pointsList.get(0).getY());
-        for (int j = 0; j < pointsList.size(); j++) {
-            polygonPath.lineTo(pointsList.get(j).getX(), pointsList.get(j).getY());
-        }
-		return polygonPath;
-	}
-	
-	
-public Path addDot(double x, double y, int radius) {
+	public Path addDot(double x, double y, int radius) {
 //		System.out.println((float) x);
 //		System.out.println((float) y);
 		        
@@ -683,11 +587,9 @@ public Path addDot(double x, double y, int radius) {
 	}
 
 
-public void setSearching(boolean searching) {
-	this.searching = searching;
-}
-
-
+	public void setSearching(boolean searching) {
+		this.searching = searching;
+	}
 
 }
 

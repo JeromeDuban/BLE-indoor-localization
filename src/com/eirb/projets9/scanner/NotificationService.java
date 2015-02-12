@@ -19,7 +19,11 @@ import com.eirb.projets9.R;
 import com.eirb.projets9.ReferenceApplication;
 import com.eirb.projets9.objects.Beacon;
 import com.eirb.projets9.objects.Talk;
-
+/**
+ * Ce service gère les notifications système générées par l'application
+ * @author jduban
+ *
+ */
 public class NotificationService extends Service{
 	
 	private static Context c;
@@ -42,7 +46,9 @@ public class NotificationService extends Service{
         		
         super.onCreate();
     }
-       
+    /**
+     * Exécuté lorsqu'un nouvel enregistrement est fait   
+     */
     public void recordCallback(){
 //    	System.out.println("CALLBACK");
 //    	System.out.println(records.toString());
@@ -54,7 +60,7 @@ public class NotificationService extends Service{
     		
     		int j = br.getList().size()-1 ;
     		boolean notif = false;
-    		
+    		/* Algo pour notifier si l'utilisateur est resté à une certaine distance pendant un certain temps */
     		while (j>=0 && (new Date().getTime() - br.getList().get(j).getTimestamp()) < ReferenceApplication.TIME_TO_BE_NOTIFIED * 1000 ){
     			
     			

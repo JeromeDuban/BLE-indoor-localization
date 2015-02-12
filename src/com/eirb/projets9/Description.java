@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activité gérant la vue détaillée des talks
+ * @author jduban
+ *
+ */
 public class Description extends Activity{
 	
 	@Override

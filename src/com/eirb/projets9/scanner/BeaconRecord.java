@@ -1,7 +1,12 @@
 package com.eirb.projets9.scanner;
 
 import java.util.ArrayList;
-
+/** Contient les caractéristiques d'un
+ * beacon et la liste des enregistrements propres a ce beacon
+ * (distance, rssi,..)
+ * @author jduban
+ *
+ */
 public class BeaconRecord implements Comparable<BeaconRecord>{
 	
 	private String uuid;

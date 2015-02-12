@@ -24,11 +24,17 @@ import com.eirb.projets9.objects.Talk;
 import com.eirb.projets9.objects.Track;
 import com.eirb.projets9.scanner.BeaconRecord;
 import com.eirb.projets9.scanner.NotificationService;
-
+/**
+ * Contient toutes les variables, listes et méthodes
+ * communes aux différentes activités
+ * Entre autre, les méthodes permettant de sérialiser et désérialiser les structures d'objets
+ * utilisées dans l'application
+ * @author jduban
+ *
+ */
 public class ReferenceApplication extends Application {
 
 //	public BackgroundPowerSaver mBackgroundPowerSaver;	// Seems to kill the background service if the screen is off
-	
 	
 	/* VARIABLES */
 	
@@ -95,17 +101,9 @@ public class ReferenceApplication extends Application {
 			notificationList = deserializeNotifications();
 		}
 		
-		// TODO : To be removed
-		
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","238",-1,-1,new Coordinate(120, 660)));
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(980, 660)));
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(980, 1300)));
-		
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(835, 445))); //915
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(913, 445))); //990
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","42",-1,-1,new Coordinate(913, 485)));
-//		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","232",-1,-1,new Coordinate(835, 485)));
-		
+		/* Beacons utilisés sur la carte 
+		 * le système de coordonées est différent sur iOS et Android
+		 * apparement donc les données du json n'ont pas pu être utilisées*/
 		
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","11",-1,-1,new Coordinate(915, 445))); //915
 		mapBeacons.add(new MapBeacon("3d4f13b4-d1fd-4049-80e5-d3edcc840b6a","61298","12",-1,-1,new Coordinate(990, 445))); //990
