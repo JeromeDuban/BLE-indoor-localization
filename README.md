@@ -8,3 +8,6 @@ TODO
 
 # Améliorations possibles
 TODO
+
+# Licensing
+Please see the file called LICENSE.md.
