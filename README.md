@@ -9,7 +9,10 @@ Ce projet necessite l'utilisation de la bibliothèque de radius network "Android
 https://altbeacon.github.io/android-beacon-library/download.html.
 Cette bibliothèque doit être importée en tant que projet sur eclipse, définie en tant que bibliothèque puis rajoutée aux dépendances du projet. 
 
+# Screenshots
+
 ![Notifications](/Screenshots/Screenshot_2015-01-14-19-57-46.png?raw=true "Notifications")
+<img src="/Screenshots/Screenshot_2015-01-14-19-57-46.png" width="150px">
 
 # License
 Se référer au fichier LICENSE.md.
